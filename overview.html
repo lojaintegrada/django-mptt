@@ -1,0 +1,198 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Django MPTT &mdash; django-mptt v0.4.pre documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.4.pre',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="django-mptt v0.4.pre documentation" href="index.html" />
+    <link rel="next" title="How to install Django MPTT" href="install.html" />
+    <link rel="prev" title="Django MPTT documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="install.html" title="How to install Django MPTT"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Django MPTT documentation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">django-mptt v0.4.pre documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="django-mptt">
+<h1><a class="toc-backref" href="#id1">Django MPTT</a><a class="headerlink" href="#django-mptt" title="Permalink to this headline">¶</a></h1>
+<div class="admonition-about-this-document admonition ">
+<p class="first admonition-title">About this document</p>
+<p class="last">This document provides an overview of what Modified Preorder Tree
+Traversal (MPTT) and Django MPTT are.</p>
+</div>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#django-mptt" id="id1">Django MPTT</a><ul>
+<li><a class="reference internal" href="#what-is-modified-preorder-tree-traversal" id="id2">What is Modified Preorder Tree Traversal?</a></li>
+<li><a class="reference internal" href="#what-is-django-mptt" id="id3">What is Django MPTT?</a><ul>
+<li><a class="reference internal" href="#feature-overview" id="id4">Feature overview</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="what-is-modified-preorder-tree-traversal">
+<h2><a class="toc-backref" href="#id2">What is Modified Preorder Tree Traversal?</a><a class="headerlink" href="#what-is-modified-preorder-tree-traversal" title="Permalink to this headline">¶</a></h2>
+<p>MPTT is a technique for storing hierarchical data in a database in a
+manner which makes tree retrieval operations such as fetching complete
+trees, item ancestors and item descendants very efficient.</p>
+<p>The trade-off for this efficiency is that performing inserts and moving
+items around the tree is more involved, as there&#8217;s some extra work
+required to keep the tree structure in a good state at all times.</p>
+<p>Here are a few articles about MPTT to whet your appetite and provide
+details about how the technique itself works:</p>
+<blockquote>
+<ul class="simple">
+<li><a class="reference external" href="http://www.intelligententerprise.com/001020/celko.jhtml">Trees in SQL</a></li>
+<li><a class="reference external" href="http://www.sitepoint.com/print/hierarchical-data-database">Storing Hierarchical Data in a Database</a></li>
+<li><a class="reference external" href="http://dev.mysql.com/tech-resources/articles/hierarchical-data.html">Managing Hierarchical Data in MySQL</a></li>
+</ul>
+</blockquote>
+<p>In particular, these articles should help you understand the two most
+important fields in MPTT - the left and right &#8220;edge indicators&#8221;. Other
+fields involved in Django MPTT&#8217;s implementation of the technique are
+discusssed in the technical details documentation.</p>
+</div>
+<div class="section" id="what-is-django-mptt">
+<h2><a class="toc-backref" href="#id3">What is Django MPTT?</a><a class="headerlink" href="#what-is-django-mptt" title="Permalink to this headline">¶</a></h2>
+<p>Django MPTT is a reusable/standalone Django application which aims to
+make it easy for you to use Modified Preorder Tree Traversal with your
+own Django models in your own applications.</p>
+<p>It takes care of the details of managing a database table as a tree
+structure and provides tools for working with trees of model instances.</p>
+<div class="section" id="feature-overview">
+<h3><a class="toc-backref" href="#id4">Feature overview</a><a class="headerlink" href="#feature-overview" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Simple registration of models - fields required for tree structure will be
+added automatically.</li>
+<li>The tree structure is automatically updated when you create or delete
+model instances, or change an instance&#8217;s parent.</li>
+<li>Each level of the tree is automatically sorted by a field (or fields) of your
+choice.</li>
+<li>New model methods are added to each registered model for:<ul>
+<li>changing position in the tree</li>
+<li>retrieving ancestors, siblings, descendants</li>
+<li>counting descendants</li>
+<li>other tree-related operations</li>
+</ul>
+</li>
+<li>A <tt class="docutils literal"><span class="pre">TreeManager</span></tt> manager is added to all registered models. This provides
+methods to:<ul>
+<li>move nodes around a tree, or into a different tree</li>
+<li>insert a node anywhere in a tree</li>
+<li>rebuild the MPTT fields for the tree (useful when you do bulk updates
+outside of django)</li>
+</ul>
+</li>
+<li>Form fields for tree models.</li>
+<li>Utility functions for tree models.</li>
+<li>Template tags and filters for rendering trees.</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Django MPTT</a><ul>
+<li><a class="reference internal" href="#what-is-modified-preorder-tree-traversal">What is Modified Preorder Tree Traversal?</a></li>
+<li><a class="reference internal" href="#what-is-django-mptt">What is Django MPTT?</a><ul>
+<li><a class="reference internal" href="#feature-overview">Feature overview</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Django MPTT documentation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="install.html"
+                        title="next chapter">How to install Django MPTT</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/overview.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="install.html" title="How to install Django MPTT"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Django MPTT documentation"
+             >previous</a> |</li>
+        <li><a href="index.html">django-mptt v0.4.pre documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2007 - 2010, Jonathan Buchanan and others.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.3.
+    </div>
+  </body>
+</html>

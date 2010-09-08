@@ -1,0 +1,226 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Technical details &mdash; django-mptt v0.4.pre documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.4.pre',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="django-mptt v0.4.pre documentation" href="index.html" />
+    <link rel="prev" title="Utilities for working with trees" href="utilities.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="utilities.html" title="Utilities for working with trees"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">django-mptt v0.4.pre documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="technical-details">
+<h1><a class="toc-backref" href="#id1">Technical details</a><a class="headerlink" href="#technical-details" title="Permalink to this headline">¶</a></h1>
+<div class="admonition-about-this-document admonition ">
+<p class="first admonition-title">About this document</p>
+<p class="last">This document provides technical details related to some aspects of
+Django MPTT&#8217;s inner workings and its implementation of Modified
+Preorder Tree Traversal.</p>
+</div>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#technical-details" id="id1">Technical details</a><ul>
+<li><a class="reference internal" href="#tree-structure" id="id2">Tree structure</a><ul>
+<li><a class="reference internal" href="#tree-id" id="id3">Tree id</a></li>
+<li><a class="reference internal" href="#level" id="id4">Level</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#dynamic-field-creation-vs-explicitly-defining-mptt-fields" id="id5">Dynamic field creation vs. explicitly defining MPTT fields</a></li>
+<li><a class="reference internal" href="#running-the-test-suite" id="id6">Running the test suite</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="tree-structure">
+<h2><a class="toc-backref" href="#id2">Tree structure</a><a class="headerlink" href="#tree-structure" title="Permalink to this headline">¶</a></h2>
+<p>In addition to the left and right identifiers which form the core of how
+MPTT works and the parent field, Django MPTT has the following
+additional fields on each tree node.</p>
+<div class="section" id="tree-id">
+<h3><a class="toc-backref" href="#id3">Tree id</a><a class="headerlink" href="#tree-id" title="Permalink to this headline">¶</a></h3>
+<p><strong>A unique identifier assigned to each root node and inherited by all its
+descendants.</strong></p>
+<p>This identifier is the means by which Django MPTT implements multiple
+root nodes.</p>
+<p>Since we can use it to identify all nodes which belong to a particular
+tree, the subtree headed by each root node can have its edge indicators
+starting at <tt class="docutils literal"><span class="pre">1</span></tt> - as long as tree operations are constrained to the
+appropriate tree id(s), we don&#8217;t have to worry about overlapping of left
+and right edge indicator values with those of nodes in other trees.</p>
+<p>This approach limits the number of rows affected when making space to
+insert new nodes and removing gaps left by deleted nodes.</p>
+<div class="section" id="root-node-ordering">
+<h4>Root node ordering<a class="headerlink" href="#root-node-ordering" title="Permalink to this headline">¶</a></h4>
+<p>This field also defines the order in which root nodes are retrieved when
+you create a <tt class="docutils literal"><span class="pre">QuerySet</span></tt> using <tt class="docutils literal"><span class="pre">TreeManager</span></tt>, which by default
+orders the resulting <tt class="docutils literal"><span class="pre">QuerySet</span></tt> by tree id, then left edge indicator
+(for depth-first ordering).</p>
+<p>When a new root node is created, it is assigned the next-largest tree id
+available, so by default root nodes (and thus their subtrees) are
+displayed in the order they were created.</p>
+</div>
+<div class="section" id="movement-and-volatility">
+<h4>Movement and volatility<a class="headerlink" href="#movement-and-volatility" title="Permalink to this headline">¶</a></h4>
+<p>Since root node ordering is defined by tree id, it can also be used to
+implement movement of other nodes as siblings of a target root node.</p>
+<p>When you use the node movement API to move a node to be a sibling of a
+root node, tree ids are shuffled around to acheive the new ordering
+required. Given this, you should consider the tree id to be
+<strong>volatile</strong>, so it&#8217;s recommended that you don&#8217;t store tree ids in your
+applications to identify particular trees.</p>
+<p>Since <em>every</em> node has a tree id, movement of a node to be a sibling of
+a root node can potentially result in a large number of rows being
+modified, as the further away the node you&#8217;re moving is from its target
+location, the larger the number of rows affected - every node with a
+tree id between that of the node being moved and the target root node
+will require its tree id to be modified.</p>
+</div>
+</div>
+<div class="section" id="level">
+<h3><a class="toc-backref" href="#id4">Level</a><a class="headerlink" href="#level" title="Permalink to this headline">¶</a></h3>
+<p><strong>The level (or &#8220;depth&#8221;) at which a node sits in the tree.</strong></p>
+<p>Root nodes are level <tt class="docutils literal"><span class="pre">0</span></tt>, their immediate children are level <tt class="docutils literal"><span class="pre">1</span></tt>,
+<em>their</em> immediate children are level <tt class="docutils literal"><span class="pre">2</span></tt> and so on...</p>
+<p>This field is purely denormalisation for convenience. It avoids the need
+to examine the tree structure to determine the level of a particular
+node and makes queries which need to take depth into account easier to
+implement using Django&#8217;s ORM. For example, limiting the number of levels
+of nodes which are retrieved for the whole tree or any subtree:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Retrieve root nodes and their immediate children only</span>
+<span class="n">SomeModel</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">level__lte</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c"># Retrieve descendants of a node up to two levels below it</span>
+<span class="n">node</span><span class="o">.</span><span class="n">get_descendants</span><span class="p">()</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">level__lte</span><span class="o">=</span><span class="n">node</span><span class="o">.</span><span class="n">level</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="dynamic-field-creation-vs-explicitly-defining-mptt-fields">
+<h2><a class="toc-backref" href="#id5">Dynamic field creation vs. explicitly defining MPTT fields</a><a class="headerlink" href="#dynamic-field-creation-vs-explicitly-defining-mptt-fields" title="Permalink to this headline">¶</a></h2>
+<p>Model classes which do not have field names which clash with the default
+arguments to the <tt class="docutils literal"><span class="pre">mptt.register</span></tt> function need not contain any details
+about MPTT fields at all in their class definition.</p>
+<p>One of the goals of this application is that authors should not have to
+worry about setting up or using MPTT fields directly in order to reap
+the benefits of the functionality their existence enables.</p>
+<p>While dynamically added MPTT fields can be used in inner <tt class="docutils literal"><span class="pre">Meta</span></tt>
+classes and <tt class="docutils literal"><span class="pre">ModelAdmin</span></tt> classes, it is recommended that models which
+will use these fields elsewhere in the class definition should implement
+the fields themselves for clarity - it&#8217;s already bad enough that we&#8217;re
+dynamically adding fields without your model definitions using fields
+which don&#8217;t appear to exist.</p>
+<p>Salt to taste, your mileage may vary, etc. etc.</p>
+</div>
+<div class="section" id="running-the-test-suite">
+<h2><a class="toc-backref" href="#id6">Running the test suite</a><a class="headerlink" href="#running-the-test-suite" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">mptt.tests</span></tt> package is set up as a project which holds a test
+settings module and defines models for use in testing MPTT. You can run
+the tests from the command-line using the <tt class="docutils literal"><span class="pre">manage.py</span></tt> script:</p>
+<div class="highlight-python"><pre>python manage.py test</pre>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Technical details</a><ul>
+<li><a class="reference internal" href="#tree-structure">Tree structure</a><ul>
+<li><a class="reference internal" href="#tree-id">Tree id</a><ul>
+<li><a class="reference internal" href="#root-node-ordering">Root node ordering</a></li>
+<li><a class="reference internal" href="#movement-and-volatility">Movement and volatility</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#level">Level</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#dynamic-field-creation-vs-explicitly-defining-mptt-fields">Dynamic field creation vs. explicitly defining MPTT fields</a></li>
+<li><a class="reference internal" href="#running-the-test-suite">Running the test suite</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="utilities.html"
+                        title="previous chapter">Utilities for working with trees</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/technical_details.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="utilities.html" title="Utilities for working with trees"
+             >previous</a> |</li>
+        <li><a href="index.html">django-mptt v0.4.pre documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2007 - 2010, Jonathan Buchanan and others.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.3.
+    </div>
+  </body>
+</html>
