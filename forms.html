@@ -62,11 +62,12 @@ library.</p>
 <li><a class="reference internal" href="#working-with-trees-in-django-forms" id="id2">Working with trees in <tt class="docutils literal"><span class="pre">django.forms</span></tt></a><ul>
 <li><a class="reference internal" href="#fields" id="id3">Fields</a><ul>
 <li><a class="reference internal" href="#treenodechoicefield" id="id4"><tt class="docutils literal"><span class="pre">TreeNodeChoiceField</span></tt></a></li>
-<li><a class="reference internal" href="#treenodepositionfield" id="id5"><tt class="docutils literal"><span class="pre">TreeNodePositionField</span></tt></a></li>
+<li><a class="reference internal" href="#treenodemultiplechoicefield" id="id5"><tt class="docutils literal"><span class="pre">TreeNodeMultipleChoiceField</span></tt></a></li>
+<li><a class="reference internal" href="#treenodepositionfield" id="id6"><tt class="docutils literal"><span class="pre">TreeNodePositionField</span></tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#forms" id="id6">Forms</a><ul>
-<li><a class="reference internal" href="#movenodeform" id="id7"><tt class="docutils literal"><span class="pre">MoveNodeForm</span></tt></a></li>
+<li><a class="reference internal" href="#forms" id="id7">Forms</a><ul>
+<li><a class="reference internal" href="#movenodeform" id="id8"><tt class="docutils literal"><span class="pre">MoveNodeForm</span></tt></a></li>
 </ul>
 </li>
 </ul>
@@ -122,17 +123,21 @@ Root 2
 +--+-- Child 2.1.1</pre>
 </div>
 </div>
+<div class="section" id="treenodemultiplechoicefield">
+<h3><a class="toc-backref" href="#id5"><tt class="docutils literal"><span class="pre">TreeNodeMultipleChoiceField</span></tt></a><a class="headerlink" href="#treenodemultiplechoicefield" title="Permalink to this headline">¶</a></h3>
+<p>Just like <tt class="docutils literal"><span class="pre">TreeNodeChoiceField</span></tt>, but accepts more than one value.</p>
+</div>
 <div class="section" id="treenodepositionfield">
-<h3><a class="toc-backref" href="#id5"><tt class="docutils literal"><span class="pre">TreeNodePositionField</span></tt></a><a class="headerlink" href="#treenodepositionfield" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id6"><tt class="docutils literal"><span class="pre">TreeNodePositionField</span></tt></a><a class="headerlink" href="#treenodepositionfield" title="Permalink to this headline">¶</a></h3>
 <p>A subclass of <a class="reference external" href="http://docs.djangoproject.com/en/dev/ref/forms/fields/#choicefield">ChoiceField</a> whose choices default to the valid arguments
 for the <a class="reference external" href="models.html#move-to-target-position-first-child">move_to method</a>.</p>
 </div>
 </div>
 <div class="section" id="forms">
-<h2><a class="toc-backref" href="#id6">Forms</a><a class="headerlink" href="#forms" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id7">Forms</a><a class="headerlink" href="#forms" title="Permalink to this headline">¶</a></h2>
 <p>The following custom form is provided in the <tt class="docutils literal"><span class="pre">mptt.forms</span></tt> package.</p>
 <div class="section" id="movenodeform">
-<h3><a class="toc-backref" href="#id7"><tt class="docutils literal"><span class="pre">MoveNodeForm</span></tt></a><a class="headerlink" href="#movenodeform" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id8"><tt class="docutils literal"><span class="pre">MoveNodeForm</span></tt></a><a class="headerlink" href="#movenodeform" title="Permalink to this headline">¶</a></h3>
 <p>A form which allows the user to move a given node from one location in
 its tree to another, with optional restriction of the nodes which are
 valid target nodes for the <cite>move_to method</cite></p>
@@ -240,6 +245,7 @@ the error message is displayed to the user.</p>
 <li><a class="reference internal" href="#">Working with trees in <tt class="docutils literal"><span class="pre">django.forms</span></tt></a><ul>
 <li><a class="reference internal" href="#fields">Fields</a><ul>
 <li><a class="reference internal" href="#treenodechoicefield"><tt class="docutils literal"><span class="pre">TreeNodeChoiceField</span></tt></a></li>
+<li><a class="reference internal" href="#treenodemultiplechoicefield"><tt class="docutils literal"><span class="pre">TreeNodeMultipleChoiceField</span></tt></a></li>
 <li><a class="reference internal" href="#treenodepositionfield"><tt class="docutils literal"><span class="pre">TreeNodePositionField</span></tt></a></li>
 </ul>
 </li>
