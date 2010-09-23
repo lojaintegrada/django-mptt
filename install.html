@@ -114,15 +114,23 @@ copy of the source code.</p>
 <p>Once you&#8217;ve installed Django MPTT and want to use it in your Django
 applications, do the following:</p>
 <blockquote>
-<ol class="arabic simple">
-<li>Put <tt class="docutils literal"><span class="pre">'mptt'</span></tt> in your <tt class="docutils literal"><span class="pre">INSTALLED_APPS</span></tt> setting.</li>
-<li>Place appropriate calls to the <tt class="docutils literal"><span class="pre">mptt.register</span></tt> function in your
-model modules, for any models you wish to use with MPTT. This step
-most be performed <em>before</em> you generate tables with <tt class="docutils literal"><span class="pre">syncdb</span></tt>. See
-the <a class="reference external" href="models.html">models documentation</a> for more information.</li>
+<ol class="arabic">
+<li><p class="first">Put <tt class="docutils literal"><span class="pre">'mptt'</span></tt> in your <tt class="docutils literal"><span class="pre">INSTALLED_APPS</span></tt> setting.</p>
+</li>
+<li><p class="first">Subclass MPTTModel, like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">mptt.models</span> <span class="kn">import</span> <span class="n">MPTTModel</span>
+
+<span class="k">class</span> <span class="nc">MyTreeNode</span><span class="p">(</span><span class="n">MPTTModel</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s">&#39;self&#39;</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
 </ol>
 </blockquote>
 <p>That&#8217;s it!</p>
+<p>To customize your model further, have a look at the <cite>models documentation</cite>.</p>
 </div>
 </div>
 

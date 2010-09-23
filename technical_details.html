@@ -134,18 +134,11 @@ of nodes which are retrieved for the whole tree or any subtree:</p>
 <div class="section" id="dynamic-field-creation-vs-explicitly-defining-mptt-fields">
 <h2><a class="toc-backref" href="#id5">Dynamic field creation vs. explicitly defining MPTT fields</a><a class="headerlink" href="#dynamic-field-creation-vs-explicitly-defining-mptt-fields" title="Permalink to this headline">¶</a></h2>
 <p>Model classes which do not have field names which clash with the default
-arguments to the <tt class="docutils literal"><span class="pre">mptt.register</span></tt> function need not contain any details
-about MPTT fields at all in their class definition.</p>
+MPTTMeta options need not contain any details about MPTT fields at all
+in their class definition.</p>
 <p>One of the goals of this application is that authors should not have to
 worry about setting up or using MPTT fields directly in order to reap
 the benefits of the functionality their existence enables.</p>
-<p>While dynamically added MPTT fields can be used in inner <tt class="docutils literal"><span class="pre">Meta</span></tt>
-classes and <tt class="docutils literal"><span class="pre">ModelAdmin</span></tt> classes, it is recommended that models which
-will use these fields elsewhere in the class definition should implement
-the fields themselves for clarity - it&#8217;s already bad enough that we&#8217;re
-dynamically adding fields without your model definitions using fields
-which don&#8217;t appear to exist.</p>
-<p>Salt to taste, your mileage may vary, etc. etc.</p>
 </div>
 <div class="section" id="running-the-test-suite">
 <h2><a class="toc-backref" href="#id6">Running the test suite</a><a class="headerlink" href="#running-the-test-suite" title="Permalink to this headline">¶</a></h2>
