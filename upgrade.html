@@ -1,0 +1,182 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Upgrade Notes - 0.3 to 0.4 &mdash; django-mptt v0.4.pre documentation</title>
+    <link rel="stylesheet" href="static/default.css" type="text/css" />
+    <link rel="stylesheet" href="static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.4.pre',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="static/jquery.js"></script>
+    <script type="text/javascript" src="static/underscore.js"></script>
+    <script type="text/javascript" src="static/doctools.js"></script>
+    <link rel="top" title="django-mptt v0.4.pre documentation" href="index.html" />
+    <link rel="next" title="Technical details" href="technical_details.html" />
+    <link rel="prev" title="Utilities for working with trees" href="utilities.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="technical_details.html" title="Technical details"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="utilities.html" title="Utilities for working with trees"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">django-mptt v0.4.pre documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="upgrade-notes-0-3-to-0-4">
+<h1>Upgrade Notes - 0.3 to 0.4<a class="headerlink" href="#upgrade-notes-0-3-to-0-4" title="Permalink to this headline">¶</a></h1>
+<p>In <tt class="docutils literal"><span class="pre">django-mptt</span></tt> 0.4, mptt.register() has been removed in favour of model inheritance.</p>
+<p>Suppose you start with this, which works with <tt class="docutils literal"><span class="pre">django-mptt</span></tt> 0.3:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="o">...</span>
+
+<span class="n">mptt</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Node</span><span class="p">,</span> <span class="n">order_insertion_by</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">],</span> <span class="n">parent_attr</span><span class="o">=</span><span class="s">&#39;padre&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>First, Make your model a subclass of <tt class="docutils literal"><span class="pre">MPTTModel</span></tt>, instead of <tt class="docutils literal"><span class="pre">models.Model</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">mptt.models</span> <span class="kn">import</span> <span class="n">MPTTModel</span>
+
+<span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="n">MPTTModel</span><span class="p">):</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
+<p>Then remove your call to <tt class="docutils literal"><span class="pre">mptt.register()</span></tt>. If you were passing it keyword arguments, you should add them to an <tt class="docutils literal"><span class="pre">MPTTMeta</span></tt> inner class on the model:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="n">MPTTModel</span><span class="p">):</span>
+    <span class="o">...</span>
+    <span class="k">class</span> <span class="nc">MPTTMeta</span><span class="p">:</span>
+        <span class="n">order_insertion_by</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span>
+        <span class="n">parent_attr</span> <span class="o">=</span> <span class="s">&#39;padre&#39;</span>
+</pre></div>
+</div>
+<p>Done! You&#8217;re all upgraded :) A couple more notes for more complex scenarios:</p>
+<div class="section" id="what-if-i-m-already-inheriting-from-something">
+<h2>What if I&#8217;m already inheriting from something?<a class="headerlink" href="#what-if-i-m-already-inheriting-from-something" title="Permalink to this headline">¶</a></h2>
+<p>If your model is already a subclass of an abstract model, it <em>should</em> be safe to use multiple inheritance:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="n">ParentModel</span><span class="p">,</span> <span class="n">MPTTModel</span><span class="p">):</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
+<p>Isn&#8217;t multiple inheritance evil? Well, maybe. However, the
+<a class="reference external" href="http://docs.djangoproject.com/en/dev/topics/db/models/#multiple-inheritance">Django model docs</a> don&#8217;t forbid this, and as long as your other model doesn&#8217;t have conflicting methods, it should be fine.</p>
+</div>
+<div class="section" id="compatibility-with-0-3-as-well">
+<h2>Compatibility with 0.3 as well<a class="headerlink" href="#compatibility-with-0-3-as-well" title="Permalink to this headline">¶</a></h2>
+<p>If you&#8217;re writing a library or reusable app that needs to work with older versions of django-mptt,
+you&#8217;ll need to update your code to handle both versions:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">mptt.models</span> <span class="kn">import</span> <span class="n">MPTTModel</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="c"># django-mptt &lt; 0.4</span>
+    <span class="n">MPTTModel</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">Model</span>
+
+
+<span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="n">MPTTModel</span><span class="p">):</span>
+    <span class="o">...</span>
+
+<span class="n">mptt</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Node</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If you had keyword arguments to <tt class="docutils literal"><span class="pre">mptt.register()</span></tt>, they now belong in an <tt class="docutils literal"><span class="pre">MPTTMeta</span></tt> inner class on the model.
+But to keep it compatible with 0.3, you can pass them to <tt class="docutils literal"><span class="pre">register()</span></tt> as well:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="n">MPTTModel</span><span class="p">):</span>
+    <span class="o">...</span>
+    <span class="k">class</span> <span class="nc">MPTTMeta</span><span class="p">:</span>
+        <span class="n">order_insertion_by</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span>
+        <span class="n">parent_attr</span> <span class="o">=</span> <span class="s">&#39;padre&#39;</span>
+
+<span class="n">mptt</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Node</span><span class="p">,</span> <span class="o">**</span><span class="nb">dict</span><span class="p">(</span><span class="n">Node</span><span class="o">.</span><span class="n">_mptt_meta</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Upgrade Notes - 0.3 to 0.4</a><ul>
+<li><a class="reference internal" href="#what-if-i-m-already-inheriting-from-something">What if I&#8217;m already inheriting from something?</a></li>
+<li><a class="reference internal" href="#compatibility-with-0-3-as-well">Compatibility with 0.3 as well</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="utilities.html"
+                        title="previous chapter">Utilities for working with trees</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="technical_details.html"
+                        title="next chapter">Technical details</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="sources/upgrade.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="technical_details.html" title="Technical details"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="utilities.html" title="Utilities for working with trees"
+             >previous</a> |</li>
+        <li><a href="index.html">django-mptt v0.4.pre documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2007 - 2010, Jonathan Buchanan and others.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.3.
+    </div>
+  </body>
+</html>
