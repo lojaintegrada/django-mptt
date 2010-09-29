@@ -50,6 +50,10 @@
             
   <div class="section" id="upgrade-notes-0-3-to-0-4">
 <h1>Upgrade Notes - 0.3 to 0.4<a class="headerlink" href="#upgrade-notes-0-3-to-0-4" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="model-changes-in-0-4">
+<h2>Model changes in 0.4<a class="headerlink" href="#model-changes-in-0-4" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="mptt-register-replaced-by-mpttmodel">
+<h3><tt class="docutils literal"><span class="pre">mptt.register</span></tt> replaced by <tt class="docutils literal"><span class="pre">MPTTModel</span></tt><a class="headerlink" href="#mptt-register-replaced-by-mpttmodel" title="Permalink to this headline">¶</a></h3>
 <p>In <tt class="docutils literal"><span class="pre">django-mptt</span></tt> 0.4, mptt.register() has been removed in favour of model inheritance.</p>
 <p>Suppose you start with this, which works with <tt class="docutils literal"><span class="pre">django-mptt</span></tt> 0.3:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
@@ -73,45 +77,68 @@
         <span class="n">parent_attr</span> <span class="o">=</span> <span class="s">&#39;padre&#39;</span>
 </pre></div>
 </div>
-<p>Done! You&#8217;re all upgraded :) A couple more notes for more complex scenarios:</p>
+</div>
+<div class="section" id="mptt-attributes-on-mymodel-meta-deprecated-moved-to-mymodel-mptt-meta">
+<h3>MPTT attributes on <tt class="docutils literal"><span class="pre">MyModel._meta</span></tt> deprecated, moved to <tt class="docutils literal"><span class="pre">MyModel._mptt_meta</span></tt><a class="headerlink" href="#mptt-attributes-on-mymodel-meta-deprecated-moved-to-mymodel-mptt-meta" title="Permalink to this headline">¶</a></h3>
+<p>Most people won&#8217;t need to worry about this, but if you&#8217;re using any of the following, note that these are deprecated and will be removed in 0.5:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">MyModel</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">left_attr</span>
+<span class="n">MyModel</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">right_attr</span>
+<span class="n">MyModel</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">tree_id_attr</span>
+<span class="n">MyModel</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">level_attr</span>
+<span class="n">MyModel</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">tree_manager_attr</span>
+<span class="n">MyModel</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">parent_attr</span>
+<span class="n">MyModel</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">order_insertion_by</span>
+</pre></div>
+</div>
+<p>They&#8217;ll continue to work as previously for now, but you should upgrade your code if you can. Simply replace <tt class="docutils literal"><span class="pre">_meta</span></tt> with <tt class="docutils literal"><span class="pre">_mptt_meta</span></tt>.</p>
+<p>You&#8217;re probably all upgraded at this point :) A couple more notes for more complex scenarios:</p>
+</div>
+</div>
+<div class="section" id="more-complicated-scenarios">
+<h2>More complicated scenarios<a class="headerlink" href="#more-complicated-scenarios" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="what-if-i-m-already-inheriting-from-something">
-<h2>What if I&#8217;m already inheriting from something?<a class="headerlink" href="#what-if-i-m-already-inheriting-from-something" title="Permalink to this headline">¶</a></h2>
-<p>If your model is already a subclass of an abstract model, it <em>should</em> be safe to use multiple inheritance:</p>
+<h3>What if I&#8217;m already inheriting from something?<a class="headerlink" href="#what-if-i-m-already-inheriting-from-something" title="Permalink to this headline">¶</a></h3>
+<p>If your model is already a subclass of an abstract model, you should use multiple inheritance:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="n">ParentModel</span><span class="p">,</span> <span class="n">MPTTModel</span><span class="p">):</span>
     <span class="o">...</span>
 </pre></div>
 </div>
 <p>Isn&#8217;t multiple inheritance evil? Well, maybe. However, the
 <a class="reference external" href="http://docs.djangoproject.com/en/dev/topics/db/models/#multiple-inheritance">Django model docs</a> don&#8217;t forbid this, and as long as your other model doesn&#8217;t have conflicting methods, it should be fine.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>As always when dealing with multiple inheritance, approach with a bit of caution.</p>
+<p class="last">Our brief testing says it works, but if you find that the Django internals are somehow
+breaking this approach for you, please <a class="reference external" href="http://github.com/django-mptt/django-mptt/issues">create an issue</a> with specifics.</p>
 </div>
-<div class="section" id="compatibility-with-0-3-as-well">
-<h2>Compatibility with 0.3 as well<a class="headerlink" href="#compatibility-with-0-3-as-well" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="writing-reusable-apps-compatibility-with-0-3-as-well">
+<h3>Writing reusable apps - Compatibility with 0.3 as well<a class="headerlink" href="#writing-reusable-apps-compatibility-with-0-3-as-well" title="Permalink to this headline">¶</a></h3>
 <p>If you&#8217;re writing a library or reusable app that needs to work with older versions of django-mptt,
-you&#8217;ll need to update your code to handle both versions:</p>
+you&#8217;ll need to update your code to handle both versions.</p>
+<p>Here&#8217;s a sample models file which works with 0.3 and 0.4:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+
+<span class="kn">import</span> <span class="nn">mptt</span>
 <span class="k">try</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">mptt.models</span> <span class="kn">import</span> <span class="n">MPTTModel</span>
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
     <span class="c"># django-mptt &lt; 0.4</span>
     <span class="n">MPTTModel</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">Model</span>
 
-
 <span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="n">MPTTModel</span><span class="p">):</span>
-    <span class="o">...</span>
+    <span class="n">name</span>   <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s">&#39;self&#39;</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s">&#39;children&#39;</span><span class="p">)</span>
 
-<span class="n">mptt</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Node</span><span class="p">)</span>
+    <span class="k">class</span> <span class="nc">MPTTMeta</span><span class="p">:</span>
+        <span class="n">order_insertion_by</span> <span class="o">=</span> <span class="s">&#39;name&#39;</span>
+
+<span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">mptt</span><span class="p">,</span> <span class="s">&#39;register&#39;</span><span class="p">):</span>
+    <span class="c"># django-mptt &lt; 0.4</span>
+    <span class="c"># This line looks frightening, suggestions for alternatives welcome :)</span>
+    <span class="n">mptt</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Node</span><span class="p">,</span> <span class="o">**</span><span class="nb">dict</span><span class="p">([(</span><span class="n">attr</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">Node</span><span class="o">.</span><span class="n">MPTTMeta</span><span class="p">,</span> <span class="n">attr</span><span class="p">))</span> <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">Node</span><span class="o">.</span><span class="n">MPTTMeta</span><span class="p">)</span> <span class="k">if</span> <span class="n">attr</span><span class="p">[:</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s">&#39;_&#39;</span><span class="p">]))</span>
 </pre></div>
 </div>
-<p>If you had keyword arguments to <tt class="docutils literal"><span class="pre">mptt.register()</span></tt>, they now belong in an <tt class="docutils literal"><span class="pre">MPTTMeta</span></tt> inner class on the model.
-But to keep it compatible with 0.3, you can pass them to <tt class="docutils literal"><span class="pre">register()</span></tt> as well:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="n">MPTTModel</span><span class="p">):</span>
-    <span class="o">...</span>
-    <span class="k">class</span> <span class="nc">MPTTMeta</span><span class="p">:</span>
-        <span class="n">order_insertion_by</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span>
-        <span class="n">parent_attr</span> <span class="o">=</span> <span class="s">&#39;padre&#39;</span>
-
-<span class="n">mptt</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Node</span><span class="p">,</span> <span class="o">**</span><span class="nb">dict</span><span class="p">(</span><span class="n">Node</span><span class="o">.</span><span class="n">_mptt_meta</span><span class="p">))</span>
-</pre></div>
 </div>
 </div>
 </div>
@@ -125,8 +152,16 @@ But to keep it compatible with 0.3, you can pass them to <tt class="docutils lit
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Upgrade Notes - 0.3 to 0.4</a><ul>
+<li><a class="reference internal" href="#model-changes-in-0-4">Model changes in 0.4</a><ul>
+<li><a class="reference internal" href="#mptt-register-replaced-by-mpttmodel"><tt class="docutils literal"><span class="pre">mptt.register</span></tt> replaced by <tt class="docutils literal"><span class="pre">MPTTModel</span></tt></a></li>
+<li><a class="reference internal" href="#mptt-attributes-on-mymodel-meta-deprecated-moved-to-mymodel-mptt-meta">MPTT attributes on <tt class="docutils literal"><span class="pre">MyModel._meta</span></tt> deprecated, moved to <tt class="docutils literal"><span class="pre">MyModel._mptt_meta</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#more-complicated-scenarios">More complicated scenarios</a><ul>
 <li><a class="reference internal" href="#what-if-i-m-already-inheriting-from-something">What if I&#8217;m already inheriting from something?</a></li>
-<li><a class="reference internal" href="#compatibility-with-0-3-as-well">Compatibility with 0.3 as well</a></li>
+<li><a class="reference internal" href="#writing-reusable-apps-compatibility-with-0-3-as-well">Writing reusable apps - Compatibility with 0.3 as well</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
