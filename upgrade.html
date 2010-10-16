@@ -99,10 +99,13 @@
 <div class="section" id="what-if-i-m-already-inheriting-from-something">
 <h3>What if I&#8217;m already inheriting from something?<a class="headerlink" href="#what-if-i-m-already-inheriting-from-something" title="Permalink to this headline">¶</a></h3>
 <p>If your model is already a subclass of an abstract model, you should use multiple inheritance:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="n">ParentModel</span><span class="p">,</span> <span class="n">MPTTModel</span><span class="p">):</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="n">MPTTModel</span><span class="p">,</span> <span class="n">ParentModel</span><span class="p">):</span>
     <span class="o">...</span>
 </pre></div>
 </div>
+<p>You should always put MPTTModel as the first model base. This is because there&#8217;s some
+complicated metaclass stuff going on behind the scenes, and if Django&#8217;s model metaclass
+gets called before the MPTT one, strange things can happen.</p>
 <p>Isn&#8217;t multiple inheritance evil? Well, maybe. However, the
 <a class="reference external" href="http://docs.djangoproject.com/en/dev/topics/db/models/#multiple-inheritance">Django model docs</a> don&#8217;t forbid this, and as long as your other model doesn&#8217;t have conflicting methods, it should be fine.</p>
 <div class="admonition note">
