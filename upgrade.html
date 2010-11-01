@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Upgrade Notes - 0.3 to 0.4 &mdash; django-mptt v0.4.1 documentation</title>
+    <title>Upgrade Notes - 0.3 to 0.4 &mdash; django-mptt v0.4.2 documentation</title>
     <link rel="stylesheet" href="static/default.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '0.4.1',
+        VERSION:     '0.4.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,7 +22,7 @@
     <script type="text/javascript" src="static/jquery.js"></script>
     <script type="text/javascript" src="static/underscore.js"></script>
     <script type="text/javascript" src="static/doctools.js"></script>
-    <link rel="top" title="django-mptt v0.4.1 documentation" href="index.html" />
+    <link rel="top" title="django-mptt v0.4.2 documentation" href="index.html" />
     <link rel="next" title="Technical details" href="technical_details.html" />
     <link rel="prev" title="Utilities for working with trees" href="utilities.html" /> 
   </head>
@@ -39,7 +39,7 @@
         <li class="right" >
           <a href="utilities.html" title="Utilities for working with trees"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">django-mptt v0.4.1 documentation</a> &raquo;</li> 
+        <li><a href="index.html">django-mptt v0.4.2 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -52,10 +52,24 @@
 <h1>Upgrade Notes - 0.3 to 0.4<a class="headerlink" href="#upgrade-notes-0-3-to-0-4" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="model-changes-in-0-4">
 <h2>Model changes in 0.4<a class="headerlink" href="#model-changes-in-0-4" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="mptt-register-replaced-by-mpttmodel">
-<h3><tt class="docutils literal"><span class="pre">mptt.register</span></tt> replaced by <tt class="docutils literal"><span class="pre">MPTTModel</span></tt><a class="headerlink" href="#mptt-register-replaced-by-mpttmodel" title="Permalink to this headline">¶</a></h3>
-<p>In <tt class="docutils literal"><span class="pre">django-mptt</span></tt> 0.4, mptt.register() has been removed in favour of model inheritance.</p>
-<p>Suppose you start with this, which works with <tt class="docutils literal"><span class="pre">django-mptt</span></tt> 0.3:</p>
+<div class="section" id="mptt-attributes-on-mymodel-meta-deprecated-moved-to-mymodel-mptt-meta">
+<h3>MPTT attributes on <tt class="docutils literal"><span class="pre">MyModel._meta</span></tt> deprecated, moved to <tt class="docutils literal"><span class="pre">MyModel._mptt_meta</span></tt><a class="headerlink" href="#mptt-attributes-on-mymodel-meta-deprecated-moved-to-mymodel-mptt-meta" title="Permalink to this headline">¶</a></h3>
+<p>Most people won&#8217;t need to worry about this, but if you&#8217;re using any of the following, note that these are deprecated and will be removed in 0.5:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">MyModel</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">left_attr</span>
+<span class="n">MyModel</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">right_attr</span>
+<span class="n">MyModel</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">tree_id_attr</span>
+<span class="n">MyModel</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">level_attr</span>
+<span class="n">MyModel</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">tree_manager_attr</span>
+<span class="n">MyModel</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">parent_attr</span>
+<span class="n">MyModel</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">order_insertion_by</span>
+</pre></div>
+</div>
+<p>They&#8217;ll continue to work as previously for now, but you should upgrade your code if you can. Simply replace <tt class="docutils literal"><span class="pre">_meta</span></tt> with <tt class="docutils literal"><span class="pre">_mptt_meta</span></tt>.</p>
+</div>
+<div class="section" id="use-model-inheritance-where-possible">
+<h3>Use model inheritance where possible<a class="headerlink" href="#use-model-inheritance-where-possible" title="Permalink to this headline">¶</a></h3>
+<p>The preferred way to do model registration in <tt class="docutils literal"><span class="pre">django-mptt</span></tt> 0.4 is via model inheritance.</p>
+<p>Suppose you start with this:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="o">...</span>
 
@@ -77,20 +91,9 @@
         <span class="n">parent_attr</span> <span class="o">=</span> <span class="s">&#39;padre&#39;</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="mptt-attributes-on-mymodel-meta-deprecated-moved-to-mymodel-mptt-meta">
-<h3>MPTT attributes on <tt class="docutils literal"><span class="pre">MyModel._meta</span></tt> deprecated, moved to <tt class="docutils literal"><span class="pre">MyModel._mptt_meta</span></tt><a class="headerlink" href="#mptt-attributes-on-mymodel-meta-deprecated-moved-to-mymodel-mptt-meta" title="Permalink to this headline">¶</a></h3>
-<p>Most people won&#8217;t need to worry about this, but if you&#8217;re using any of the following, note that these are deprecated and will be removed in 0.5:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">MyModel</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">left_attr</span>
-<span class="n">MyModel</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">right_attr</span>
-<span class="n">MyModel</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">tree_id_attr</span>
-<span class="n">MyModel</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">level_attr</span>
-<span class="n">MyModel</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">tree_manager_attr</span>
-<span class="n">MyModel</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">parent_attr</span>
-<span class="n">MyModel</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">order_insertion_by</span>
-</pre></div>
-</div>
-<p>They&#8217;ll continue to work as previously for now, but you should upgrade your code if you can. Simply replace <tt class="docutils literal"><span class="pre">_meta</span></tt> with <tt class="docutils literal"><span class="pre">_mptt_meta</span></tt>.</p>
+<p>If necessary you can still use <tt class="docutils literal"><span class="pre">mptt.register</span></tt>. It was removed in 0.4.0 but restored in 0.4.2, since people reported use cases that didn&#8217;t work without it.)</p>
+<p>For instance, if you need to register models where the code isn&#8217;t under your control, you&#8217;ll need to use <tt class="docutils literal"><span class="pre">mptt.register</span></tt>.
+It may also come in handy for keeping libraries compatible with <tt class="docutils literal"><span class="pre">django-mptt</span></tt> 0.3.</p>
 <p>You&#8217;re probably all upgraded at this point :) A couple more notes for more complex scenarios:</p>
 </div>
 </div>
@@ -156,8 +159,8 @@ you&#8217;ll need to update your code to handle both versions.</p>
   <ul>
 <li><a class="reference internal" href="#">Upgrade Notes - 0.3 to 0.4</a><ul>
 <li><a class="reference internal" href="#model-changes-in-0-4">Model changes in 0.4</a><ul>
-<li><a class="reference internal" href="#mptt-register-replaced-by-mpttmodel"><tt class="docutils literal"><span class="pre">mptt.register</span></tt> replaced by <tt class="docutils literal"><span class="pre">MPTTModel</span></tt></a></li>
 <li><a class="reference internal" href="#mptt-attributes-on-mymodel-meta-deprecated-moved-to-mymodel-mptt-meta">MPTT attributes on <tt class="docutils literal"><span class="pre">MyModel._meta</span></tt> deprecated, moved to <tt class="docutils literal"><span class="pre">MyModel._mptt_meta</span></tt></a></li>
+<li><a class="reference internal" href="#use-model-inheritance-where-possible">Use model inheritance where possible</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#more-complicated-scenarios">More complicated scenarios</a><ul>
@@ -209,7 +212,7 @@ you&#8217;ll need to update your code to handle both versions.</p>
         <li class="right" >
           <a href="utilities.html" title="Utilities for working with trees"
              >previous</a> |</li>
-        <li><a href="index.html">django-mptt v0.4.1 documentation</a> &raquo;</li> 
+        <li><a href="index.html">django-mptt v0.4.2 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

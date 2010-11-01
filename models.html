@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Models and Managers &mdash; django-mptt v0.4.1 documentation</title>
+    <title>Models and Managers &mdash; django-mptt v0.4.2 documentation</title>
     <link rel="stylesheet" href="static/default.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '0.4.1',
+        VERSION:     '0.4.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,7 +22,7 @@
     <script type="text/javascript" src="static/jquery.js"></script>
     <script type="text/javascript" src="static/underscore.js"></script>
     <script type="text/javascript" src="static/doctools.js"></script>
-    <link rel="top" title="django-mptt v0.4.1 documentation" href="index.html" />
+    <link rel="top" title="django-mptt v0.4.2 documentation" href="index.html" />
     <link rel="next" title="Admin classes" href="admin.html" />
     <link rel="prev" title="How to install Django MPTT" href="install.html" /> 
   </head>
@@ -39,7 +39,7 @@
         <li class="right" >
           <a href="install.html" title="How to install Django MPTT"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">django-mptt v0.4.1 documentation</a> &raquo;</li> 
+        <li><a href="index.html">django-mptt v0.4.2 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -62,25 +62,26 @@ easily work with model instances as trees.</p>
 <li><a class="reference internal" href="#models-and-managers" id="id1">Models and Managers</a><ul>
 <li><a class="reference internal" href="#setting-up-a-django-model-for-mptt" id="id2">Setting up a Django model for MPTT</a></li>
 <li><a class="reference internal" href="#model-options" id="id3">Model Options</a></li>
-<li><a class="reference internal" href="#mpttmodel-instance-methods" id="id4">MPTTModel instance methods</a><ul>
-<li><a class="reference internal" href="#get-ancestors-ascending-false" id="id5"><tt class="docutils literal"><span class="pre">get_ancestors(ascending=False)</span></tt></a></li>
-<li><a class="reference internal" href="#get-children" id="id6"><tt class="docutils literal"><span class="pre">get_children()</span></tt></a></li>
-<li><a class="reference internal" href="#get-descendants-include-self-false" id="id7"><tt class="docutils literal"><span class="pre">get_descendants(include_self=False)</span></tt></a></li>
-<li><a class="reference internal" href="#get-descendant-count" id="id8"><tt class="docutils literal"><span class="pre">get_descendant_count()</span></tt></a></li>
-<li><a class="reference internal" href="#get-next-sibling" id="id9"><tt class="docutils literal"><span class="pre">get_next_sibling()</span></tt></a></li>
-<li><a class="reference internal" href="#get-previous-sibling" id="id10"><tt class="docutils literal"><span class="pre">get_previous_sibling()</span></tt></a></li>
-<li><a class="reference internal" href="#get-root" id="id11"><tt class="docutils literal"><span class="pre">get_root()</span></tt></a></li>
-<li><a class="reference internal" href="#get-siblings-include-self-false" id="id12"><tt class="docutils literal"><span class="pre">get_siblings(include_self=False)</span></tt></a></li>
-<li><a class="reference internal" href="#insert-at-target-position-first-child-save-false" id="id13"><tt class="docutils literal"><span class="pre">insert_at(target,</span> <span class="pre">position='first-child',</span> <span class="pre">save=False)</span></tt></a></li>
-<li><a class="reference internal" href="#is-child-node" id="id14"><tt class="docutils literal"><span class="pre">is_child_node()</span></tt></a></li>
-<li><a class="reference internal" href="#is-leaf-node" id="id15"><tt class="docutils literal"><span class="pre">is_leaf_node()</span></tt></a></li>
-<li><a class="reference internal" href="#is-root-node" id="id16"><tt class="docutils literal"><span class="pre">is_root_node()</span></tt></a></li>
-<li><a class="reference internal" href="#move-to-target-position-first-child" id="id17"><tt class="docutils literal"><span class="pre">move_to(target,</span> <span class="pre">position='first-child')</span></tt></a></li>
+<li><a class="reference internal" href="#registration-of-existing-models" id="id4">Registration of existing models</a></li>
+<li><a class="reference internal" href="#mpttmodel-instance-methods" id="id5">MPTTModel instance methods</a><ul>
+<li><a class="reference internal" href="#get-ancestors-ascending-false" id="id6"><tt class="docutils literal"><span class="pre">get_ancestors(ascending=False)</span></tt></a></li>
+<li><a class="reference internal" href="#get-children" id="id7"><tt class="docutils literal"><span class="pre">get_children()</span></tt></a></li>
+<li><a class="reference internal" href="#get-descendants-include-self-false" id="id8"><tt class="docutils literal"><span class="pre">get_descendants(include_self=False)</span></tt></a></li>
+<li><a class="reference internal" href="#get-descendant-count" id="id9"><tt class="docutils literal"><span class="pre">get_descendant_count()</span></tt></a></li>
+<li><a class="reference internal" href="#get-next-sibling" id="id10"><tt class="docutils literal"><span class="pre">get_next_sibling()</span></tt></a></li>
+<li><a class="reference internal" href="#get-previous-sibling" id="id11"><tt class="docutils literal"><span class="pre">get_previous_sibling()</span></tt></a></li>
+<li><a class="reference internal" href="#get-root" id="id12"><tt class="docutils literal"><span class="pre">get_root()</span></tt></a></li>
+<li><a class="reference internal" href="#get-siblings-include-self-false" id="id13"><tt class="docutils literal"><span class="pre">get_siblings(include_self=False)</span></tt></a></li>
+<li><a class="reference internal" href="#insert-at-target-position-first-child-save-false" id="id14"><tt class="docutils literal"><span class="pre">insert_at(target,</span> <span class="pre">position='first-child',</span> <span class="pre">save=False)</span></tt></a></li>
+<li><a class="reference internal" href="#is-child-node" id="id15"><tt class="docutils literal"><span class="pre">is_child_node()</span></tt></a></li>
+<li><a class="reference internal" href="#is-leaf-node" id="id16"><tt class="docutils literal"><span class="pre">is_leaf_node()</span></tt></a></li>
+<li><a class="reference internal" href="#is-root-node" id="id17"><tt class="docutils literal"><span class="pre">is_root_node()</span></tt></a></li>
+<li><a class="reference internal" href="#move-to-target-position-first-child" id="id18"><tt class="docutils literal"><span class="pre">move_to(target,</span> <span class="pre">position='first-child')</span></tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#the-treemanager-custom-manager" id="id18">The <tt class="docutils literal"><span class="pre">TreeManager</span></tt> custom manager</a><ul>
-<li><a class="reference internal" href="#methods" id="id19">Methods</a></li>
-<li><a class="reference internal" href="#example-usage" id="id20">Example usage</a></li>
+<li><a class="reference internal" href="#the-treemanager-custom-manager" id="id19">The <tt class="docutils literal"><span class="pre">TreeManager</span></tt> custom manager</a><ul>
+<li><a class="reference internal" href="#methods" id="id20">Methods</a></li>
+<li><a class="reference internal" href="#example-usage" id="id21">Example usage</a></li>
 </ul>
 </li>
 </ul>
@@ -171,18 +172,31 @@ as trees of categories, which should always be in alphabetical order.</p>
 </dd>
 </dl>
 </div>
+<div class="section" id="registration-of-existing-models">
+<h2><a class="toc-backref" href="#id4">Registration of existing models</a><a class="headerlink" href="#registration-of-existing-models" title="Permalink to this headline">¶</a></h2>
+<p>The preferred way to do model registration in <tt class="docutils literal"><span class="pre">django-mptt</span></tt> 0.4 is by subclassing <tt class="docutils literal"><span class="pre">MPTTModel</span></tt>.</p>
+<p>However, sometimes that doesn&#8217;t quite work. For instance, suppose you want to modify Django&#8217;s Group model to be hierarchical.</p>
+<p>You can&#8217;t subclass MPTTModel without modifying the Group source. Instead, you can do:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">mptt</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">Group</span>
+
+<span class="n">mptt</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Group</span><span class="p">,</span> <span class="n">order_insertion_by</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">mptt.register()</span></tt> was removed in 0.4.0 but restored in 0.4.2, when this use case was reported.</p>
+</div>
 <div class="section" id="mpttmodel-instance-methods">
-<h2><a class="toc-backref" href="#id4">MPTTModel instance methods</a><a class="headerlink" href="#mpttmodel-instance-methods" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id5">MPTTModel instance methods</a><a class="headerlink" href="#mpttmodel-instance-methods" title="Permalink to this headline">¶</a></h2>
 <p>Subclasses of MPTTModel have the following instance methods:</p>
 <div class="section" id="get-ancestors-ascending-false">
-<h3><a class="toc-backref" href="#id5"><tt class="docutils literal"><span class="pre">get_ancestors(ascending=False)</span></tt></a><a class="headerlink" href="#get-ancestors-ascending-false" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id6"><tt class="docutils literal"><span class="pre">get_ancestors(ascending=False)</span></tt></a><a class="headerlink" href="#get-ancestors-ascending-false" title="Permalink to this headline">¶</a></h3>
 <p>creates a <tt class="docutils literal"><span class="pre">QuerySet</span></tt> containing the ancestors of the model instance.</p>
 <p>These default to being in descending order (root ancestor first,
 immediate parent last); passing <tt class="xref docutils literal"><span class="pre">True</span></tt> for the <tt class="docutils literal"><span class="pre">ascending</span></tt> argument
 will reverse the ordering (immediate parent first, root ancestor last).</p>
 </div>
 <div class="section" id="get-children">
-<h3><a class="toc-backref" href="#id6"><tt class="docutils literal"><span class="pre">get_children()</span></tt></a><a class="headerlink" href="#get-children" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id7"><tt class="docutils literal"><span class="pre">get_children()</span></tt></a><a class="headerlink" href="#get-children" title="Permalink to this headline">¶</a></h3>
 <p>Creates a <tt class="docutils literal"><span class="pre">QuerySet</span></tt> containing the immediate children of the model
 instance, in tree order.</p>
 <p>The benefit of using this method over the reverse relation provided by
@@ -191,41 +205,41 @@ avoided in the case where the instance is a leaf node (it has no
 children).</p>
 </div>
 <div class="section" id="get-descendants-include-self-false">
-<h3><a class="toc-backref" href="#id7"><tt class="docutils literal"><span class="pre">get_descendants(include_self=False)</span></tt></a><a class="headerlink" href="#get-descendants-include-self-false" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id8"><tt class="docutils literal"><span class="pre">get_descendants(include_self=False)</span></tt></a><a class="headerlink" href="#get-descendants-include-self-false" title="Permalink to this headline">¶</a></h3>
 <p>Creates a <tt class="docutils literal"><span class="pre">QuerySet</span></tt> containing descendants of the model instance, in
 tree order.</p>
 <p>If <tt class="docutils literal"><span class="pre">include_self</span></tt> is <tt class="xref docutils literal"><span class="pre">True</span></tt>, the <tt class="docutils literal"><span class="pre">QuerySet</span></tt> will also include the
 model instance itself.</p>
 </div>
 <div class="section" id="get-descendant-count">
-<h3><a class="toc-backref" href="#id8"><tt class="docutils literal"><span class="pre">get_descendant_count()</span></tt></a><a class="headerlink" href="#get-descendant-count" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id9"><tt class="docutils literal"><span class="pre">get_descendant_count()</span></tt></a><a class="headerlink" href="#get-descendant-count" title="Permalink to this headline">¶</a></h3>
 <p>Returns the number of descendants the model instance has, based on its
 left and right tree node edge indicators. As such, this does not incur
 any database access.</p>
 </div>
 <div class="section" id="get-next-sibling">
-<h3><a class="toc-backref" href="#id9"><tt class="docutils literal"><span class="pre">get_next_sibling()</span></tt></a><a class="headerlink" href="#get-next-sibling" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id10"><tt class="docutils literal"><span class="pre">get_next_sibling()</span></tt></a><a class="headerlink" href="#get-next-sibling" title="Permalink to this headline">¶</a></h3>
 <p>Returns the model instance&#8217;s next sibling in the tree, or <tt class="xref docutils literal"><span class="pre">None</span></tt> if it
 doesn&#8217;t have a next sibling.</p>
 </div>
 <div class="section" id="get-previous-sibling">
-<h3><a class="toc-backref" href="#id10"><tt class="docutils literal"><span class="pre">get_previous_sibling()</span></tt></a><a class="headerlink" href="#get-previous-sibling" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id11"><tt class="docutils literal"><span class="pre">get_previous_sibling()</span></tt></a><a class="headerlink" href="#get-previous-sibling" title="Permalink to this headline">¶</a></h3>
 <p>Returns the model instance&#8217;s previous sibling in the tree, or <tt class="xref docutils literal"><span class="pre">None</span></tt>
 if it doesn&#8217;t have a previous sibling.</p>
 </div>
 <div class="section" id="get-root">
-<h3><a class="toc-backref" href="#id11"><tt class="docutils literal"><span class="pre">get_root()</span></tt></a><a class="headerlink" href="#get-root" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id12"><tt class="docutils literal"><span class="pre">get_root()</span></tt></a><a class="headerlink" href="#get-root" title="Permalink to this headline">¶</a></h3>
 <p>Returns the root node of the model instance&#8217;s tree.</p>
 </div>
 <div class="section" id="get-siblings-include-self-false">
-<h3><a class="toc-backref" href="#id12"><tt class="docutils literal"><span class="pre">get_siblings(include_self=False)</span></tt></a><a class="headerlink" href="#get-siblings-include-self-false" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id13"><tt class="docutils literal"><span class="pre">get_siblings(include_self=False)</span></tt></a><a class="headerlink" href="#get-siblings-include-self-false" title="Permalink to this headline">¶</a></h3>
 <p>Creates a <tt class="docutils literal"><span class="pre">QuerySet</span></tt> containing siblings of the model instance. Root
 nodes are considered to be siblings of other root nodes.</p>
 <p>If <tt class="docutils literal"><span class="pre">include_self</span></tt> is <tt class="xref docutils literal"><span class="pre">True</span></tt>, the <tt class="docutils literal"><span class="pre">QuerySet</span></tt> will also include the
 model instance itself.</p>
 </div>
 <div class="section" id="insert-at-target-position-first-child-save-false">
-<h3><a class="toc-backref" href="#id13"><tt class="docutils literal"><span class="pre">insert_at(target,</span> <span class="pre">position='first-child',</span> <span class="pre">save=False)</span></tt></a><a class="headerlink" href="#insert-at-target-position-first-child-save-false" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id14"><tt class="docutils literal"><span class="pre">insert_at(target,</span> <span class="pre">position='first-child',</span> <span class="pre">save=False)</span></tt></a><a class="headerlink" href="#insert-at-target-position-first-child-save-false" title="Permalink to this headline">¶</a></h3>
 <p>Positions the model instance (which must not yet have been inserted into
 the database) in the tree based on <tt class="docutils literal"><span class="pre">target</span></tt> and <tt class="docutils literal"><span class="pre">position</span></tt> (when
 appropriate).</p>
@@ -233,22 +247,22 @@ appropriate).</p>
 called.</p>
 </div>
 <div class="section" id="is-child-node">
-<h3><a class="toc-backref" href="#id14"><tt class="docutils literal"><span class="pre">is_child_node()</span></tt></a><a class="headerlink" href="#is-child-node" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id15"><tt class="docutils literal"><span class="pre">is_child_node()</span></tt></a><a class="headerlink" href="#is-child-node" title="Permalink to this headline">¶</a></h3>
 <p>Returns <tt class="xref docutils literal"><span class="pre">True</span></tt> if the model instance is a child node, <tt class="xref docutils literal"><span class="pre">False</span></tt>
 otherwise.</p>
 </div>
 <div class="section" id="is-leaf-node">
-<h3><a class="toc-backref" href="#id15"><tt class="docutils literal"><span class="pre">is_leaf_node()</span></tt></a><a class="headerlink" href="#is-leaf-node" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id16"><tt class="docutils literal"><span class="pre">is_leaf_node()</span></tt></a><a class="headerlink" href="#is-leaf-node" title="Permalink to this headline">¶</a></h3>
 <p>Returns <tt class="xref docutils literal"><span class="pre">True</span></tt> if the model instance is a leaf node (it has no
 children), <tt class="xref docutils literal"><span class="pre">False</span></tt> otherwise.</p>
 </div>
 <div class="section" id="is-root-node">
-<h3><a class="toc-backref" href="#id16"><tt class="docutils literal"><span class="pre">is_root_node()</span></tt></a><a class="headerlink" href="#is-root-node" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id17"><tt class="docutils literal"><span class="pre">is_root_node()</span></tt></a><a class="headerlink" href="#is-root-node" title="Permalink to this headline">¶</a></h3>
 <p>Returns <tt class="xref docutils literal"><span class="pre">True</span></tt> if the model instance is a root node, <tt class="xref docutils literal"><span class="pre">False</span></tt>
 otherwise.</p>
 </div>
 <div class="section" id="move-to-target-position-first-child">
-<span id="move-to-documentation"></span><h3><a class="toc-backref" href="#id17"><tt class="docutils literal"><span class="pre">move_to(target,</span> <span class="pre">position='first-child')</span></tt></a><a class="headerlink" href="#move-to-target-position-first-child" title="Permalink to this headline">¶</a></h3>
+<span id="move-to-documentation"></span><h3><a class="toc-backref" href="#id18"><tt class="docutils literal"><span class="pre">move_to(target,</span> <span class="pre">position='first-child')</span></tt></a><a class="headerlink" href="#move-to-target-position-first-child" title="Permalink to this headline">¶</a></h3>
 <p>Moves the model instance elsewhere in the tree based on <tt class="docutils literal"><span class="pre">target</span></tt> and
 <tt class="docutils literal"><span class="pre">position</span></tt> (when appropriate).</p>
 <div class="admonition note">
@@ -300,7 +314,7 @@ method.</p>
 </div>
 </div>
 <div class="section" id="the-treemanager-custom-manager">
-<h2><a class="toc-backref" href="#id18">The <tt class="docutils literal"><span class="pre">TreeManager</span></tt> custom manager</a><a class="headerlink" href="#the-treemanager-custom-manager" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id19">The <tt class="docutils literal"><span class="pre">TreeManager</span></tt> custom manager</a><a class="headerlink" href="#the-treemanager-custom-manager" title="Permalink to this headline">¶</a></h2>
 <p>A custom manager, <tt class="docutils literal"><span class="pre">TreeManager</span></tt> is also added to your MPTTModel subclasses.
 The attribute this manager can be accessed through is specified by the
 <tt class="docutils literal"><span class="pre">tree_manager_attr</span></tt> option (default <tt class="docutils literal"><span class="pre">'tree'</span></tt>)</p>
@@ -308,7 +322,7 @@ The attribute this manager can be accessed through is specified by the
 tree structure, with root nodes appearing in tree id order and and their
 descendants being ordered in a depth-first fashion.</p>
 <div class="section" id="methods">
-<h3><a class="toc-backref" href="#id19">Methods</a><a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id20">Methods</a><a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h3>
 <p>The following manager methods are available:</p>
 <div class="section" id="add-related-count-queryset-rel-cls-rel-field-count-attr-cumulative-false">
 <h4><tt class="docutils literal"><span class="pre">add_related_count(queryset,</span> <span class="pre">rel_cls,</span> <span class="pre">rel_field,</span> <span class="pre">count_attr,</span> <span class="pre">cumulative=False)</span></tt><a class="headerlink" href="#add-related-count-queryset-rel-cls-rel-field-count-attr-cumulative-false" title="Permalink to this headline">¶</a></h4>
@@ -361,7 +375,7 @@ database.</p>
 </div>
 </div>
 <div class="section" id="example-usage">
-<h3><a class="toc-backref" href="#id20">Example usage</a><a class="headerlink" href="#example-usage" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id21">Example usage</a><a class="headerlink" href="#example-usage" title="Permalink to this headline">¶</a></h3>
 <p>In the following examples, we have <tt class="docutils literal"><span class="pre">Category</span></tt> and <tt class="docutils literal"><span class="pre">Question</span></tt> models.
 <tt class="docutils literal"><span class="pre">Question</span></tt> has a <tt class="docutils literal"><span class="pre">category</span></tt> field which is a <tt class="docutils literal"><span class="pre">ForeignKey</span></tt> to
 <tt class="docutils literal"><span class="pre">Category</span></tt>.</p>
@@ -396,6 +410,7 @@ them:</p>
 <li><a class="reference internal" href="#">Models and Managers</a><ul>
 <li><a class="reference internal" href="#setting-up-a-django-model-for-mptt">Setting up a Django model for MPTT</a></li>
 <li><a class="reference internal" href="#model-options">Model Options</a></li>
+<li><a class="reference internal" href="#registration-of-existing-models">Registration of existing models</a></li>
 <li><a class="reference internal" href="#mpttmodel-instance-methods">MPTTModel instance methods</a><ul>
 <li><a class="reference internal" href="#get-ancestors-ascending-false"><tt class="docutils literal"><span class="pre">get_ancestors(ascending=False)</span></tt></a></li>
 <li><a class="reference internal" href="#get-children"><tt class="docutils literal"><span class="pre">get_children()</span></tt></a></li>
@@ -468,7 +483,7 @@ them:</p>
         <li class="right" >
           <a href="install.html" title="How to install Django MPTT"
              >previous</a> |</li>
-        <li><a href="index.html">django-mptt v0.4.1 documentation</a> &raquo;</li> 
+        <li><a href="index.html">django-mptt v0.4.2 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
