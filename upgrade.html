@@ -92,8 +92,10 @@
 </pre></div>
 </div>
 <p>If necessary you can still use <tt class="docutils literal"><span class="pre">mptt.register</span></tt>. It was removed in 0.4.0 but restored in 0.4.2, since people reported use cases that didn&#8217;t work without it.)</p>
-<p>For instance, if you need to register models where the code isn&#8217;t under your control, you&#8217;ll need to use <tt class="docutils literal"><span class="pre">mptt.register</span></tt>.
-It may also come in handy for keeping libraries compatible with <tt class="docutils literal"><span class="pre">django-mptt</span></tt> 0.3.</p>
+<p>For instance, if you need to register models where the code isn&#8217;t under your control, you&#8217;ll need to use <tt class="docutils literal"><span class="pre">mptt.register()</span></tt>.</p>
+<p>Behind the scenes, <tt class="docutils literal"><span class="pre">mptt.register()</span></tt> in 0.4 will actually add MPTTModel to <tt class="docutils literal"><span class="pre">Node.__bases__</span></tt>,
+thus achieving the same result as subclassing <tt class="docutils literal"><span class="pre">MPTTModel</span></tt>.
+If you&#8217;re already inheriting from something other than <tt class="docutils literal"><span class="pre">Model</span></tt>, that means multiple inheritance.</p>
 <p>You&#8217;re probably all upgraded at this point :) A couple more notes for more complex scenarios:</p>
 </div>
 </div>
@@ -118,33 +120,10 @@ gets called before the MPTT one, strange things can happen.</p>
 breaking this approach for you, please <a class="reference external" href="http://github.com/django-mptt/django-mptt/issues">create an issue</a> with specifics.</p>
 </div>
 </div>
-<div class="section" id="writing-reusable-apps-compatibility-with-0-3-as-well">
-<h3>Writing reusable apps - Compatibility with 0.3 as well<a class="headerlink" href="#writing-reusable-apps-compatibility-with-0-3-as-well" title="Permalink to this headline">¶</a></h3>
-<p>If you&#8217;re writing a library or reusable app that needs to work with older versions of django-mptt,
-you&#8217;ll need to update your code to handle both versions.</p>
-<p>Here&#8217;s a sample models file which works with 0.3 and 0.4:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
-
-<span class="kn">import</span> <span class="nn">mptt</span>
-<span class="k">try</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">mptt.models</span> <span class="kn">import</span> <span class="n">MPTTModel</span>
-<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-    <span class="c"># django-mptt &lt; 0.4</span>
-    <span class="n">MPTTModel</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">Model</span>
-
-<span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="n">MPTTModel</span><span class="p">):</span>
-    <span class="n">name</span>   <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-    <span class="n">parent</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s">&#39;self&#39;</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s">&#39;children&#39;</span><span class="p">)</span>
-
-    <span class="k">class</span> <span class="nc">MPTTMeta</span><span class="p">:</span>
-        <span class="n">order_insertion_by</span> <span class="o">=</span> <span class="s">&#39;name&#39;</span>
-
-<span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">mptt</span><span class="p">,</span> <span class="s">&#39;register&#39;</span><span class="p">):</span>
-    <span class="c"># django-mptt &lt; 0.4</span>
-    <span class="c"># This line looks frightening, suggestions for alternatives welcome :)</span>
-    <span class="n">mptt</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Node</span><span class="p">,</span> <span class="o">**</span><span class="nb">dict</span><span class="p">([(</span><span class="n">attr</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">Node</span><span class="o">.</span><span class="n">MPTTMeta</span><span class="p">,</span> <span class="n">attr</span><span class="p">))</span> <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">Node</span><span class="o">.</span><span class="n">MPTTMeta</span><span class="p">)</span> <span class="k">if</span> <span class="n">attr</span><span class="p">[:</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s">&#39;_&#39;</span><span class="p">]))</span>
-</pre></div>
-</div>
+<div class="section" id="compatibility-with-0-3">
+<h3>Compatibility with 0.3<a class="headerlink" href="#compatibility-with-0-3" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">MPTTModel</span></tt> was added in 0.4. If you&#8217;re writing a library or reusable app that needs to work with 0.3,
+you should use the <tt class="docutils literal"><span class="pre">mptt.register()</span></tt> function instead, as above.</p>
 </div>
 </div>
 </div>
@@ -165,7 +144,7 @@ you&#8217;ll need to update your code to handle both versions.</p>
 </li>
 <li><a class="reference internal" href="#more-complicated-scenarios">More complicated scenarios</a><ul>
 <li><a class="reference internal" href="#what-if-i-m-already-inheriting-from-something">What if I&#8217;m already inheriting from something?</a></li>
-<li><a class="reference internal" href="#writing-reusable-apps-compatibility-with-0-3-as-well">Writing reusable apps - Compatibility with 0.3 as well</a></li>
+<li><a class="reference internal" href="#compatibility-with-0-3">Compatibility with 0.3</a></li>
 </ul>
 </li>
 </ul>
