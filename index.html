@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -14,16 +12,15 @@
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
         VERSION:     '0.4.2',
-        COLLAPSE_INDEX: false,
+        COLLAPSE_MODINDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
       };
     </script>
     <script type="text/javascript" src="static/jquery.js"></script>
-    <script type="text/javascript" src="static/underscore.js"></script>
     <script type="text/javascript" src="static/doctools.js"></script>
     <link rel="top" title="django-mptt v0.4.2 documentation" href="#" />
-    <link rel="next" title="Django MPTT" href="overview.html" /> 
+    <link rel="next" title="Overview" href="overview.html" /> 
   </head>
   <body>
     <div class="related">
@@ -33,7 +30,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="overview.html" title="Django MPTT"
+          <a href="overview.html" title="Overview"
              accesskey="N">next</a> |</li>
         <li><a href="#">django-mptt v0.4.2 documentation</a> &raquo;</li> 
       </ul>
@@ -47,62 +44,30 @@
   <div class="section" id="django-mptt-documentation">
 <h1>Django MPTT documentation<a class="headerlink" href="#django-mptt-documentation" title="Permalink to this headline">¶</a></h1>
 <p>Contents:</p>
-<div class="toctree-wrapper compound">
+<p>If you&#8217;re new to django-mptt, you may want to start with these documents to get
+you up and running:</p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="overview.html">Django MPTT</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="overview.html#what-is-modified-preorder-tree-traversal">What is Modified Preorder Tree Traversal?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="overview.html#what-is-django-mptt">What is Django MPTT?</a></li>
+<li class="toctree-l1"><a class="reference external" href="overview.html">Overview</a><ul>
+<li class="toctree-l2"><a class="reference external" href="overview.html#what-is-modified-preorder-tree-traversal">What is Modified Preorder Tree Traversal?</a></li>
+<li class="toctree-l2"><a class="reference external" href="overview.html#what-is-django-mptt">What is <tt class="docutils literal"><span class="pre">django-mptt</span></tt>?</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="install.html">How to install Django MPTT</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="install.html#installing-an-official-release">Installing an official release</a></li>
-<li class="toctree-l2"><a class="reference internal" href="install.html#installing-the-development-version">Installing the development version</a></li>
-<li class="toctree-l2"><a class="reference internal" href="install.html#using-django-mptt-in-your-applications">Using Django MPTT in your applications</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="models.html">Models and Managers</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="models.html#setting-up-a-django-model-for-mptt">Setting up a Django model for MPTT</a></li>
-<li class="toctree-l2"><a class="reference internal" href="models.html#model-options">Model Options</a></li>
-<li class="toctree-l2"><a class="reference internal" href="models.html#registration-of-existing-models">Registration of existing models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="models.html#mpttmodel-instance-methods">MPTTModel instance methods</a></li>
-<li class="toctree-l2"><a class="reference internal" href="models.html#the-treemanager-custom-manager">The <tt class="docutils literal"><span class="pre">TreeManager</span></tt> custom manager</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="admin.html">Admin classes</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="admin.html#mpttmodeladmin">MPTTModelAdmin</a></li>
-<li class="toctree-l2"><a class="reference internal" href="admin.html#feincmsmodeladmin">FeinCMSModelAdmin</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="forms.html">Working with trees in <tt class="docutils literal"><span class="pre">django.forms</span></tt></a><ul>
-<li class="toctree-l2"><a class="reference internal" href="forms.html#fields">Fields</a></li>
-<li class="toctree-l2"><a class="reference internal" href="forms.html#forms">Forms</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="templates.html">Working with trees in templates</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="templates.html#getting-started">Getting started</a></li>
-<li class="toctree-l2"><a class="reference internal" href="templates.html#recursive-tags">Recursive tags</a></li>
-<li class="toctree-l2"><a class="reference internal" href="templates.html#iterative-tags">Iterative tags</a></li>
-<li class="toctree-l2"><a class="reference internal" href="templates.html#filters">Filters</a></li>
-<li class="toctree-l2"><a class="reference internal" href="templates.html#examples">Examples</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="utilities.html">Utilities for working with trees</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="utilities.html#list-tree-utilities">List/tree utilities</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade.html">Upgrade Notes - 0.3 to 0.4</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="upgrade.html#model-changes-in-0-4">Model changes in 0.4</a></li>
-<li class="toctree-l2"><a class="reference internal" href="upgrade.html#more-complicated-scenarios">More complicated scenarios</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="technical_details.html">Technical details</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="technical_details.html#tree-structure">Tree structure</a></li>
-<li class="toctree-l2"><a class="reference internal" href="technical_details.html#dynamic-field-creation-vs-explicitly-defining-mptt-fields">Dynamic field creation vs. explicitly defining MPTT fields</a></li>
-<li class="toctree-l2"><a class="reference internal" href="technical_details.html#running-the-test-suite">Running the test suite</a></li>
+<li class="toctree-l1"><a class="reference external" href="install.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference external" href="install.html#official-releases">Official releases</a></li>
+<li class="toctree-l2"><a class="reference external" href="install.html#development-version">Development version</a></li>
 </ul>
 </li>
 </ul>
-</div>
+<p>Topic docs:</p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="models.html">Models and Managers</a></li>
+<li class="toctree-l1"><a class="reference external" href="admin.html">Admin classes</a></li>
+<li class="toctree-l1"><a class="reference external" href="forms.html">Working with trees in Django forms</a></li>
+<li class="toctree-l1"><a class="reference external" href="templates.html">Working with trees in templates</a></li>
+<li class="toctree-l1"><a class="reference external" href="utilities.html">Utilities for working with trees</a></li>
+<li class="toctree-l1"><a class="reference external" href="upgrade.html">Upgrade Notes - 0.3 to 0.4</a></li>
+<li class="toctree-l1"><a class="reference external" href="technical_details.html">Technical details</a></li>
+</ul>
 </div>
 
 
@@ -111,27 +76,27 @@
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-  <h4>Next topic</h4>
-  <p class="topless"><a href="overview.html"
-                        title="next chapter">Django MPTT</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="sources/index.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
-  <h3>Quick search</h3>
-    <form class="search" action="search.html" method="get">
-      <input type="text" name="q" size="18" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="overview.html"
+                                  title="next chapter">Overview</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="sources/index.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -143,14 +108,14 @@
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="overview.html" title="Django MPTT"
+          <a href="overview.html" title="Overview"
              >next</a> |</li>
         <li><a href="#">django-mptt v0.4.2 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2007 - 2010, Jonathan Buchanan and others.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.3.
+      &copy; Copyright 2007 - 2010, Jonathan Buchanan and others.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.6.
     </div>
   </body>
 </html>

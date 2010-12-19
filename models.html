@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -14,17 +12,16 @@
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
         VERSION:     '0.4.2',
-        COLLAPSE_INDEX: false,
+        COLLAPSE_MODINDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
       };
     </script>
     <script type="text/javascript" src="static/jquery.js"></script>
-    <script type="text/javascript" src="static/underscore.js"></script>
     <script type="text/javascript" src="static/doctools.js"></script>
     <link rel="top" title="django-mptt v0.4.2 documentation" href="index.html" />
     <link rel="next" title="Admin classes" href="admin.html" />
-    <link rel="prev" title="How to install Django MPTT" href="install.html" /> 
+    <link rel="prev" title="Installation" href="install.html" /> 
   </head>
   <body>
     <div class="related">
@@ -37,7 +34,7 @@
           <a href="admin.html" title="Admin classes"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="install.html" title="How to install Django MPTT"
+          <a href="install.html" title="Installation"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">django-mptt v0.4.2 documentation</a> &raquo;</li> 
       </ul>
@@ -50,12 +47,6 @@
             
   <div class="section" id="models-and-managers">
 <h1><a class="toc-backref" href="#id1">Models and Managers</a><a class="headerlink" href="#models-and-managers" title="Permalink to this headline">¶</a></h1>
-<div class="admonition-about-this-document admonition ">
-<p class="first admonition-title">About this document</p>
-<p class="last">This document describes the changes Django MPTT makes to your Django
-model classes and the custom tree manager it provides, so you can
-easily work with model instances as trees.</p>
-</div>
 <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
 <ul class="simple">
@@ -405,68 +396,68 @@ them:</p>
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Models and Managers</a><ul>
-<li><a class="reference internal" href="#setting-up-a-django-model-for-mptt">Setting up a Django model for MPTT</a></li>
-<li><a class="reference internal" href="#model-options">Model Options</a></li>
-<li><a class="reference internal" href="#registration-of-existing-models">Registration of existing models</a></li>
-<li><a class="reference internal" href="#mpttmodel-instance-methods">MPTTModel instance methods</a><ul>
-<li><a class="reference internal" href="#get-ancestors-ascending-false"><tt class="docutils literal"><span class="pre">get_ancestors(ascending=False)</span></tt></a></li>
-<li><a class="reference internal" href="#get-children"><tt class="docutils literal"><span class="pre">get_children()</span></tt></a></li>
-<li><a class="reference internal" href="#get-descendants-include-self-false"><tt class="docutils literal"><span class="pre">get_descendants(include_self=False)</span></tt></a></li>
-<li><a class="reference internal" href="#get-descendant-count"><tt class="docutils literal"><span class="pre">get_descendant_count()</span></tt></a></li>
-<li><a class="reference internal" href="#get-next-sibling"><tt class="docutils literal"><span class="pre">get_next_sibling()</span></tt></a></li>
-<li><a class="reference internal" href="#get-previous-sibling"><tt class="docutils literal"><span class="pre">get_previous_sibling()</span></tt></a></li>
-<li><a class="reference internal" href="#get-root"><tt class="docutils literal"><span class="pre">get_root()</span></tt></a></li>
-<li><a class="reference internal" href="#get-siblings-include-self-false"><tt class="docutils literal"><span class="pre">get_siblings(include_self=False)</span></tt></a></li>
-<li><a class="reference internal" href="#insert-at-target-position-first-child-save-false"><tt class="docutils literal"><span class="pre">insert_at(target,</span> <span class="pre">position='first-child',</span> <span class="pre">save=False)</span></tt></a></li>
-<li><a class="reference internal" href="#is-child-node"><tt class="docutils literal"><span class="pre">is_child_node()</span></tt></a></li>
-<li><a class="reference internal" href="#is-leaf-node"><tt class="docutils literal"><span class="pre">is_leaf_node()</span></tt></a></li>
-<li><a class="reference internal" href="#is-root-node"><tt class="docutils literal"><span class="pre">is_root_node()</span></tt></a></li>
-<li><a class="reference internal" href="#move-to-target-position-first-child"><tt class="docutils literal"><span class="pre">move_to(target,</span> <span class="pre">position='first-child')</span></tt></a></li>
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">Models and Managers</a><ul>
+<li><a class="reference external" href="#setting-up-a-django-model-for-mptt">Setting up a Django model for MPTT</a></li>
+<li><a class="reference external" href="#model-options">Model Options</a></li>
+<li><a class="reference external" href="#registration-of-existing-models">Registration of existing models</a></li>
+<li><a class="reference external" href="#mpttmodel-instance-methods">MPTTModel instance methods</a><ul>
+<li><a class="reference external" href="#get-ancestors-ascending-false"><tt class="docutils literal"><span class="pre">get_ancestors(ascending=False)</span></tt></a></li>
+<li><a class="reference external" href="#get-children"><tt class="docutils literal"><span class="pre">get_children()</span></tt></a></li>
+<li><a class="reference external" href="#get-descendants-include-self-false"><tt class="docutils literal"><span class="pre">get_descendants(include_self=False)</span></tt></a></li>
+<li><a class="reference external" href="#get-descendant-count"><tt class="docutils literal"><span class="pre">get_descendant_count()</span></tt></a></li>
+<li><a class="reference external" href="#get-next-sibling"><tt class="docutils literal"><span class="pre">get_next_sibling()</span></tt></a></li>
+<li><a class="reference external" href="#get-previous-sibling"><tt class="docutils literal"><span class="pre">get_previous_sibling()</span></tt></a></li>
+<li><a class="reference external" href="#get-root"><tt class="docutils literal"><span class="pre">get_root()</span></tt></a></li>
+<li><a class="reference external" href="#get-siblings-include-self-false"><tt class="docutils literal"><span class="pre">get_siblings(include_self=False)</span></tt></a></li>
+<li><a class="reference external" href="#insert-at-target-position-first-child-save-false"><tt class="docutils literal"><span class="pre">insert_at(target,</span> <span class="pre">position='first-child',</span> <span class="pre">save=False)</span></tt></a></li>
+<li><a class="reference external" href="#is-child-node"><tt class="docutils literal"><span class="pre">is_child_node()</span></tt></a></li>
+<li><a class="reference external" href="#is-leaf-node"><tt class="docutils literal"><span class="pre">is_leaf_node()</span></tt></a></li>
+<li><a class="reference external" href="#is-root-node"><tt class="docutils literal"><span class="pre">is_root_node()</span></tt></a></li>
+<li><a class="reference external" href="#move-to-target-position-first-child"><tt class="docutils literal"><span class="pre">move_to(target,</span> <span class="pre">position='first-child')</span></tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#the-treemanager-custom-manager">The <tt class="docutils literal"><span class="pre">TreeManager</span></tt> custom manager</a><ul>
-<li><a class="reference internal" href="#methods">Methods</a><ul>
-<li><a class="reference internal" href="#add-related-count-queryset-rel-cls-rel-field-count-attr-cumulative-false"><tt class="docutils literal"><span class="pre">add_related_count(queryset,</span> <span class="pre">rel_cls,</span> <span class="pre">rel_field,</span> <span class="pre">count_attr,</span> <span class="pre">cumulative=False)</span></tt></a></li>
-<li><a class="reference internal" href="#get-root-tree-id"><tt class="docutils literal"><span class="pre">get_root(tree_id)</span></tt></a></li>
-<li><a class="reference internal" href="#insert-node-node-target-position-last-child-save-false"><tt class="docutils literal"><span class="pre">insert_node(node,</span> <span class="pre">target,</span> <span class="pre">position='last-child',</span> <span class="pre">save=False)</span></tt></a></li>
-<li><a class="reference internal" href="#move-node-node-target-position-last-child"><tt class="docutils literal"><span class="pre">move_node(node,</span> <span class="pre">target,</span> <span class="pre">position='last-child')</span></tt></a></li>
-<li><a class="reference internal" href="#root-nodes"><tt class="docutils literal"><span class="pre">root_nodes()</span></tt></a></li>
+<li><a class="reference external" href="#the-treemanager-custom-manager">The <tt class="docutils literal"><span class="pre">TreeManager</span></tt> custom manager</a><ul>
+<li><a class="reference external" href="#methods">Methods</a><ul>
+<li><a class="reference external" href="#add-related-count-queryset-rel-cls-rel-field-count-attr-cumulative-false"><tt class="docutils literal"><span class="pre">add_related_count(queryset,</span> <span class="pre">rel_cls,</span> <span class="pre">rel_field,</span> <span class="pre">count_attr,</span> <span class="pre">cumulative=False)</span></tt></a></li>
+<li><a class="reference external" href="#get-root-tree-id"><tt class="docutils literal"><span class="pre">get_root(tree_id)</span></tt></a></li>
+<li><a class="reference external" href="#insert-node-node-target-position-last-child-save-false"><tt class="docutils literal"><span class="pre">insert_node(node,</span> <span class="pre">target,</span> <span class="pre">position='last-child',</span> <span class="pre">save=False)</span></tt></a></li>
+<li><a class="reference external" href="#move-node-node-target-position-last-child"><tt class="docutils literal"><span class="pre">move_node(node,</span> <span class="pre">target,</span> <span class="pre">position='last-child')</span></tt></a></li>
+<li><a class="reference external" href="#root-nodes"><tt class="docutils literal"><span class="pre">root_nodes()</span></tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#example-usage">Example usage</a></li>
+<li><a class="reference external" href="#example-usage">Example usage</a></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="install.html"
-                        title="previous chapter">How to install Django MPTT</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="admin.html"
-                        title="next chapter">Admin classes</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="sources/models.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
-  <h3>Quick search</h3>
-    <form class="search" action="search.html" method="get">
-      <input type="text" name="q" size="18" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="install.html"
+                                  title="previous chapter">Installation</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="admin.html"
+                                  title="next chapter">Admin classes</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="sources/models.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -481,14 +472,14 @@ them:</p>
           <a href="admin.html" title="Admin classes"
              >next</a> |</li>
         <li class="right" >
-          <a href="install.html" title="How to install Django MPTT"
+          <a href="install.html" title="Installation"
              >previous</a> |</li>
         <li><a href="index.html">django-mptt v0.4.2 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2007 - 2010, Jonathan Buchanan and others.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.3.
+      &copy; Copyright 2007 - 2010, Jonathan Buchanan and others.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.6.
     </div>
   </body>
 </html>
