@@ -5,13 +5,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Admin classes &mdash; django-mptt v0.4.2 documentation</title>
+    <title>Admin classes &mdash; django-mptt v0.5.pre documentation</title>
     <link rel="stylesheet" href="static/default.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '0.4.2',
+        VERSION:     '0.5.pre',
         COLLAPSE_MODINDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -19,7 +19,7 @@
     </script>
     <script type="text/javascript" src="static/jquery.js"></script>
     <script type="text/javascript" src="static/doctools.js"></script>
-    <link rel="top" title="django-mptt v0.4.2 documentation" href="index.html" />
+    <link rel="top" title="django-mptt v0.5.pre documentation" href="index.html" />
     <link rel="next" title="Working with trees in Django forms" href="forms.html" />
     <link rel="prev" title="Models and Managers" href="models.html" /> 
   </head>
@@ -31,12 +31,15 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
           <a href="forms.html" title="Working with trees in Django forms"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="models.html" title="Models and Managers"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">django-mptt v0.4.2 documentation</a> &raquo;</li> 
+        <li><a href="index.html">django-mptt v0.5.pre documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -68,6 +71,18 @@ in the tree to make a pretty tree list view.</p>
 <span class="n">MPTT_ADMIN_LEVEL_INDENT</span> <span class="o">=</span> <span class="mi">20</span>
 </pre></div>
 </div>
+<p>If you&#8217;d like to specify which field should be indented, add an <cite>mptt_indent_field</cite>
+to your MPTTModelAdmin:</p>
+<blockquote>
+<p>from django.contrib import admin
+from mptt.admin import MPTTModelAdmin
+from myproject.myapp.models import Node</p>
+<dl class="docutils">
+<dt>class CustomMPTTModelAdmin(MPTTModelAdmin)</dt>
+<dd>mptt_indent_field = &#8220;some_node_field&#8221;</dd>
+</dl>
+<p>admin.site.register(Node, CustomMPTTModelAdmin)</p>
+</blockquote>
 </div>
 <div class="section" id="feincmsmodeladmin">
 <h2>FeinCMSModelAdmin<a class="headerlink" href="#feincmsmodeladmin" title="Permalink to this headline">¶</a></h2>
@@ -132,16 +147,19 @@ in the tree to make a pretty tree list view.</p>
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="forms.html" title="Working with trees in Django forms"
              >next</a> |</li>
         <li class="right" >
           <a href="models.html" title="Models and Managers"
              >previous</a> |</li>
-        <li><a href="index.html">django-mptt v0.4.2 documentation</a> &raquo;</li> 
+        <li><a href="index.html">django-mptt v0.5.pre documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-      &copy; Copyright 2007 - 2010, Jonathan Buchanan and others.
+      &copy; Copyright 2007 - 2011, Jonathan Buchanan and others.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.6.
     </div>
   </body>
