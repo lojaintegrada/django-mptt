@@ -16,6 +16,7 @@ mptt.models.MPTTOptions.update_mptt_cached_fields method mptt.models.html
 mptt.managers.TreeManager.rebuild method mptt.managers.html
 mptt.models.MPTTOptions class mptt.models.html
 mptt.models.MPTTModel.is_child_node method mptt.models.html
+mptt.admin.MPTTModelAdmin.formfield_for_foreignkey method mptt.admin.html
 mptt.admin.MPTTAdminForm class mptt.admin.html
 mptt.managers.TreeManager.insert_node method mptt.managers.html
 mptt.admin.MPTTModelAdmin class mptt.admin.html

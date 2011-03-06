@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Upgrade Notes - 0.3 to 0.4 &mdash; django-mptt v0.5.pre documentation</title>
+    <title>Upgrade notes &mdash; django-mptt v0.5.pre documentation</title>
     <link rel="stylesheet" href="static/default.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -48,12 +48,31 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="upgrade-notes-0-3-to-0-4">
-<h1>Upgrade Notes - 0.3 to 0.4<a class="headerlink" href="#upgrade-notes-0-3-to-0-4" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="model-changes-in-0-4">
-<h2>Model changes in 0.4<a class="headerlink" href="#model-changes-in-0-4" title="Permalink to this headline">¶</a></h2>
+  <div class="section" id="upgrade-notes">
+<h1>Upgrade notes<a class="headerlink" href="#upgrade-notes" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="development-version-since-0-4-2">
+<h2>Development version - since 0.4.2<a class="headerlink" href="#development-version-since-0-4-2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="save-raw-true-keyword-argument-removed">
+<h3><tt class="docutils literal"><span class="pre">save(raw=True)</span></tt> keyword argument removed<a class="headerlink" href="#save-raw-true-keyword-argument-removed" title="Permalink to this headline">¶</a></h3>
+<p>In earlier versions, MPTTModel.save() had a <tt class="docutils literal"><span class="pre">raw</span></tt> keyword argument.
+If True, the MPTT fields would not be updated during the save.
+This (undocumented) argument has now been removed.</p>
+</div>
+<div class="section" id="running-the-tests">
+<h3>Running the tests<a class="headerlink" href="#running-the-tests" title="Permalink to this headline">¶</a></h3>
+<p>Tests are now run with:</p>
+<div class="highlight-python"><pre>cd tests/
+./runtests.sh</pre>
+</div>
+<p>The previous method (<tt class="docutils literal"><span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">test</span></tt>) no longer works since we switched to plain distutils.</p>
+</div>
+</div>
+<div class="section" id="to-0-4-2">
+<h2>0.3 to 0.4.2<a class="headerlink" href="#to-0-4-2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="model-changes">
+<h3>Model changes<a class="headerlink" href="#model-changes" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="mptt-attributes-on-mymodel-meta-deprecated-moved-to-mymodel-mptt-meta">
-<h3>MPTT attributes on <tt class="docutils literal"><span class="pre">MyModel._meta</span></tt> deprecated, moved to <tt class="docutils literal"><span class="pre">MyModel._mptt_meta</span></tt><a class="headerlink" href="#mptt-attributes-on-mymodel-meta-deprecated-moved-to-mymodel-mptt-meta" title="Permalink to this headline">¶</a></h3>
+<h4>MPTT attributes on <tt class="docutils literal"><span class="pre">MyModel._meta</span></tt> deprecated, moved to <tt class="docutils literal"><span class="pre">MyModel._mptt_meta</span></tt><a class="headerlink" href="#mptt-attributes-on-mymodel-meta-deprecated-moved-to-mymodel-mptt-meta" title="Permalink to this headline">¶</a></h4>
 <p>Most people won&#8217;t need to worry about this, but if you&#8217;re using any of the following, note that these are deprecated and will be removed in 0.5:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">MyModel</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">left_attr</span>
 <span class="n">MyModel</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">right_attr</span>
@@ -67,7 +86,7 @@
 <p>They&#8217;ll continue to work as previously for now, but you should upgrade your code if you can. Simply replace <tt class="docutils literal"><span class="pre">_meta</span></tt> with <tt class="docutils literal"><span class="pre">_mptt_meta</span></tt>.</p>
 </div>
 <div class="section" id="use-model-inheritance-where-possible">
-<h3>Use model inheritance where possible<a class="headerlink" href="#use-model-inheritance-where-possible" title="Permalink to this headline">¶</a></h3>
+<h4>Use model inheritance where possible<a class="headerlink" href="#use-model-inheritance-where-possible" title="Permalink to this headline">¶</a></h4>
 <p>The preferred way to do model registration in <tt class="docutils literal"><span class="pre">django-mptt</span></tt> 0.4 is via model inheritance.</p>
 <p>Suppose you start with this:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
@@ -100,9 +119,9 @@ If you&#8217;re already inheriting from something other than <tt class="docutils
 </div>
 </div>
 <div class="section" id="more-complicated-scenarios">
-<h2>More complicated scenarios<a class="headerlink" href="#more-complicated-scenarios" title="Permalink to this headline">¶</a></h2>
+<h3>More complicated scenarios<a class="headerlink" href="#more-complicated-scenarios" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="what-if-i-m-already-inheriting-from-something">
-<h3>What if I&#8217;m already inheriting from something?<a class="headerlink" href="#what-if-i-m-already-inheriting-from-something" title="Permalink to this headline">¶</a></h3>
+<h4>What if I&#8217;m already inheriting from something?<a class="headerlink" href="#what-if-i-m-already-inheriting-from-something" title="Permalink to this headline">¶</a></h4>
 <p>If your model is already a subclass of an abstract model, you should use multiple inheritance:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="n">MPTTModel</span><span class="p">,</span> <span class="n">ParentModel</span><span class="p">):</span>
     <span class="o">...</span>
@@ -121,9 +140,10 @@ breaking this approach for you, please <a class="reference external" href="http:
 </div>
 </div>
 <div class="section" id="compatibility-with-0-3">
-<h3>Compatibility with 0.3<a class="headerlink" href="#compatibility-with-0-3" title="Permalink to this headline">¶</a></h3>
+<h4>Compatibility with 0.3<a class="headerlink" href="#compatibility-with-0-3" title="Permalink to this headline">¶</a></h4>
 <p><tt class="docutils literal"><span class="pre">MPTTModel</span></tt> was added in 0.4. If you&#8217;re writing a library or reusable app that needs to work with 0.3,
 you should use the <tt class="docutils literal"><span class="pre">mptt.register()</span></tt> function instead, as above.</p>
+</div>
 </div>
 </div>
 </div>
@@ -136,8 +156,14 @@ you should use the <tt class="docutils literal"><span class="pre">mptt.register(
         <div class="sphinxsidebarwrapper">
             <h3><a href="index.html">Table Of Contents</a></h3>
             <ul>
-<li><a class="reference external" href="#">Upgrade Notes - 0.3 to 0.4</a><ul>
-<li><a class="reference external" href="#model-changes-in-0-4">Model changes in 0.4</a><ul>
+<li><a class="reference external" href="#">Upgrade notes</a><ul>
+<li><a class="reference external" href="#development-version-since-0-4-2">Development version - since 0.4.2</a><ul>
+<li><a class="reference external" href="#save-raw-true-keyword-argument-removed"><tt class="docutils literal"><span class="pre">save(raw=True)</span></tt> keyword argument removed</a></li>
+<li><a class="reference external" href="#running-the-tests">Running the tests</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#to-0-4-2">0.3 to 0.4.2</a><ul>
+<li><a class="reference external" href="#model-changes">Model changes</a><ul>
 <li><a class="reference external" href="#mptt-attributes-on-mymodel-meta-deprecated-moved-to-mymodel-mptt-meta">MPTT attributes on <tt class="docutils literal"><span class="pre">MyModel._meta</span></tt> deprecated, moved to <tt class="docutils literal"><span class="pre">MyModel._mptt_meta</span></tt></a></li>
 <li><a class="reference external" href="#use-model-inheritance-where-possible">Use model inheritance where possible</a></li>
 </ul>
@@ -145,6 +171,8 @@ you should use the <tt class="docutils literal"><span class="pre">mptt.register(
 <li><a class="reference external" href="#more-complicated-scenarios">More complicated scenarios</a><ul>
 <li><a class="reference external" href="#what-if-i-m-already-inheriting-from-something">What if I&#8217;m already inheriting from something?</a></li>
 <li><a class="reference external" href="#compatibility-with-0-3">Compatibility with 0.3</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
