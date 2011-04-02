@@ -51,55 +51,8 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="module-mptt.forms">
-<h1><tt class="docutils literal"><span class="pre">mptt.forms</span></tt><a class="headerlink" href="#module-mptt.forms" title="Permalink to this headline">¶</a></h1>
-<p>Form components for working with trees.</p>
-<dl class="class">
-<dt id="mptt.forms.TreeNodeChoiceField">
-<em class="property">class </em><tt class="descclassname">mptt.forms.</tt><tt class="descname">TreeNodeChoiceField</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#mptt.forms.TreeNodeChoiceField" title="Permalink to this definition">¶</a></dt>
-<dd><p>A ModelChoiceField for tree nodes.</p>
-<dl class="method">
-<dt id="mptt.forms.TreeNodeChoiceField.label_from_instance">
-<tt class="descname">label_from_instance</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#mptt.forms.TreeNodeChoiceField.label_from_instance" title="Permalink to this definition">¶</a></dt>
-<dd>Creates labels which represent the tree level of each node when
-generating option labels.</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="mptt.forms.TreeNodeMultipleChoiceField">
-<em class="property">class </em><tt class="descclassname">mptt.forms.</tt><tt class="descname">TreeNodeMultipleChoiceField</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#mptt.forms.TreeNodeMultipleChoiceField" title="Permalink to this definition">¶</a></dt>
-<dd>A ModelMultipleChoiceField for tree nodes.</dd></dl>
-
-<dl class="class">
-<dt id="mptt.forms.TreeNodePositionField">
-<em class="property">class </em><tt class="descclassname">mptt.forms.</tt><tt class="descname">TreeNodePositionField</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#mptt.forms.TreeNodePositionField" title="Permalink to this definition">¶</a></dt>
-<dd>A ChoiceField for specifying position relative to another node.</dd></dl>
-
-<dl class="class">
-<dt id="mptt.forms.MoveNodeForm">
-<em class="property">class </em><tt class="descclassname">mptt.forms.</tt><tt class="descname">MoveNodeForm</tt><big>(</big><em>node</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#mptt.forms.MoveNodeForm" title="Permalink to this definition">¶</a></dt>
-<dd><p>A form which allows the user to move a given node from one location
-in its tree to another, with optional restriction of the nodes which
-are valid target nodes for the move.</p>
-<dl class="attribute">
-<dt id="mptt.forms.MoveNodeForm.media">
-<tt class="descname">media</tt><a class="headerlink" href="#mptt.forms.MoveNodeForm.media" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="mptt.forms.MoveNodeForm.save">
-<tt class="descname">save</tt><big>(</big><big>)</big><a class="headerlink" href="#mptt.forms.MoveNodeForm.save" title="Permalink to this definition">¶</a></dt>
-<dd><p>Attempts to move the node using the selected target and
-position.</p>
-<p>If an invalid move is attempted, the related error message will
-be added to the form&#8217;s non-field errors and the error will be
-re-raised. Callers should attempt to catch <tt class="docutils literal"><span class="pre">InvalidNode</span></tt> to
-redisplay the form with the error, should it occur.</p>
-</dd></dl>
-
-</dd></dl>
-
+  <div class="section" id="mptt-forms">
+<h1><tt class="docutils literal"><span class="pre">mptt.forms</span></tt><a class="headerlink" href="#mptt-forms" title="Permalink to this headline">¶</a></h1>
 </div>
 
 
