@@ -64,14 +64,15 @@ This (undocumented) argument has now been removed.</p>
 <div class="section" id="meta-attributes-moved-to-mptt-meta">
 <h3><tt class="docutils literal"><span class="pre">_meta</span></tt> attributes moved to <tt class="docutils literal"><span class="pre">_mptt_meta</span></tt><a class="headerlink" href="#meta-attributes-moved-to-mptt-meta" title="Permalink to this headline">¶</a></h3>
 <p>In 0.4, we deprecated all these attributes on model._meta. These have now been removed:</p>
-<blockquote>
-MyModel._meta.left_attr
-MyModel._meta.right_attr
-MyModel._meta.tree_id_attr
-MyModel._meta.level_attr
-MyModel._meta.tree_manager_attr
-MyModel._meta.parent_attr
-MyModel._meta.order_insertion_by</blockquote>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">MyModel</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">left_attr</span>
+<span class="n">MyModel</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">right_attr</span>
+<span class="n">MyModel</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">tree_id_attr</span>
+<span class="n">MyModel</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">level_attr</span>
+<span class="n">MyModel</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">tree_manager_attr</span>
+<span class="n">MyModel</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">parent_attr</span>
+<span class="n">MyModel</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">order_insertion_by</span>
+</pre></div>
+</div>
 <p>If you&#8217;re still using any of these, you&#8217;ll need to update by simply renaming <tt class="docutils literal"><span class="pre">_meta</span></tt> to <tt class="docutils literal"><span class="pre">_mptt_meta</span></tt>.</p>
 </div>
 <div class="section" id="running-the-tests">
