@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -12,12 +14,13 @@
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
         VERSION:     '0.5.pre',
-        COLLAPSE_MODINDEX: false,
+        COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
       };
     </script>
     <script type="text/javascript" src="static/jquery.js"></script>
+    <script type="text/javascript" src="static/underscore.js"></script>
     <script type="text/javascript" src="static/doctools.js"></script>
     <link rel="top" title="django-mptt v0.5.pre documentation" href="index.html" />
     <link rel="next" title="Technical details" href="technical_details.html" />
@@ -31,8 +34,8 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="modindex.html" title="Global Module Index"
-             accesskey="M">modules</a> |</li>
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
           <a href="technical_details.html" title="Technical details"
              accesskey="N">next</a> |</li>
@@ -57,6 +60,19 @@
 <p>In earlier versions, MPTTModel.save() had a <tt class="docutils literal"><span class="pre">raw</span></tt> keyword argument.
 If True, the MPTT fields would not be updated during the save.
 This (undocumented) argument has now been removed.</p>
+</div>
+<div class="section" id="meta-attributes-moved-to-mptt-meta">
+<h3><tt class="docutils literal"><span class="pre">_meta</span></tt> attributes moved to <tt class="docutils literal"><span class="pre">_mptt_meta</span></tt><a class="headerlink" href="#meta-attributes-moved-to-mptt-meta" title="Permalink to this headline">¶</a></h3>
+<p>In 0.4, we deprecated all these mptt attributes on model._meta:</p>
+<blockquote>
+MyModel._meta.left_attr
+MyModel._meta.right_attr
+MyModel._meta.tree_id_attr
+MyModel._meta.level_attr
+MyModel._meta.tree_manager_attr
+MyModel._meta.parent_attr
+MyModel._meta.order_insertion_by</blockquote>
+<p>If you&#8217;re still using any of these, you&#8217;ll need to update by simply renaming <tt class="docutils literal"><span class="pre">_meta</span></tt> to <tt class="docutils literal"><span class="pre">_mptt_meta</span></tt>.</p>
 </div>
 <div class="section" id="running-the-tests">
 <h3>Running the tests<a class="headerlink" href="#running-the-tests" title="Permalink to this headline">¶</a></h3>
@@ -154,23 +170,24 @@ you should use the <tt class="docutils literal"><span class="pre">mptt.register(
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-            <h3><a href="index.html">Table Of Contents</a></h3>
-            <ul>
-<li><a class="reference external" href="#">Upgrade notes</a><ul>
-<li><a class="reference external" href="#development-version-since-0-4-2">Development version - since 0.4.2</a><ul>
-<li><a class="reference external" href="#save-raw-true-keyword-argument-removed"><tt class="docutils literal"><span class="pre">save(raw=True)</span></tt> keyword argument removed</a></li>
-<li><a class="reference external" href="#running-the-tests">Running the tests</a></li>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Upgrade notes</a><ul>
+<li><a class="reference internal" href="#development-version-since-0-4-2">Development version - since 0.4.2</a><ul>
+<li><a class="reference internal" href="#save-raw-true-keyword-argument-removed"><tt class="docutils literal"><span class="pre">save(raw=True)</span></tt> keyword argument removed</a></li>
+<li><a class="reference internal" href="#meta-attributes-moved-to-mptt-meta"><tt class="docutils literal"><span class="pre">_meta</span></tt> attributes moved to <tt class="docutils literal"><span class="pre">_mptt_meta</span></tt></a></li>
+<li><a class="reference internal" href="#running-the-tests">Running the tests</a></li>
 </ul>
 </li>
-<li><a class="reference external" href="#to-0-4-2">0.3 to 0.4.2</a><ul>
-<li><a class="reference external" href="#model-changes">Model changes</a><ul>
-<li><a class="reference external" href="#mptt-attributes-on-mymodel-meta-deprecated-moved-to-mymodel-mptt-meta">MPTT attributes on <tt class="docutils literal"><span class="pre">MyModel._meta</span></tt> deprecated, moved to <tt class="docutils literal"><span class="pre">MyModel._mptt_meta</span></tt></a></li>
-<li><a class="reference external" href="#use-model-inheritance-where-possible">Use model inheritance where possible</a></li>
+<li><a class="reference internal" href="#to-0-4-2">0.3 to 0.4.2</a><ul>
+<li><a class="reference internal" href="#model-changes">Model changes</a><ul>
+<li><a class="reference internal" href="#mptt-attributes-on-mymodel-meta-deprecated-moved-to-mymodel-mptt-meta">MPTT attributes on <tt class="docutils literal"><span class="pre">MyModel._meta</span></tt> deprecated, moved to <tt class="docutils literal"><span class="pre">MyModel._mptt_meta</span></tt></a></li>
+<li><a class="reference internal" href="#use-model-inheritance-where-possible">Use model inheritance where possible</a></li>
 </ul>
 </li>
-<li><a class="reference external" href="#more-complicated-scenarios">More complicated scenarios</a><ul>
-<li><a class="reference external" href="#what-if-i-m-already-inheriting-from-something">What if I&#8217;m already inheriting from something?</a></li>
-<li><a class="reference external" href="#compatibility-with-0-3">Compatibility with 0.3</a></li>
+<li><a class="reference internal" href="#more-complicated-scenarios">More complicated scenarios</a><ul>
+<li><a class="reference internal" href="#what-if-i-m-already-inheriting-from-something">What if I&#8217;m already inheriting from something?</a></li>
+<li><a class="reference internal" href="#compatibility-with-0-3">Compatibility with 0.3</a></li>
 </ul>
 </li>
 </ul>
@@ -179,30 +196,30 @@ you should use the <tt class="docutils literal"><span class="pre">mptt.register(
 </li>
 </ul>
 
-            <h4>Previous topic</h4>
-            <p class="topless"><a href="utilities.html"
-                                  title="previous chapter">Utilities for working with trees</a></p>
-            <h4>Next topic</h4>
-            <p class="topless"><a href="technical_details.html"
-                                  title="next chapter">Technical details</a></p>
-            <h3>This Page</h3>
-            <ul class="this-page-menu">
-              <li><a href="sources/upgrade.txt"
-                     rel="nofollow">Show Source</a></li>
-            </ul>
-          <div id="searchbox" style="display: none">
-            <h3>Quick search</h3>
-              <form class="search" action="search.html" method="get">
-                <input type="text" name="q" size="18" />
-                <input type="submit" value="Go" />
-                <input type="hidden" name="check_keywords" value="yes" />
-                <input type="hidden" name="area" value="default" />
-              </form>
-              <p class="searchtip" style="font-size: 90%">
-              Enter search terms or a module, class or function name.
-              </p>
-          </div>
-          <script type="text/javascript">$('#searchbox').show(0);</script>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="utilities.html"
+                        title="previous chapter">Utilities for working with trees</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="technical_details.html"
+                        title="next chapter">Technical details</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="sources/upgrade.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -214,7 +231,7 @@ you should use the <tt class="docutils literal"><span class="pre">mptt.register(
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="modindex.html" title="Global Module Index"
+          <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
           <a href="technical_details.html" title="Technical details"
@@ -226,8 +243,8 @@ you should use the <tt class="docutils literal"><span class="pre">mptt.register(
       </ul>
     </div>
     <div class="footer">
-      &copy; Copyright 2007 - 2011, Jonathan Buchanan and others.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.6.
+        &copy; Copyright 2007 - 2011, Jonathan Buchanan and others.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
     </div>
   </body>
 </html>

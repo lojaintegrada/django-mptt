@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -12,12 +14,13 @@
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
         VERSION:     '0.5.pre',
-        COLLAPSE_MODINDEX: false,
+        COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
       };
     </script>
     <script type="text/javascript" src="static/jquery.js"></script>
+    <script type="text/javascript" src="static/underscore.js"></script>
     <script type="text/javascript" src="static/doctools.js"></script>
     <link rel="top" title="django-mptt v0.5.pre documentation" href="index.html" />
     <link rel="next" title="Upgrade notes" href="upgrade.html" />
@@ -31,8 +34,8 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="modindex.html" title="Global Module Index"
-             accesskey="M">modules</a> |</li>
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
           <a href="upgrade.html" title="Upgrade notes"
              accesskey="N">next</a> |</li>
@@ -53,11 +56,11 @@
 <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
 <ul class="simple">
-<li><a class="reference internal" href="#utilities-for-working-with-trees" id="id4">Utilities for working with trees</a><ul>
-<li><a class="reference internal" href="#list-tree-utilities" id="id5">List/tree utilities</a><ul>
-<li><a class="reference internal" href="#previous-current-next" id="id6"><tt class="docutils literal"><span class="pre">previous_current_next()</span></tt></a></li>
-<li><a class="reference internal" href="#tree-item-iterator" id="id7"><tt class="docutils literal"><span class="pre">tree_item_iterator()</span></tt></a></li>
-<li><a class="reference internal" href="#drilldown-tree-for-node" id="id8"><tt class="docutils literal"><span class="pre">drilldown_tree_for_node()</span></tt></a></li>
+<li><a class="reference external" href="#utilities-for-working-with-trees" id="id4">Utilities for working with trees</a><ul>
+<li><a class="reference external" href="#list-tree-utilities" id="id5">List/tree utilities</a><ul>
+<li><a class="reference external" href="#previous-current-next" id="id6"><tt class="docutils literal"><span class="pre">previous_current_next()</span></tt></a></li>
+<li><a class="reference external" href="#tree-item-iterator" id="id7"><tt class="docutils literal"><span class="pre">tree_item_iterator()</span></tt></a></li>
+<li><a class="reference external" href="#drilldown-tree-for-node" id="id8"><tt class="docutils literal"><span class="pre">drilldown_tree_for_node()</span></tt></a></li>
 </ul>
 </li>
 </ul>
@@ -75,7 +78,7 @@ with and creating lists of model instances which represent trees.</p>
 with <tt class="xref docutils literal"><span class="pre">None</span></tt> filling in when there is no previous or next available.</p>
 <p>This function is useful if you want to step through a tree one item at a
 time and you need to refer to the previous or next item in the tree. It
-is used in the implementation of <a class="reference internal" href="#tree-item-iterator">tree_item_iterator()</a>.</p>
+is used in the implementation of <a class="reference external" href="#tree-item-iterator">tree_item_iterator()</a>.</p>
 <div class="section" id="required-arguments">
 <h4>Required arguments<a class="headerlink" href="#required-arguments" title="Permalink to this headline">¶</a></h4>
 <dl class="docutils">
@@ -152,22 +155,22 @@ node <em>and</em> all of its descendants. Defaults to <tt class="xref docutils l
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-            <h3><a href="index.html">Table Of Contents</a></h3>
-            <ul>
-<li><a class="reference external" href="#">Utilities for working with trees</a><ul>
-<li><a class="reference external" href="#list-tree-utilities">List/tree utilities</a><ul>
-<li><a class="reference external" href="#previous-current-next"><tt class="docutils literal"><span class="pre">previous_current_next()</span></tt></a><ul>
-<li><a class="reference external" href="#required-arguments">Required arguments</a></li>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Utilities for working with trees</a><ul>
+<li><a class="reference internal" href="#list-tree-utilities">List/tree utilities</a><ul>
+<li><a class="reference internal" href="#previous-current-next"><tt class="docutils literal"><span class="pre">previous_current_next()</span></tt></a><ul>
+<li><a class="reference internal" href="#required-arguments">Required arguments</a></li>
 </ul>
 </li>
-<li><a class="reference external" href="#tree-item-iterator"><tt class="docutils literal"><span class="pre">tree_item_iterator()</span></tt></a><ul>
-<li><a class="reference external" href="#id1">Required arguments</a></li>
-<li><a class="reference external" href="#optional-arguments">Optional arguments</a></li>
+<li><a class="reference internal" href="#tree-item-iterator"><tt class="docutils literal"><span class="pre">tree_item_iterator()</span></tt></a><ul>
+<li><a class="reference internal" href="#id1">Required arguments</a></li>
+<li><a class="reference internal" href="#optional-arguments">Optional arguments</a></li>
 </ul>
 </li>
-<li><a class="reference external" href="#drilldown-tree-for-node"><tt class="docutils literal"><span class="pre">drilldown_tree_for_node()</span></tt></a><ul>
-<li><a class="reference external" href="#id2">Required arguments</a></li>
-<li><a class="reference external" href="#id3">Optional arguments</a></li>
+<li><a class="reference internal" href="#drilldown-tree-for-node"><tt class="docutils literal"><span class="pre">drilldown_tree_for_node()</span></tt></a><ul>
+<li><a class="reference internal" href="#id2">Required arguments</a></li>
+<li><a class="reference internal" href="#id3">Optional arguments</a></li>
 </ul>
 </li>
 </ul>
@@ -176,30 +179,30 @@ node <em>and</em> all of its descendants. Defaults to <tt class="xref docutils l
 </li>
 </ul>
 
-            <h4>Previous topic</h4>
-            <p class="topless"><a href="templates.html"
-                                  title="previous chapter">Working with trees in templates</a></p>
-            <h4>Next topic</h4>
-            <p class="topless"><a href="upgrade.html"
-                                  title="next chapter">Upgrade notes</a></p>
-            <h3>This Page</h3>
-            <ul class="this-page-menu">
-              <li><a href="sources/utilities.txt"
-                     rel="nofollow">Show Source</a></li>
-            </ul>
-          <div id="searchbox" style="display: none">
-            <h3>Quick search</h3>
-              <form class="search" action="search.html" method="get">
-                <input type="text" name="q" size="18" />
-                <input type="submit" value="Go" />
-                <input type="hidden" name="check_keywords" value="yes" />
-                <input type="hidden" name="area" value="default" />
-              </form>
-              <p class="searchtip" style="font-size: 90%">
-              Enter search terms or a module, class or function name.
-              </p>
-          </div>
-          <script type="text/javascript">$('#searchbox').show(0);</script>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="templates.html"
+                        title="previous chapter">Working with trees in templates</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="upgrade.html"
+                        title="next chapter">Upgrade notes</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="sources/utilities.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -211,7 +214,7 @@ node <em>and</em> all of its descendants. Defaults to <tt class="xref docutils l
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="modindex.html" title="Global Module Index"
+          <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
           <a href="upgrade.html" title="Upgrade notes"
@@ -223,8 +226,8 @@ node <em>and</em> all of its descendants. Defaults to <tt class="xref docutils l
       </ul>
     </div>
     <div class="footer">
-      &copy; Copyright 2007 - 2011, Jonathan Buchanan and others.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.6.
+        &copy; Copyright 2007 - 2011, Jonathan Buchanan and others.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
     </div>
   </body>
 </html>

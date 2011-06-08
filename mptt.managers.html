@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -12,12 +14,13 @@
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
         VERSION:     '0.5.pre',
-        COLLAPSE_MODINDEX: false,
+        COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
       };
     </script>
     <script type="text/javascript" src="static/jquery.js"></script>
+    <script type="text/javascript" src="static/underscore.js"></script>
     <script type="text/javascript" src="static/doctools.js"></script>
     <link rel="top" title="django-mptt v0.5.pre documentation" href="index.html" />
     <link rel="up" title="mptt" href="mptt.html" />
@@ -32,8 +35,8 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="modindex.html" title="Global Module Index"
-             accesskey="M">modules</a> |</li>
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
           <a href="mptt.models.html" title="mptt.models"
              accesskey="N">next</a> |</li>
@@ -52,11 +55,11 @@
           <div class="body">
             
   <div class="section" id="module-mptt.managers">
-<h1><tt class="docutils literal"><span class="pre">mptt.managers</span></tt><a class="headerlink" href="#module-mptt.managers" title="Permalink to this headline">¶</a></h1>
+<span id="mptt-managers"></span><h1><tt class="docutils literal"><span class="pre">mptt.managers</span></tt><a class="headerlink" href="#module-mptt.managers" title="Permalink to this headline">¶</a></h1>
 <p>A custom manager for working with trees of objects.</p>
 <dl class="class">
 <dt id="mptt.managers.TreeManager">
-<em class="property">class </em><tt class="descclassname">mptt.managers.</tt><tt class="descname">TreeManager</tt><big>(</big><em>mptt_opts=None</em><big>)</big><a class="headerlink" href="#mptt.managers.TreeManager" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">mptt.managers.</tt><tt class="descname">TreeManager</tt><a class="headerlink" href="#mptt.managers.TreeManager" title="Permalink to this definition">¶</a></dt>
 <dd><p>A manager for working with trees of objects.</p>
 <dl class="method">
 <dt id="mptt.managers.TreeManager.add_related_count">
@@ -85,16 +88,18 @@ descendants, otherwise it will be for each item itself.</dd>
 <dl class="method">
 <dt id="mptt.managers.TreeManager.get_query_set">
 <tt class="descname">get_query_set</tt><big>(</big><big>)</big><a class="headerlink" href="#mptt.managers.TreeManager.get_query_set" title="Permalink to this definition">¶</a></dt>
-<dd>Returns a <tt class="docutils literal"><span class="pre">QuerySet</span></tt> which contains all tree items, ordered in
+<dd><p>Returns a <tt class="docutils literal"><span class="pre">QuerySet</span></tt> which contains all tree items, ordered in
 such a way that that root nodes appear in tree id order and
-their subtrees appear in depth-first order.</dd></dl>
+their subtrees appear in depth-first order.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="mptt.managers.TreeManager.init_from_model">
 <tt class="descname">init_from_model</tt><big>(</big><em>model</em><big>)</big><a class="headerlink" href="#mptt.managers.TreeManager.init_from_model" title="Permalink to this definition">¶</a></dt>
-<dd>Sets things up. This would normally be done in contribute_to_class(),
+<dd><p>Sets things up. This would normally be done in contribute_to_class(),
 but Django calls that before we&#8217;ve created our extra tree fields on the
-model (which we need). So it&#8217;s done here instead, after field setup.</dd></dl>
+model (which we need). So it&#8217;s done here instead, after field setup.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="mptt.managers.TreeManager.insert_node">
@@ -109,6 +114,16 @@ the last root node.</p>
 <p>If <tt class="docutils literal"><span class="pre">save</span></tt> is <tt class="xref docutils literal"><span class="pre">True</span></tt>, <tt class="docutils literal"><span class="pre">node</span></tt>&#8216;s <tt class="docutils literal"><span class="pre">save()</span></tt> method will be
 called before it is returned.</p>
 </dd></dl>
+
+<dl class="attribute">
+<dt id="mptt.managers.TreeManager.left_attr">
+<tt class="descname">left_attr</tt><a class="headerlink" href="#mptt.managers.TreeManager.left_attr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="mptt.managers.TreeManager.level_attr">
+<tt class="descname">level_attr</tt><a class="headerlink" href="#mptt.managers.TreeManager.level_attr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="mptt.managers.TreeManager.move_node">
@@ -127,20 +142,38 @@ of a root node, as this is a special case due to our use of tree
 ids to order root nodes.</p>
 </dd></dl>
 
+<dl class="attribute">
+<dt id="mptt.managers.TreeManager.parent_attr">
+<tt class="descname">parent_attr</tt><a class="headerlink" href="#mptt.managers.TreeManager.parent_attr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
 <dt id="mptt.managers.TreeManager.rebuild">
 <tt class="descname">rebuild</tt><big>(</big><big>)</big><a class="headerlink" href="#mptt.managers.TreeManager.rebuild" title="Permalink to this definition">¶</a></dt>
-<dd>Rebuilds whole tree in database using <cite>parent</cite> link.</dd></dl>
+<dd><p>Rebuilds whole tree in database using <cite>parent</cite> link.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="mptt.managers.TreeManager.right_attr">
+<tt class="descname">right_attr</tt><a class="headerlink" href="#mptt.managers.TreeManager.right_attr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="mptt.managers.TreeManager.root_node">
 <tt class="descname">root_node</tt><big>(</big><em>tree_id</em><big>)</big><a class="headerlink" href="#mptt.managers.TreeManager.root_node" title="Permalink to this definition">¶</a></dt>
-<dd>Returns the root node of the tree with the given id.</dd></dl>
+<dd><p>Returns the root node of the tree with the given id.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="mptt.managers.TreeManager.root_nodes">
 <tt class="descname">root_nodes</tt><big>(</big><big>)</big><a class="headerlink" href="#mptt.managers.TreeManager.root_nodes" title="Permalink to this definition">¶</a></dt>
-<dd>Creates a <tt class="docutils literal"><span class="pre">QuerySet</span></tt> containing root nodes.</dd></dl>
+<dd><p>Creates a <tt class="docutils literal"><span class="pre">QuerySet</span></tt> containing root nodes.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="mptt.managers.TreeManager.tree_id_attr">
+<tt class="descname">tree_id_attr</tt><a class="headerlink" href="#mptt.managers.TreeManager.tree_id_attr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -152,30 +185,30 @@ ids to order root nodes.</p>
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-            <h4>Previous topic</h4>
-            <p class="topless"><a href="mptt.forms.html"
-                                  title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">mptt.forms</span></tt></a></p>
-            <h4>Next topic</h4>
-            <p class="topless"><a href="mptt.models.html"
-                                  title="next chapter"><tt class="docutils literal"><span class="pre">mptt.models</span></tt></a></p>
-            <h3>This Page</h3>
-            <ul class="this-page-menu">
-              <li><a href="sources/mptt.managers.txt"
-                     rel="nofollow">Show Source</a></li>
-            </ul>
-          <div id="searchbox" style="display: none">
-            <h3>Quick search</h3>
-              <form class="search" action="search.html" method="get">
-                <input type="text" name="q" size="18" />
-                <input type="submit" value="Go" />
-                <input type="hidden" name="check_keywords" value="yes" />
-                <input type="hidden" name="area" value="default" />
-              </form>
-              <p class="searchtip" style="font-size: 90%">
-              Enter search terms or a module, class or function name.
-              </p>
-          </div>
-          <script type="text/javascript">$('#searchbox').show(0);</script>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="mptt.forms.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">mptt.forms</span></tt></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="mptt.models.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">mptt.models</span></tt></a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="sources/mptt.managers.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -187,7 +220,7 @@ ids to order root nodes.</p>
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="modindex.html" title="Global Module Index"
+          <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
           <a href="mptt.models.html" title="mptt.models"
@@ -201,8 +234,8 @@ ids to order root nodes.</p>
       </ul>
     </div>
     <div class="footer">
-      &copy; Copyright 2007 - 2011, Jonathan Buchanan and others.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.6.
+        &copy; Copyright 2007 - 2011, Jonathan Buchanan and others.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
     </div>
   </body>
 </html>

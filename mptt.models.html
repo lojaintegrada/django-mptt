@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -12,12 +14,13 @@
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
         VERSION:     '0.5.pre',
-        COLLAPSE_MODINDEX: false,
+        COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
       };
     </script>
     <script type="text/javascript" src="static/jquery.js"></script>
+    <script type="text/javascript" src="static/underscore.js"></script>
     <script type="text/javascript" src="static/doctools.js"></script>
     <link rel="top" title="django-mptt v0.5.pre documentation" href="index.html" />
     <link rel="up" title="mptt" href="mptt.html" />
@@ -32,8 +35,8 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="modindex.html" title="Global Module Index"
-             accesskey="M">modules</a> |</li>
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
           <a href="mptt.utils.html" title="mptt.utils"
              accesskey="N">next</a> |</li>
@@ -52,7 +55,7 @@
           <div class="body">
             
   <div class="section" id="module-mptt.models">
-<h1><tt class="docutils literal"><span class="pre">mptt.models</span></tt><a class="headerlink" href="#module-mptt.models" title="Permalink to this headline">¶</a></h1>
+<span id="mptt-models"></span><h1><tt class="docutils literal"><span class="pre">mptt.models</span></tt><a class="headerlink" href="#module-mptt.models" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="mptt.models.MPTTModel">
 <em class="property">class </em><tt class="descclassname">mptt.models.</tt><tt class="descname">MPTTModel</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#mptt.models.MPTTModel" title="Permalink to this definition">¶</a></dt>
@@ -96,7 +99,8 @@ a leaf node (it has no children).</p>
 <dl class="method">
 <dt id="mptt.models.MPTTModel.get_descendant_count">
 <tt class="descclassname">MPTTModel.</tt><tt class="descname">get_descendant_count</tt><big>(</big><big>)</big><a class="headerlink" href="#mptt.models.MPTTModel.get_descendant_count" title="Permalink to this definition">¶</a></dt>
-<dd>Returns the number of descendants this model instance has.</dd></dl>
+<dd><p>Returns the number of descendants this model instance has.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="mptt.models.MPTTModel.get_descendants">
@@ -119,24 +123,28 @@ include this model instance (if it is a leaf node)</p>
 <dl class="method">
 <dt id="mptt.models.MPTTModel.get_level">
 <tt class="descclassname">MPTTModel.</tt><tt class="descname">get_level</tt><big>(</big><big>)</big><a class="headerlink" href="#mptt.models.MPTTModel.get_level" title="Permalink to this definition">¶</a></dt>
-<dd>Returns the level of this node (distance from root)</dd></dl>
+<dd><p>Returns the level of this node (distance from root)</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="mptt.models.MPTTModel.get_next_sibling">
 <tt class="descclassname">MPTTModel.</tt><tt class="descname">get_next_sibling</tt><big>(</big><em>**filters</em><big>)</big><a class="headerlink" href="#mptt.models.MPTTModel.get_next_sibling" title="Permalink to this definition">¶</a></dt>
-<dd>Returns this model instance&#8217;s next sibling in the tree, or
-<tt class="xref docutils literal"><span class="pre">None</span></tt> if it doesn&#8217;t have a next sibling.</dd></dl>
+<dd><p>Returns this model instance&#8217;s next sibling in the tree, or
+<tt class="xref docutils literal"><span class="pre">None</span></tt> if it doesn&#8217;t have a next sibling.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="mptt.models.MPTTModel.get_previous_sibling">
 <tt class="descclassname">MPTTModel.</tt><tt class="descname">get_previous_sibling</tt><big>(</big><em>**filters</em><big>)</big><a class="headerlink" href="#mptt.models.MPTTModel.get_previous_sibling" title="Permalink to this definition">¶</a></dt>
-<dd>Returns this model instance&#8217;s previous sibling in the tree, or
-<tt class="xref docutils literal"><span class="pre">None</span></tt> if it doesn&#8217;t have a previous sibling.</dd></dl>
+<dd><p>Returns this model instance&#8217;s previous sibling in the tree, or
+<tt class="xref docutils literal"><span class="pre">None</span></tt> if it doesn&#8217;t have a previous sibling.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="mptt.models.MPTTModel.get_root">
 <tt class="descclassname">MPTTModel.</tt><tt class="descname">get_root</tt><big>(</big><big>)</big><a class="headerlink" href="#mptt.models.MPTTModel.get_root" title="Permalink to this definition">¶</a></dt>
-<dd>Returns the root node of this model instance&#8217;s tree.</dd></dl>
+<dd><p>Returns the root node of this model instance&#8217;s tree.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="mptt.models.MPTTModel.get_siblings">
@@ -151,46 +159,53 @@ include this model instance.</p>
 <dl class="method">
 <dt id="mptt.models.MPTTModel.insert_at">
 <tt class="descclassname">MPTTModel.</tt><tt class="descname">insert_at</tt><big>(</big><em>target</em>, <em>position='first-child'</em>, <em>save=False</em>, <em>allow_existing_pk=False</em><big>)</big><a class="headerlink" href="#mptt.models.MPTTModel.insert_at" title="Permalink to this definition">¶</a></dt>
-<dd>Convenience method for calling <tt class="docutils literal"><span class="pre">TreeManager.insert_node</span></tt> with this
-model instance.</dd></dl>
+<dd><p>Convenience method for calling <tt class="docutils literal"><span class="pre">TreeManager.insert_node</span></tt> with this
+model instance.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="mptt.models.MPTTModel.is_ancestor_of">
 <tt class="descclassname">MPTTModel.</tt><tt class="descname">is_ancestor_of</tt><big>(</big><em>other</em>, <em>include_self=False</em><big>)</big><a class="headerlink" href="#mptt.models.MPTTModel.is_ancestor_of" title="Permalink to this definition">¶</a></dt>
-<dd>Returns <tt class="xref docutils literal"><span class="pre">True</span></tt> if this model is an ancestor of the given node,
+<dd><p>Returns <tt class="xref docutils literal"><span class="pre">True</span></tt> if this model is an ancestor of the given node,
 <tt class="xref docutils literal"><span class="pre">False</span></tt> otherwise.
-If include_self is True, also returns True if the two nodes are the same node.</dd></dl>
+If include_self is True, also returns True if the two nodes are the same node.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="mptt.models.MPTTModel.is_child_node">
 <tt class="descclassname">MPTTModel.</tt><tt class="descname">is_child_node</tt><big>(</big><big>)</big><a class="headerlink" href="#mptt.models.MPTTModel.is_child_node" title="Permalink to this definition">¶</a></dt>
-<dd>Returns <tt class="xref docutils literal"><span class="pre">True</span></tt> if this model instance is a child node, <tt class="xref docutils literal"><span class="pre">False</span></tt>
-otherwise.</dd></dl>
+<dd><p>Returns <tt class="xref docutils literal"><span class="pre">True</span></tt> if this model instance is a child node, <tt class="xref docutils literal"><span class="pre">False</span></tt>
+otherwise.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="mptt.models.MPTTModel.is_descendant_of">
 <tt class="descclassname">MPTTModel.</tt><tt class="descname">is_descendant_of</tt><big>(</big><em>other</em>, <em>include_self=False</em><big>)</big><a class="headerlink" href="#mptt.models.MPTTModel.is_descendant_of" title="Permalink to this definition">¶</a></dt>
-<dd>Returns <tt class="xref docutils literal"><span class="pre">True</span></tt> if this model is a descendant of the given node,
+<dd><p>Returns <tt class="xref docutils literal"><span class="pre">True</span></tt> if this model is a descendant of the given node,
 <tt class="xref docutils literal"><span class="pre">False</span></tt> otherwise.
-If include_self is True, also returns True if the two nodes are the same node.</dd></dl>
+If include_self is True, also returns True if the two nodes are the same node.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="mptt.models.MPTTModel.is_leaf_node">
 <tt class="descclassname">MPTTModel.</tt><tt class="descname">is_leaf_node</tt><big>(</big><big>)</big><a class="headerlink" href="#mptt.models.MPTTModel.is_leaf_node" title="Permalink to this definition">¶</a></dt>
-<dd>Returns <tt class="xref docutils literal"><span class="pre">True</span></tt> if this model instance is a leaf node (it has no
-children), <tt class="xref docutils literal"><span class="pre">False</span></tt> otherwise.</dd></dl>
+<dd><p>Returns <tt class="xref docutils literal"><span class="pre">True</span></tt> if this model instance is a leaf node (it has no
+children), <tt class="xref docutils literal"><span class="pre">False</span></tt> otherwise.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="mptt.models.MPTTModel.is_root_node">
 <tt class="descclassname">MPTTModel.</tt><tt class="descname">is_root_node</tt><big>(</big><big>)</big><a class="headerlink" href="#mptt.models.MPTTModel.is_root_node" title="Permalink to this definition">¶</a></dt>
-<dd>Returns <tt class="xref docutils literal"><span class="pre">True</span></tt> if this model instance is a root node,
-<tt class="xref docutils literal"><span class="pre">False</span></tt> otherwise.</dd></dl>
+<dd><p>Returns <tt class="xref docutils literal"><span class="pre">True</span></tt> if this model instance is a root node,
+<tt class="xref docutils literal"><span class="pre">False</span></tt> otherwise.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="mptt.models.MPTTModel.move_to">
 <tt class="descclassname">MPTTModel.</tt><tt class="descname">move_to</tt><big>(</big><em>target</em>, <em>position='first-child'</em><big>)</big><a class="headerlink" href="#mptt.models.MPTTModel.move_to" title="Permalink to this definition">¶</a></dt>
-<dd>Convenience method for calling <tt class="docutils literal"><span class="pre">TreeManager.move_node</span></tt> with this
-model instance.</dd></dl>
+<dd><p>Convenience method for calling <tt class="docutils literal"><span class="pre">TreeManager.move_node</span></tt> with this
+model instance.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="mptt.models.MPTTModel.save">
@@ -218,8 +233,9 @@ appropriate position to maintain ordering by the specified field.</p>
 <dl class="classmethod">
 <dt id="mptt.models.MPTTModelBase.register">
 <em class="property">classmethod </em><tt class="descname">register</tt><big>(</big><em>meta</em>, <em>cls</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#mptt.models.MPTTModelBase.register" title="Permalink to this definition">¶</a></dt>
-<dd>For the weird cases when you need to add tree-ness to an <em>existing</em>
-class. For other cases you should subclass MPTTModel instead of calling this.</dd></dl>
+<dd><p>For the weird cases when you need to add tree-ness to an <em>existing</em>
+class. For other cases you should subclass MPTTModel instead of calling this.</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -246,10 +262,11 @@ nodes) so that ordering by the fields specified by the node&#8217;s class&#8217;
 <dl class="method">
 <dt id="mptt.models.MPTTOptions.get_raw_field_value">
 <tt class="descname">get_raw_field_value</tt><big>(</big><em>instance</em>, <em>field_name</em><big>)</big><a class="headerlink" href="#mptt.models.MPTTOptions.get_raw_field_value" title="Permalink to this definition">¶</a></dt>
-<dd>Gets the value of the given fieldname for the instance.
+<dd><p>Gets the value of the given fieldname for the instance.
 This is not the same as getattr().
 This function will return IDs for foreignkeys etc, rather than doing
-a database query.</dd></dl>
+a database query.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="mptt.models.MPTTOptions.insertion_target_filters">
@@ -269,9 +286,10 @@ OR (field1 = %s AND field2 = %s AND field3 &gt; %s)</pre>
 <dl class="method">
 <dt id="mptt.models.MPTTOptions.set_raw_field_value">
 <tt class="descname">set_raw_field_value</tt><big>(</big><em>instance</em>, <em>field_name</em>, <em>value</em><big>)</big><a class="headerlink" href="#mptt.models.MPTTOptions.set_raw_field_value" title="Permalink to this definition">¶</a></dt>
-<dd>Sets the value of the given fieldname for the instance.
+<dd><p>Sets the value of the given fieldname for the instance.
 This is not the same as setattr().
-This function requires an ID for a foreignkey (etc) rather than an instance.</dd></dl>
+This function requires an ID for a foreignkey (etc) rather than an instance.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="mptt.models.MPTTOptions.update_mptt_cached_fields">
@@ -298,30 +316,30 @@ so that the MPTT fields need to be updated.</p>
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-            <h4>Previous topic</h4>
-            <p class="topless"><a href="mptt.managers.html"
-                                  title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">mptt.managers</span></tt></a></p>
-            <h4>Next topic</h4>
-            <p class="topless"><a href="mptt.utils.html"
-                                  title="next chapter"><tt class="docutils literal"><span class="pre">mptt.utils</span></tt></a></p>
-            <h3>This Page</h3>
-            <ul class="this-page-menu">
-              <li><a href="sources/mptt.models.txt"
-                     rel="nofollow">Show Source</a></li>
-            </ul>
-          <div id="searchbox" style="display: none">
-            <h3>Quick search</h3>
-              <form class="search" action="search.html" method="get">
-                <input type="text" name="q" size="18" />
-                <input type="submit" value="Go" />
-                <input type="hidden" name="check_keywords" value="yes" />
-                <input type="hidden" name="area" value="default" />
-              </form>
-              <p class="searchtip" style="font-size: 90%">
-              Enter search terms or a module, class or function name.
-              </p>
-          </div>
-          <script type="text/javascript">$('#searchbox').show(0);</script>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="mptt.managers.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">mptt.managers</span></tt></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="mptt.utils.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">mptt.utils</span></tt></a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="sources/mptt.models.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -333,7 +351,7 @@ so that the MPTT fields need to be updated.</p>
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="modindex.html" title="Global Module Index"
+          <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
           <a href="mptt.utils.html" title="mptt.utils"
@@ -347,8 +365,8 @@ so that the MPTT fields need to be updated.</p>
       </ul>
     </div>
     <div class="footer">
-      &copy; Copyright 2007 - 2011, Jonathan Buchanan and others.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.6.
+        &copy; Copyright 2007 - 2011, Jonathan Buchanan and others.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
     </div>
   </body>
 </html>
