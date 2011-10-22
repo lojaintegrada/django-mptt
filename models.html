@@ -3,13 +3,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Models and Managers &mdash; django-mptt v0.5.pre documentation</title>
+    <title>Models and Managers &mdash; django-mptt 0.5.pre documentation</title>
+    
     <link rel="stylesheet" href="static/default.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
@@ -22,7 +25,7 @@
     <script type="text/javascript" src="static/jquery.js"></script>
     <script type="text/javascript" src="static/underscore.js"></script>
     <script type="text/javascript" src="static/doctools.js"></script>
-    <link rel="top" title="django-mptt v0.5.pre documentation" href="index.html" />
+    <link rel="top" title="django-mptt 0.5.pre documentation" href="index.html" />
     <link rel="next" title="Admin classes" href="admin.html" />
     <link rel="prev" title="Installation" href="install.html" /> 
   </head>
@@ -42,7 +45,7 @@
         <li class="right" >
           <a href="install.html" title="Installation"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">django-mptt v0.5.pre documentation</a> &raquo;</li> 
+        <li><a href="index.html">django-mptt 0.5.pre documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -56,30 +59,30 @@
 <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
 <ul class="simple">
-<li><a class="reference external" href="#models-and-managers" id="id1">Models and Managers</a><ul>
-<li><a class="reference external" href="#setting-up-a-django-model-for-mptt" id="id2">Setting up a Django model for MPTT</a></li>
-<li><a class="reference external" href="#model-options" id="id3">Model Options</a></li>
-<li><a class="reference external" href="#registration-of-existing-models" id="id4">Registration of existing models</a></li>
-<li><a class="reference external" href="#mpttmodel-instance-methods" id="id5">MPTTModel instance methods</a><ul>
-<li><a class="reference external" href="#get-ancestors-ascending-false" id="id6"><tt class="docutils literal"><span class="pre">get_ancestors(ascending=False)</span></tt></a></li>
-<li><a class="reference external" href="#get-children" id="id7"><tt class="docutils literal"><span class="pre">get_children()</span></tt></a></li>
-<li><a class="reference external" href="#get-descendants-include-self-false" id="id8"><tt class="docutils literal"><span class="pre">get_descendants(include_self=False)</span></tt></a></li>
-<li><a class="reference external" href="#get-descendant-count" id="id9"><tt class="docutils literal"><span class="pre">get_descendant_count()</span></tt></a></li>
-<li><a class="reference external" href="#get-next-sibling" id="id10"><tt class="docutils literal"><span class="pre">get_next_sibling()</span></tt></a></li>
-<li><a class="reference external" href="#get-previous-sibling" id="id11"><tt class="docutils literal"><span class="pre">get_previous_sibling()</span></tt></a></li>
-<li><a class="reference external" href="#get-root" id="id12"><tt class="docutils literal"><span class="pre">get_root()</span></tt></a></li>
-<li><a class="reference external" href="#get-siblings-include-self-false" id="id13"><tt class="docutils literal"><span class="pre">get_siblings(include_self=False)</span></tt></a></li>
-<li><a class="reference external" href="#insert-at-target-position-first-child-save-false" id="id14"><tt class="docutils literal"><span class="pre">insert_at(target,</span> <span class="pre">position='first-child',</span> <span class="pre">save=False)</span></tt></a></li>
-<li><a class="reference external" href="#is-child-node" id="id15"><tt class="docutils literal"><span class="pre">is_child_node()</span></tt></a></li>
-<li><a class="reference external" href="#is-leaf-node" id="id16"><tt class="docutils literal"><span class="pre">is_leaf_node()</span></tt></a></li>
-<li><a class="reference external" href="#is-root-node" id="id17"><tt class="docutils literal"><span class="pre">is_root_node()</span></tt></a></li>
-<li><a class="reference external" href="#move-to-target-position-first-child" id="id18"><tt class="docutils literal"><span class="pre">move_to(target,</span> <span class="pre">position='first-child')</span></tt></a></li>
+<li><a class="reference internal" href="#models-and-managers" id="id1">Models and Managers</a><ul>
+<li><a class="reference internal" href="#setting-up-a-django-model-for-mptt" id="id2">Setting up a Django model for MPTT</a></li>
+<li><a class="reference internal" href="#model-options" id="id3">Model Options</a></li>
+<li><a class="reference internal" href="#registration-of-existing-models" id="id4">Registration of existing models</a></li>
+<li><a class="reference internal" href="#mpttmodel-instance-methods" id="id5">MPTTModel instance methods</a><ul>
+<li><a class="reference internal" href="#get-ancestors-ascending-false" id="id6"><tt class="docutils literal"><span class="pre">get_ancestors(ascending=False)</span></tt></a></li>
+<li><a class="reference internal" href="#get-children" id="id7"><tt class="docutils literal"><span class="pre">get_children()</span></tt></a></li>
+<li><a class="reference internal" href="#get-descendants-include-self-false" id="id8"><tt class="docutils literal"><span class="pre">get_descendants(include_self=False)</span></tt></a></li>
+<li><a class="reference internal" href="#get-descendant-count" id="id9"><tt class="docutils literal"><span class="pre">get_descendant_count()</span></tt></a></li>
+<li><a class="reference internal" href="#get-next-sibling" id="id10"><tt class="docutils literal"><span class="pre">get_next_sibling()</span></tt></a></li>
+<li><a class="reference internal" href="#get-previous-sibling" id="id11"><tt class="docutils literal"><span class="pre">get_previous_sibling()</span></tt></a></li>
+<li><a class="reference internal" href="#get-root" id="id12"><tt class="docutils literal"><span class="pre">get_root()</span></tt></a></li>
+<li><a class="reference internal" href="#get-siblings-include-self-false" id="id13"><tt class="docutils literal"><span class="pre">get_siblings(include_self=False)</span></tt></a></li>
+<li><a class="reference internal" href="#insert-at-target-position-first-child-save-false" id="id14"><tt class="docutils literal"><span class="pre">insert_at(target,</span> <span class="pre">position='first-child',</span> <span class="pre">save=False)</span></tt></a></li>
+<li><a class="reference internal" href="#is-child-node" id="id15"><tt class="docutils literal"><span class="pre">is_child_node()</span></tt></a></li>
+<li><a class="reference internal" href="#is-leaf-node" id="id16"><tt class="docutils literal"><span class="pre">is_leaf_node()</span></tt></a></li>
+<li><a class="reference internal" href="#is-root-node" id="id17"><tt class="docutils literal"><span class="pre">is_root_node()</span></tt></a></li>
+<li><a class="reference internal" href="#move-to-target-position-first-child" id="id18"><tt class="docutils literal"><span class="pre">move_to(target,</span> <span class="pre">position='first-child')</span></tt></a></li>
 </ul>
 </li>
-<li><a class="reference external" href="#treeforeignkey" id="id19"><tt class="docutils literal"><span class="pre">TreeForeignKey</span></tt></a></li>
-<li><a class="reference external" href="#the-treemanager-custom-manager" id="id20">The <tt class="docutils literal"><span class="pre">TreeManager</span></tt> custom manager</a><ul>
-<li><a class="reference external" href="#methods" id="id21">Methods</a></li>
-<li><a class="reference external" href="#example-usage" id="id22">Example usage</a></li>
+<li><a class="reference internal" href="#treeforeignkey" id="id19"><tt class="docutils literal"><span class="pre">TreeForeignKey</span></tt></a></li>
+<li><a class="reference internal" href="#the-treemanager-custom-manager" id="id20">The <tt class="docutils literal"><span class="pre">TreeManager</span></tt> custom manager</a><ul>
+<li><a class="reference internal" href="#methods" id="id21">Methods</a></li>
+<li><a class="reference internal" href="#example-usage" id="id22">Example usage</a></li>
 </ul>
 </li>
 </ul>
@@ -97,8 +100,8 @@
     <span class="n">parent</span> <span class="o">=</span> <span class="n">TreeForeignKey</span><span class="p">(</span><span class="s">&#39;self&#39;</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s">&#39;children&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>You must define a parent field which is a <tt class="docutils literal"><span class="pre">ForeignKey</span></tt> to <tt class="docutils literal"><span class="pre">'self'</span></tt>. Recommended: use <a class="reference external" href="#treeforeignkey">TreeForeignKey</a>. You can
-call it something different if you want - see <a class="reference external" href="#model-options">Model Options</a> below.</p>
+<p>You must define a parent field which is a <tt class="docutils literal"><span class="pre">ForeignKey</span></tt> to <tt class="docutils literal"><span class="pre">'self'</span></tt>. Recommended: use <a class="reference internal" href="#treeforeignkey">TreeForeignKey</a>. You can
+call it something different if you want - see <a class="reference internal" href="#model-options">Model Options</a> below.</p>
 <p>Because you&#8217;re inheriting from MPTTModel, your model will also have a number of
 other fields: <tt class="docutils literal"><span class="pre">level</span></tt>, <tt class="docutils literal"><span class="pre">lft</span></tt>, <tt class="docutils literal"><span class="pre">rght</span></tt>, and <tt class="docutils literal"><span class="pre">tree_id</span></tt>. Most of the time
 you won&#8217;t need to use these fields directly, but it&#8217;s helpful to know they&#8217;re there.</p>
@@ -154,9 +157,6 @@ Defaults to <tt class="docutils literal"><span class="pre">'level'</span></tt>.<
 <p class="last">For example, root nodes would have a level of <tt class="docutils literal"><span class="pre">0</span></tt> and their
 immediate children would have have a level of <tt class="docutils literal"><span class="pre">1</span></tt>.</p>
 </dd>
-<dt><tt class="docutils literal"><span class="pre">tree_manager_attr</span></tt></dt>
-<dd>The name of an attribute which will hold a custom manager which is
-used to work with trees of model instances. Defaults to <tt class="docutils literal"><span class="pre">'tree'</span></tt>.</dd>
 <dt><tt class="docutils literal"><span class="pre">order_insertion_by</span></tt></dt>
 <dd><p class="first">A list of field names which should define ordering when new tree
 nodes are being inserted or existing nodes are being reparented, with
@@ -194,7 +194,7 @@ as trees of categories, which should always be in alphabetical order.</p>
 <h3><a class="toc-backref" href="#id6"><tt class="docutils literal"><span class="pre">get_ancestors(ascending=False)</span></tt></a><a class="headerlink" href="#get-ancestors-ascending-false" title="Permalink to this headline">¶</a></h3>
 <p>creates a <tt class="docutils literal"><span class="pre">QuerySet</span></tt> containing the ancestors of the model instance.</p>
 <p>These default to being in descending order (root ancestor first,
-immediate parent last); passing <tt class="xref docutils literal"><span class="pre">True</span></tt> for the <tt class="docutils literal"><span class="pre">ascending</span></tt> argument
+immediate parent last); passing <tt class="docutils literal"><span class="pre">True</span></tt> for the <tt class="docutils literal"><span class="pre">ascending</span></tt> argument
 will reverse the ordering (immediate parent first, root ancestor last).</p>
 </div>
 <div class="section" id="get-children">
@@ -210,7 +210,7 @@ children).</p>
 <h3><a class="toc-backref" href="#id8"><tt class="docutils literal"><span class="pre">get_descendants(include_self=False)</span></tt></a><a class="headerlink" href="#get-descendants-include-self-false" title="Permalink to this headline">¶</a></h3>
 <p>Creates a <tt class="docutils literal"><span class="pre">QuerySet</span></tt> containing descendants of the model instance, in
 tree order.</p>
-<p>If <tt class="docutils literal"><span class="pre">include_self</span></tt> is <tt class="xref docutils literal"><span class="pre">True</span></tt>, the <tt class="docutils literal"><span class="pre">QuerySet</span></tt> will also include the
+<p>If <tt class="docutils literal"><span class="pre">include_self</span></tt> is <tt class="docutils literal"><span class="pre">True</span></tt>, the <tt class="docutils literal"><span class="pre">QuerySet</span></tt> will also include the
 model instance itself.</p>
 </div>
 <div class="section" id="get-descendant-count">
@@ -221,12 +221,12 @@ any database access.</p>
 </div>
 <div class="section" id="get-next-sibling">
 <h3><a class="toc-backref" href="#id10"><tt class="docutils literal"><span class="pre">get_next_sibling()</span></tt></a><a class="headerlink" href="#get-next-sibling" title="Permalink to this headline">¶</a></h3>
-<p>Returns the model instance&#8217;s next sibling in the tree, or <tt class="xref docutils literal"><span class="pre">None</span></tt> if it
+<p>Returns the model instance&#8217;s next sibling in the tree, or <tt class="docutils literal"><span class="pre">None</span></tt> if it
 doesn&#8217;t have a next sibling.</p>
 </div>
 <div class="section" id="get-previous-sibling">
 <h3><a class="toc-backref" href="#id11"><tt class="docutils literal"><span class="pre">get_previous_sibling()</span></tt></a><a class="headerlink" href="#get-previous-sibling" title="Permalink to this headline">¶</a></h3>
-<p>Returns the model instance&#8217;s previous sibling in the tree, or <tt class="xref docutils literal"><span class="pre">None</span></tt>
+<p>Returns the model instance&#8217;s previous sibling in the tree, or <tt class="docutils literal"><span class="pre">None</span></tt>
 if it doesn&#8217;t have a previous sibling.</p>
 </div>
 <div class="section" id="get-root">
@@ -237,7 +237,7 @@ if it doesn&#8217;t have a previous sibling.</p>
 <h3><a class="toc-backref" href="#id13"><tt class="docutils literal"><span class="pre">get_siblings(include_self=False)</span></tt></a><a class="headerlink" href="#get-siblings-include-self-false" title="Permalink to this headline">¶</a></h3>
 <p>Creates a <tt class="docutils literal"><span class="pre">QuerySet</span></tt> containing siblings of the model instance. Root
 nodes are considered to be siblings of other root nodes.</p>
-<p>If <tt class="docutils literal"><span class="pre">include_self</span></tt> is <tt class="xref docutils literal"><span class="pre">True</span></tt>, the <tt class="docutils literal"><span class="pre">QuerySet</span></tt> will also include the
+<p>If <tt class="docutils literal"><span class="pre">include_self</span></tt> is <tt class="docutils literal"><span class="pre">True</span></tt>, the <tt class="docutils literal"><span class="pre">QuerySet</span></tt> will also include the
 model instance itself.</p>
 </div>
 <div class="section" id="insert-at-target-position-first-child-save-false">
@@ -250,17 +250,17 @@ called.</p>
 </div>
 <div class="section" id="is-child-node">
 <h3><a class="toc-backref" href="#id15"><tt class="docutils literal"><span class="pre">is_child_node()</span></tt></a><a class="headerlink" href="#is-child-node" title="Permalink to this headline">¶</a></h3>
-<p>Returns <tt class="xref docutils literal"><span class="pre">True</span></tt> if the model instance is a child node, <tt class="xref docutils literal"><span class="pre">False</span></tt>
+<p>Returns <tt class="docutils literal"><span class="pre">True</span></tt> if the model instance is a child node, <tt class="docutils literal"><span class="pre">False</span></tt>
 otherwise.</p>
 </div>
 <div class="section" id="is-leaf-node">
 <h3><a class="toc-backref" href="#id16"><tt class="docutils literal"><span class="pre">is_leaf_node()</span></tt></a><a class="headerlink" href="#is-leaf-node" title="Permalink to this headline">¶</a></h3>
-<p>Returns <tt class="xref docutils literal"><span class="pre">True</span></tt> if the model instance is a leaf node (it has no
-children), <tt class="xref docutils literal"><span class="pre">False</span></tt> otherwise.</p>
+<p>Returns <tt class="docutils literal"><span class="pre">True</span></tt> if the model instance is a leaf node (it has no
+children), <tt class="docutils literal"><span class="pre">False</span></tt> otherwise.</p>
 </div>
 <div class="section" id="is-root-node">
 <h3><a class="toc-backref" href="#id17"><tt class="docutils literal"><span class="pre">is_root_node()</span></tt></a><a class="headerlink" href="#is-root-node" title="Permalink to this headline">¶</a></h3>
-<p>Returns <tt class="xref docutils literal"><span class="pre">True</span></tt> if the model instance is a root node, <tt class="xref docutils literal"><span class="pre">False</span></tt>
+<p>Returns <tt class="docutils literal"><span class="pre">True</span></tt> if the model instance is a root node, <tt class="docutils literal"><span class="pre">False</span></tt>
 otherwise.</p>
 </div>
 <div class="section" id="move-to-target-position-first-child">
@@ -280,13 +280,13 @@ in the tree structure being put into an inaccurate state.</p>
 the type of movement which needs to take place, and will be used as the
 basis for positioning the model when it is moved, in combination with
 the <tt class="docutils literal"><span class="pre">position</span></tt> argument.</p>
-<p>A <tt class="docutils literal"><span class="pre">target</span></tt> of <tt class="xref docutils literal"><span class="pre">None</span></tt> indicates that the model instance should be
+<p>A <tt class="docutils literal"><span class="pre">target</span></tt> of <tt class="docutils literal"><span class="pre">None</span></tt> indicates that the model instance should be
 turned into a root node. The <tt class="docutils literal"><span class="pre">position</span></tt> argument is disregarded in
 this case.</p>
 <p>Valid values for the <tt class="docutils literal"><span class="pre">position</span></tt> argument and their effects on movement
 are:</p>
 <blockquote>
-<dl class="docutils">
+<div><dl class="docutils">
 <dt><tt class="docutils literal"><span class="pre">'first-child'</span></tt></dt>
 <dd>The instance being moved should have <tt class="docutils literal"><span class="pre">target</span></tt> set as its new
 parent and be placed as its <em>first</em> child in the tree structure.</dd>
@@ -302,7 +302,7 @@ in the tree structure.</dd>
 its new parent and should be placed <em>directly after</em> <tt class="docutils literal"><span class="pre">target</span></tt>
 in the tree structure.</dd>
 </dl>
-</blockquote>
+</div></blockquote>
 <p>A <tt class="docutils literal"><span class="pre">ValueError</span></tt> will be raised if an invalid value is given for the
 <tt class="docutils literal"><span class="pre">position</span></tt> argument.</p>
 <p>Note that some of the moves you could attempt to make with this method
@@ -327,9 +327,7 @@ form field display choices in tree form.</p>
 </div>
 <div class="section" id="the-treemanager-custom-manager">
 <h2><a class="toc-backref" href="#id20">The <tt class="docutils literal"><span class="pre">TreeManager</span></tt> custom manager</a><a class="headerlink" href="#the-treemanager-custom-manager" title="Permalink to this headline">¶</a></h2>
-<p>A custom manager, <tt class="docutils literal"><span class="pre">TreeManager</span></tt> is also added to your MPTTModel subclasses.
-The attribute this manager can be accessed through is specified by the
-<tt class="docutils literal"><span class="pre">tree_manager_attr</span></tt> option (default <tt class="docutils literal"><span class="pre">'tree'</span></tt>)</p>
+<p>The default manager for an MPTTModel is a <tt class="docutils literal"><span class="pre">TreeManager</span></tt>.</p>
 <p>Any <tt class="docutils literal"><span class="pre">QuerySet</span></tt> created with this manager will be ordered based on the
 tree structure, with root nodes appearing in tree id order and and their
 descendants being ordered in a depth-first fashion.</p>
@@ -351,7 +349,7 @@ model.</p>
 <tt class="docutils literal"><span class="pre">QuerySet</span></tt>, containing a count of how many instances of <tt class="docutils literal"><span class="pre">rel_cls</span></tt>
 are related to it through <tt class="docutils literal"><span class="pre">rel_field</span></tt>.</dd>
 <dt><tt class="docutils literal"><span class="pre">cumulative</span></tt></dt>
-<dd>If <tt class="xref docutils literal"><span class="pre">True</span></tt>, the count will be for each item and all of its
+<dd>If <tt class="docutils literal"><span class="pre">True</span></tt>, the count will be for each item and all of its
 descendants, otherwise it will be for each item itself.</dd>
 </dl>
 </div>
@@ -365,21 +363,21 @@ descendants, otherwise it will be for each item itself.</dd>
 into in the database) so it will be positioned relative to a given
 <tt class="docutils literal"><span class="pre">target</span></tt> node as specified by <tt class="docutils literal"><span class="pre">position</span></tt> (when appropriate) when it
 is inserted, with any neccessary space already having been made for it.</p>
-<p>A <tt class="docutils literal"><span class="pre">target</span></tt> of <tt class="xref docutils literal"><span class="pre">None</span></tt> indicates that <tt class="docutils literal"><span class="pre">node</span></tt> should be the last root
+<p>A <tt class="docutils literal"><span class="pre">target</span></tt> of <tt class="docutils literal"><span class="pre">None</span></tt> indicates that <tt class="docutils literal"><span class="pre">node</span></tt> should be the last root
 node.</p>
-<p>If <tt class="docutils literal"><span class="pre">save</span></tt> is <tt class="xref docutils literal"><span class="pre">True</span></tt>, <tt class="docutils literal"><span class="pre">node</span></tt>&#8216;s <tt class="docutils literal"><span class="pre">save()</span></tt> method will be called
+<p>If <tt class="docutils literal"><span class="pre">save</span></tt> is <tt class="docutils literal"><span class="pre">True</span></tt>, <tt class="docutils literal"><span class="pre">node</span></tt>&#8216;s <tt class="docutils literal"><span class="pre">save()</span></tt> method will be called
 before it is returned.</p>
 </div>
 <div class="section" id="move-node-node-target-position-last-child">
 <h4><tt class="docutils literal"><span class="pre">move_node(node,</span> <span class="pre">target,</span> <span class="pre">position='last-child')</span></tt><a class="headerlink" href="#move-node-node-target-position-last-child" title="Permalink to this headline">¶</a></h4>
 <p>Moves <tt class="docutils literal"><span class="pre">node</span></tt> based on <tt class="docutils literal"><span class="pre">target</span></tt>, relative to <tt class="docutils literal"><span class="pre">position</span></tt> when
 appropriate.</p>
-<p>A <tt class="docutils literal"><span class="pre">target</span></tt> of <tt class="xref docutils literal"><span class="pre">None</span></tt> indicates that <tt class="docutils literal"><span class="pre">node</span></tt> should be removed from
+<p>A <tt class="docutils literal"><span class="pre">target</span></tt> of <tt class="docutils literal"><span class="pre">None</span></tt> indicates that <tt class="docutils literal"><span class="pre">node</span></tt> should be removed from
 its current position and turned into a root node. If <tt class="docutils literal"><span class="pre">node</span></tt> is a root
 node in this case, no action will be taken.</p>
 <p>The given <tt class="docutils literal"><span class="pre">node</span></tt> will be modified to reflect its new tree state in the
 database.</p>
-<p>For more details, see the <a class="reference external" href="#move-to-documentation">move_to documentation</a> above.</p>
+<p>For more details, see the <a class="reference internal" href="#move-to-documentation">move_to documentation</a> above.</p>
 </div>
 <div class="section" id="root-nodes">
 <h4><tt class="docutils literal"><span class="pre">root_nodes()</span></tt><a class="headerlink" href="#root-nodes" title="Permalink to this headline">¶</a></h4>
@@ -394,7 +392,7 @@ database.</p>
 <p>Retrieving a list of root Categories which have a <tt class="docutils literal"><span class="pre">question_count</span></tt>
 attribute containing the number of Questions associated with each root
 and all of its descendants:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">roots</span> <span class="o">=</span> <span class="n">Category</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">add_related_count</span><span class="p">(</span><span class="n">Category</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">root_nodes</span><span class="p">(),</span> <span class="n">Question</span><span class="p">,</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">roots</span> <span class="o">=</span> <span class="n">Category</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">add_related_count</span><span class="p">(</span><span class="n">Category</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">root_nodes</span><span class="p">(),</span> <span class="n">Question</span><span class="p">,</span>
                                         <span class="s">&#39;category&#39;</span><span class="p">,</span> <span class="s">&#39;question_counts&#39;</span><span class="p">,</span>
                                         <span class="n">cumulative</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </pre></div>
@@ -403,7 +401,7 @@ and all of its descendants:</p>
 attribute containing the number of Questions associated with each of
 them:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">node</span> <span class="o">=</span> <span class="n">Category</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;Some Category&#39;</span><span class="p">)</span>
-<span class="n">children</span> <span class="o">=</span> <span class="n">Category</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">add_related_count</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">get_children</span><span class="p">(),</span> <span class="n">Question</span><span class="p">,</span>
+<span class="n">children</span> <span class="o">=</span> <span class="n">Category</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">add_related_count</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">get_children</span><span class="p">(),</span> <span class="n">Question</span><span class="p">,</span>
                                            <span class="s">&#39;category&#39;</span><span class="p">,</span> <span class="s">&#39;question_counts&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -470,7 +468,7 @@ them:</p>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -499,12 +497,12 @@ them:</p>
         <li class="right" >
           <a href="install.html" title="Installation"
              >previous</a> |</li>
-        <li><a href="index.html">django-mptt v0.5.pre documentation</a> &raquo;</li> 
+        <li><a href="index.html">django-mptt 0.5.pre documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
         &copy; Copyright 2007 - 2011, Jonathan Buchanan and others.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.
     </div>
   </body>
 </html>
