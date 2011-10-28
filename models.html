@@ -79,7 +79,7 @@
 <li><a class="reference internal" href="#move-to-target-position-first-child" id="id18"><tt class="docutils literal"><span class="pre">move_to(target,</span> <span class="pre">position='first-child')</span></tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#treeforeignkey" id="id19"><tt class="docutils literal"><span class="pre">TreeForeignKey</span></tt></a></li>
+<li><a class="reference internal" href="#treeforeignkey-treeonetoonefield-treemanytomanyfield" id="id19"><tt class="docutils literal"><span class="pre">TreeForeignKey</span></tt>, <tt class="docutils literal"><span class="pre">TreeOneToOneField</span></tt>, <tt class="docutils literal"><span class="pre">TreeManyToManyField</span></tt></a></li>
 <li><a class="reference internal" href="#the-treemanager-custom-manager" id="id20">The <tt class="docutils literal"><span class="pre">TreeManager</span></tt> custom manager</a><ul>
 <li><a class="reference internal" href="#methods" id="id21">Methods</a></li>
 <li><a class="reference internal" href="#example-usage" id="id22">Example usage</a></li>
@@ -100,7 +100,7 @@
     <span class="n">parent</span> <span class="o">=</span> <span class="n">TreeForeignKey</span><span class="p">(</span><span class="s">&#39;self&#39;</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s">&#39;children&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>You must define a parent field which is a <tt class="docutils literal"><span class="pre">ForeignKey</span></tt> to <tt class="docutils literal"><span class="pre">'self'</span></tt>. Recommended: use <a class="reference internal" href="#treeforeignkey">TreeForeignKey</a>. You can
+<p>You must define a parent field which is a <tt class="docutils literal"><span class="pre">ForeignKey</span></tt> to <tt class="docutils literal"><span class="pre">'self'</span></tt>. Recommended: use <a href="#id23"><span class="problematic" id="id24">`TreeForeignKey`_</span></a>. You can
 call it something different if you want - see <a class="reference internal" href="#model-options">Model Options</a> below.</p>
 <p>Because you&#8217;re inheriting from MPTTModel, your model will also have a number of
 other fields: <tt class="docutils literal"><span class="pre">level</span></tt>, <tt class="docutils literal"><span class="pre">lft</span></tt>, <tt class="docutils literal"><span class="pre">rght</span></tt>, and <tt class="docutils literal"><span class="pre">tree_id</span></tt>. Most of the time
@@ -315,8 +315,8 @@ safe to go on to save it or use its tree fields after you&#8217;ve called this
 method.</p>
 </div>
 </div>
-<div class="section" id="treeforeignkey">
-<h2><a class="toc-backref" href="#id19"><tt class="docutils literal"><span class="pre">TreeForeignKey</span></tt></a><a class="headerlink" href="#treeforeignkey" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="treeforeignkey-treeonetoonefield-treemanytomanyfield">
+<h2><a class="toc-backref" href="#id19"><tt class="docutils literal"><span class="pre">TreeForeignKey</span></tt>, <tt class="docutils literal"><span class="pre">TreeOneToOneField</span></tt>, <tt class="docutils literal"><span class="pre">TreeManyToManyField</span></tt></a><a class="headerlink" href="#treeforeignkey-treeonetoonefield-treemanytomanyfield" title="Permalink to this headline">¶</a></h2>
 <p class="versionadded">
 <span class="versionmodified">New in version 0.5.</span></p>
 <p>It&#8217;s recommended you use <tt class="docutils literal"><span class="pre">mptt.fields.TreeForeignKey</span></tt> wherever you have a
@@ -324,6 +324,7 @@ foreign key to an MPTT model. This includes the <tt class="docutils literal"><sp
 created on your model.</p>
 <p><tt class="docutils literal"><span class="pre">TreeForeignKey</span></tt> is just like a regular <tt class="docutils literal"><span class="pre">ForeignKey</span></tt> but it makes the default
 form field display choices in tree form.</p>
+<p>There are also <tt class="docutils literal"><span class="pre">TreeOneToOneField</span></tt> and <tt class="docutils literal"><span class="pre">TreeManyToManyField</span></tt> if you need them.</p>
 </div>
 <div class="section" id="the-treemanager-custom-manager">
 <h2><a class="toc-backref" href="#id20">The <tt class="docutils literal"><span class="pre">TreeManager</span></tt> custom manager</a><a class="headerlink" href="#the-treemanager-custom-manager" title="Permalink to this headline">¶</a></h2>
@@ -437,7 +438,7 @@ them:</p>
 <li><a class="reference internal" href="#move-to-target-position-first-child"><tt class="docutils literal"><span class="pre">move_to(target,</span> <span class="pre">position='first-child')</span></tt></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#treeforeignkey"><tt class="docutils literal"><span class="pre">TreeForeignKey</span></tt></a></li>
+<li><a class="reference internal" href="#treeforeignkey-treeonetoonefield-treemanytomanyfield"><tt class="docutils literal"><span class="pre">TreeForeignKey</span></tt>, <tt class="docutils literal"><span class="pre">TreeOneToOneField</span></tt>, <tt class="docutils literal"><span class="pre">TreeManyToManyField</span></tt></a></li>
 <li><a class="reference internal" href="#the-treemanager-custom-manager">The <tt class="docutils literal"><span class="pre">TreeManager</span></tt> custom manager</a><ul>
 <li><a class="reference internal" href="#methods">Methods</a><ul>
 <li><a class="reference internal" href="#add-related-count-queryset-rel-cls-rel-field-count-attr-cumulative-false"><tt class="docutils literal"><span class="pre">add_related_count(queryset,</span> <span class="pre">rel_cls,</span> <span class="pre">rel_field,</span> <span class="pre">count_attr,</span> <span class="pre">cumulative=False)</span></tt></a></li>

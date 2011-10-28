@@ -75,7 +75,7 @@ generating option labels.</p>
 
 <dl class="class">
 <dt id="mptt.forms.TreeNodeMultipleChoiceField">
-<em class="property">class </em><tt class="descclassname">mptt.forms.</tt><tt class="descname">TreeNodeMultipleChoiceField</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#mptt.forms.TreeNodeMultipleChoiceField" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">mptt.forms.</tt><tt class="descname">TreeNodeMultipleChoiceField</tt><big>(</big><em>queryset</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#mptt.forms.TreeNodeMultipleChoiceField" title="Permalink to this definition">¶</a></dt>
 <dd><p>A ModelMultipleChoiceField for tree nodes.</p>
 </dd></dl>
 
@@ -85,7 +85,7 @@ generating option labels.</p>
 <dd><p>A ChoiceField for specifying position relative to another node.</p>
 <dl class="attribute">
 <dt id="mptt.forms.TreeNodePositionField.DEFAULT_CHOICES">
-<tt class="descname">DEFAULT_CHOICES</tt><em class="property"> = (('first-child', &lt;django.utils.functional.__proxy__ object at 0x10695ebd0&gt;), ('last-child', &lt;django.utils.functional.__proxy__ object at 0x10695ec50&gt;), ('left', &lt;django.utils.functional.__proxy__ object at 0x10695ecd0&gt;), ('right', &lt;django.utils.functional.__proxy__ object at 0x10695ed50&gt;))</em><a class="headerlink" href="#mptt.forms.TreeNodePositionField.DEFAULT_CHOICES" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">DEFAULT_CHOICES</tt><em class="property"> = (('first-child', &lt;django.utils.functional.__proxy__ object at 0x10ee5ded0&gt;), ('last-child', &lt;django.utils.functional.__proxy__ object at 0x10ee5df50&gt;), ('left', &lt;django.utils.functional.__proxy__ object at 0x10ee5dfd0&gt;), ('right', &lt;django.utils.functional.__proxy__ object at 0x10ee67090&gt;))</em><a class="headerlink" href="#mptt.forms.TreeNodePositionField.DEFAULT_CHOICES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -118,7 +118,7 @@ in its tree to another, with optional restriction of the nodes which
 are valid target nodes for the move.</p>
 <dl class="attribute">
 <dt id="mptt.forms.MoveNodeForm.base_fields">
-<tt class="descname">base_fields</tt><em class="property"> = {'target': &lt;mptt.forms.TreeNodeChoiceField object at 0x10695ee10&gt;, 'position': &lt;mptt.forms.TreeNodePositionField object at 0x10695efd0&gt;}</em><a class="headerlink" href="#mptt.forms.MoveNodeForm.base_fields" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">base_fields</tt><em class="property"> = {'target': &lt;mptt.forms.TreeNodeChoiceField object at 0x10ee67150&gt;, 'position': &lt;mptt.forms.TreeNodePositionField object at 0x10ee67310&gt;}</em><a class="headerlink" href="#mptt.forms.MoveNodeForm.base_fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
