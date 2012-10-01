@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Models and Managers &mdash; django-mptt 0.5.3 documentation</title>
+    <title>Models and Managers &mdash; django-mptt 0.5.+dev documentation</title>
     
     <link rel="stylesheet" href="static/default.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '0.5.3',
+        VERSION:     '0.5.+dev',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="static/jquery.js"></script>
     <script type="text/javascript" src="static/underscore.js"></script>
     <script type="text/javascript" src="static/doctools.js"></script>
-    <link rel="top" title="django-mptt 0.5.3 documentation" href="index.html" />
+    <link rel="top" title="django-mptt 0.5.+dev documentation" href="index.html" />
     <link rel="next" title="Admin classes" href="admin.html" />
     <link rel="prev" title="Tutorial" href="tutorial.html" /> 
   </head>
@@ -45,7 +45,7 @@
         <li class="right" >
           <a href="tutorial.html" title="Tutorial"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">django-mptt 0.5.3 documentation</a> &raquo;</li> 
+        <li><a href="index.html">django-mptt 0.5.+dev documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -64,7 +64,7 @@
 <li><a class="reference internal" href="#model-options" id="id3">Model Options</a></li>
 <li><a class="reference internal" href="#registration-of-existing-models" id="id4">Registration of existing models</a></li>
 <li><a class="reference internal" href="#mpttmodel-instance-methods" id="id5">MPTTModel instance methods</a><ul>
-<li><a class="reference internal" href="#get-ancestors-ascending-false" id="id6"><tt class="docutils literal"><span class="pre">get_ancestors(ascending=False)</span></tt></a></li>
+<li><a class="reference internal" href="#get-ancestors-ascending-false-include-self-false" id="id6"><tt class="docutils literal"><span class="pre">get_ancestors(ascending=False,</span> <span class="pre">include_self=False)</span></tt></a></li>
 <li><a class="reference internal" href="#get-children" id="id7"><tt class="docutils literal"><span class="pre">get_children()</span></tt></a></li>
 <li><a class="reference internal" href="#get-descendants-include-self-false" id="id8"><tt class="docutils literal"><span class="pre">get_descendants(include_self=False)</span></tt></a></li>
 <li><a class="reference internal" href="#get-descendant-count" id="id9"><tt class="docutils literal"><span class="pre">get_descendant_count()</span></tt></a></li>
@@ -100,7 +100,7 @@
     <span class="n">parent</span> <span class="o">=</span> <span class="n">TreeForeignKey</span><span class="p">(</span><span class="s">&#39;self&#39;</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s">&#39;children&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>You must define a parent field which is a <tt class="docutils literal"><span class="pre">ForeignKey</span></tt> to <tt class="docutils literal"><span class="pre">'self'</span></tt>. Recommended: use <a href="#id23"><span class="problematic" id="id24">`TreeForeignKey`_</span></a>. You can
+<p>You must define a parent field which is a <tt class="docutils literal"><span class="pre">ForeignKey</span></tt> to <tt class="docutils literal"><span class="pre">'self'</span></tt>. Recommended: use <tt class="docutils literal"><span class="pre">TreeForeignKey</span></tt>. You can
 call it something different if you want - see <a class="reference internal" href="#model-options">Model Options</a> below.</p>
 <p>Because you&#8217;re inheriting from MPTTModel, your model will also have a number of
 other fields: <tt class="docutils literal"><span class="pre">level</span></tt>, <tt class="docutils literal"><span class="pre">lft</span></tt>, <tt class="docutils literal"><span class="pre">rght</span></tt>, and <tt class="docutils literal"><span class="pre">tree_id</span></tt>. Most of the time
@@ -190,12 +190,14 @@ as trees of categories, which should always be in alphabetical order.</p>
 <div class="section" id="mpttmodel-instance-methods">
 <h2><a class="toc-backref" href="#id5">MPTTModel instance methods</a><a class="headerlink" href="#mpttmodel-instance-methods" title="Permalink to this headline">¶</a></h2>
 <p>Subclasses of MPTTModel have the following instance methods:</p>
-<div class="section" id="get-ancestors-ascending-false">
-<h3><a class="toc-backref" href="#id6"><tt class="docutils literal"><span class="pre">get_ancestors(ascending=False)</span></tt></a><a class="headerlink" href="#get-ancestors-ascending-false" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="get-ancestors-ascending-false-include-self-false">
+<h3><a class="toc-backref" href="#id6"><tt class="docutils literal"><span class="pre">get_ancestors(ascending=False,</span> <span class="pre">include_self=False)</span></tt></a><a class="headerlink" href="#get-ancestors-ascending-false-include-self-false" title="Permalink to this headline">¶</a></h3>
 <p>creates a <tt class="docutils literal"><span class="pre">QuerySet</span></tt> containing the ancestors of the model instance.</p>
 <p>These default to being in descending order (root ancestor first,
 immediate parent last); passing <tt class="docutils literal"><span class="pre">True</span></tt> for the <tt class="docutils literal"><span class="pre">ascending</span></tt> argument
 will reverse the ordering (immediate parent first, root ancestor last).</p>
+<p>If <tt class="docutils literal"><span class="pre">include_self</span></tt> is <tt class="docutils literal"><span class="pre">True</span></tt>, the <tt class="docutils literal"><span class="pre">QuerySet</span></tt> will also include the
+model instance itself.</p>
 </div>
 <div class="section" id="get-children">
 <h3><a class="toc-backref" href="#id7"><tt class="docutils literal"><span class="pre">get_children()</span></tt></a><a class="headerlink" href="#get-children" title="Permalink to this headline">¶</a></h3>
@@ -423,7 +425,7 @@ them:</p>
 <li><a class="reference internal" href="#model-options">Model Options</a></li>
 <li><a class="reference internal" href="#registration-of-existing-models">Registration of existing models</a></li>
 <li><a class="reference internal" href="#mpttmodel-instance-methods">MPTTModel instance methods</a><ul>
-<li><a class="reference internal" href="#get-ancestors-ascending-false"><tt class="docutils literal"><span class="pre">get_ancestors(ascending=False)</span></tt></a></li>
+<li><a class="reference internal" href="#get-ancestors-ascending-false-include-self-false"><tt class="docutils literal"><span class="pre">get_ancestors(ascending=False,</span> <span class="pre">include_self=False)</span></tt></a></li>
 <li><a class="reference internal" href="#get-children"><tt class="docutils literal"><span class="pre">get_children()</span></tt></a></li>
 <li><a class="reference internal" href="#get-descendants-include-self-false"><tt class="docutils literal"><span class="pre">get_descendants(include_self=False)</span></tt></a></li>
 <li><a class="reference internal" href="#get-descendant-count"><tt class="docutils literal"><span class="pre">get_descendant_count()</span></tt></a></li>
@@ -498,7 +500,7 @@ them:</p>
         <li class="right" >
           <a href="tutorial.html" title="Tutorial"
              >previous</a> |</li>
-        <li><a href="index.html">django-mptt 0.5.3 documentation</a> &raquo;</li> 
+        <li><a href="index.html">django-mptt 0.5.+dev documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

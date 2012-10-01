@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Upgrade notes &mdash; django-mptt 0.5.3 documentation</title>
+    <title>Upgrade notes &mdash; django-mptt 0.5.+dev documentation</title>
     
     <link rel="stylesheet" href="static/default.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '0.5.3',
+        VERSION:     '0.5.+dev',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="static/jquery.js"></script>
     <script type="text/javascript" src="static/underscore.js"></script>
     <script type="text/javascript" src="static/doctools.js"></script>
-    <link rel="top" title="django-mptt 0.5.3 documentation" href="index.html" />
+    <link rel="top" title="django-mptt 0.5.+dev documentation" href="index.html" />
     <link rel="next" title="Technical details" href="technical_details.html" />
     <link rel="prev" title="Utilities for working with trees" href="utilities.html" /> 
   </head>
@@ -45,7 +45,7 @@
         <li class="right" >
           <a href="utilities.html" title="Utilities for working with trees"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">django-mptt 0.5.3 documentation</a> &raquo;</li> 
+        <li><a href="index.html">django-mptt 0.5.+dev documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -56,15 +56,29 @@
             
   <div class="section" id="upgrade-notes">
 <h1>Upgrade notes<a class="headerlink" href="#upgrade-notes" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="to-0-5-2">
-<h2>0.4.2 to 0.5.2<a class="headerlink" href="#to-0-5-2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="development-version-since-0-5-4">
+<h2>Development version (since 0.5.4)<a class="headerlink" href="#development-version-since-0-5-4" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="mptt-now-requires-python-2-5">
+<h3>mptt now requires Python 2.5+<a class="headerlink" href="#mptt-now-requires-python-2-5" title="Permalink to this headline">¶</a></h3>
+<p>We started using context managers, which means we can&#8217;t support python 2.4 anymore. If you absolutely can&#8217;t upgrade your Python version, you&#8217;ll need to stick to mptt 0.5.4 until you can.</p>
+</div>
+<div class="section" id="no-more-implicit-empty-label-true-on-form-fields">
+<h3>No more implicit <tt class="docutils literal"><span class="pre">empty_label=True</span></tt> on form fields<a class="headerlink" href="#no-more-implicit-empty-label-true-on-form-fields" title="Permalink to this headline">¶</a></h3>
+<p>Until 0.5.4, <tt class="docutils literal"><span class="pre">TreeNodeChoiceField</span></tt> and <tt class="docutils literal"><span class="pre">TreeNodeMultipleChoiceField</span></tt> implicitly set <tt class="docutils literal"><span class="pre">empty_label=True</span></tt>.
+This was around since a long time ago, for unknown reasons. It has been removed in 0.6 as it caused occasional headaches for users.</p>
+<p>If you were relying on this behavior, you&#8217;ll need to explicitly pass <tt class="docutils literal"><span class="pre">empty_label=True</span></tt> to any of those fields you use,
+otherwise you will start seeing new &#8216;&#8212;&#8212;&#8211;&#8217; choices appearing in them.</p>
+</div>
+</div>
+<div class="section" id="to-0-5-4">
+<h2>0.4.2 to 0.5.4<a class="headerlink" href="#to-0-5-4" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="treemanager-is-now-the-default-manager-yourmodel-tree-removed">
 <h3><tt class="docutils literal"><span class="pre">TreeManager</span></tt> is now the default manager, <tt class="docutils literal"><span class="pre">YourModel.tree</span></tt> removed<a class="headerlink" href="#treemanager-is-now-the-default-manager-yourmodel-tree-removed" title="Permalink to this headline">¶</a></h3>
 <p>In 0.5, <tt class="docutils literal"><span class="pre">TreeManager</span></tt> now behaves just like a normal django manager. If you don&#8217;t override anything,
 you&#8217;ll now get a <tt class="docutils literal"><span class="pre">TreeManager</span></tt> by default (<tt class="docutils literal"><span class="pre">.objects</span></tt>.)</p>
 <p>Before 0.5, <tt class="docutils literal"><span class="pre">.tree</span></tt> was the default name for the <tt class="docutils literal"><span class="pre">TreeManager</span></tt>. That&#8217;s been removed, so we recommend
 updating your code to use <tt class="docutils literal"><span class="pre">.objects</span></tt>.</p>
-<p>If you don&#8217;t want to update <tt class="docutils literal"><span class="pre">.tree</span></tt> to <tt class="docutils literal"><span class="pre">.objects</span></tt> everywhere just yet, you should add explicit <a href="#id1"><span class="problematic" id="id2">``</span></a>TreeManager``s
+<p>If you don&#8217;t want to update <tt class="docutils literal"><span class="pre">.tree</span></tt> to <tt class="docutils literal"><span class="pre">.objects</span></tt> everywhere just yet, you should add an explicit <tt class="docutils literal"><span class="pre">TreeManager</span></tt>
 to your models:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">objects</span> <span class="o">=</span> <span class="n">tree</span> <span class="o">=</span> <span class="n">TreeManager</span><span class="p">()</span>
 </pre></div>
@@ -189,7 +203,12 @@ you should use the <tt class="docutils literal"><span class="pre">mptt.register(
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Upgrade notes</a><ul>
-<li><a class="reference internal" href="#to-0-5-2">0.4.2 to 0.5.2</a><ul>
+<li><a class="reference internal" href="#development-version-since-0-5-4">Development version (since 0.5.4)</a><ul>
+<li><a class="reference internal" href="#mptt-now-requires-python-2-5">mptt now requires Python 2.5+</a></li>
+<li><a class="reference internal" href="#no-more-implicit-empty-label-true-on-form-fields">No more implicit <tt class="docutils literal"><span class="pre">empty_label=True</span></tt> on form fields</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#to-0-5-4">0.4.2 to 0.5.4</a><ul>
 <li><a class="reference internal" href="#treemanager-is-now-the-default-manager-yourmodel-tree-removed"><tt class="docutils literal"><span class="pre">TreeManager</span></tt> is now the default manager, <tt class="docutils literal"><span class="pre">YourModel.tree</span></tt> removed</a></li>
 <li><a class="reference internal" href="#save-raw-true-keyword-argument-removed"><tt class="docutils literal"><span class="pre">save(raw=True)</span></tt> keyword argument removed</a></li>
 <li><a class="reference internal" href="#meta-attributes-moved-to-mptt-meta"><tt class="docutils literal"><span class="pre">_meta</span></tt> attributes moved to <tt class="docutils literal"><span class="pre">_mptt_meta</span></tt></a></li>
@@ -256,7 +275,7 @@ you should use the <tt class="docutils literal"><span class="pre">mptt.register(
         <li class="right" >
           <a href="utilities.html" title="Utilities for working with trees"
              >previous</a> |</li>
-        <li><a href="index.html">django-mptt 0.5.3 documentation</a> &raquo;</li> 
+        <li><a href="index.html">django-mptt 0.5.+dev documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
