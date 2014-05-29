@@ -3,20 +3,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Models and Managers &mdash; django-mptt 0.6.0 documentation</title>
-    
+    <title>Models and Managers &mdash; django-mptt v0.6.1 documentation</title>
     <link rel="stylesheet" href="static/default.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '0.6.0',
+        VERSION:     '0.6.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +22,7 @@
     <script type="text/javascript" src="static/jquery.js"></script>
     <script type="text/javascript" src="static/underscore.js"></script>
     <script type="text/javascript" src="static/doctools.js"></script>
-    <link rel="top" title="django-mptt 0.6.0 documentation" href="index.html" />
+    <link rel="top" title="django-mptt v0.6.1 documentation" href="index.html" />
     <link rel="next" title="Admin classes" href="admin.html" />
     <link rel="prev" title="Tutorial" href="tutorial.html" /> 
   </head>
@@ -45,7 +42,7 @@
         <li class="right" >
           <a href="tutorial.html" title="Tutorial"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">django-mptt 0.6.0 documentation</a> &raquo;</li> 
+        <li><a href="index.html">django-mptt v0.6.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -200,9 +197,9 @@ as trees of categories, which should always be in alphabetical order.</p>
 <h3><a class="toc-backref" href="#id6"><tt class="docutils literal"><span class="pre">get_ancestors(ascending=False,</span> <span class="pre">include_self=False)</span></tt></a><a class="headerlink" href="#get-ancestors-ascending-false-include-self-false" title="Permalink to this headline">¶</a></h3>
 <p>creates a <tt class="docutils literal"><span class="pre">QuerySet</span></tt> containing the ancestors of the model instance.</p>
 <p>These default to being in descending order (root ancestor first,
-immediate parent last); passing <tt class="docutils literal"><span class="pre">True</span></tt> for the <tt class="docutils literal"><span class="pre">ascending</span></tt> argument
+immediate parent last); passing <tt class="xref docutils literal"><span class="pre">True</span></tt> for the <tt class="docutils literal"><span class="pre">ascending</span></tt> argument
 will reverse the ordering (immediate parent first, root ancestor last).</p>
-<p>If <tt class="docutils literal"><span class="pre">include_self</span></tt> is <tt class="docutils literal"><span class="pre">True</span></tt>, the <tt class="docutils literal"><span class="pre">QuerySet</span></tt> will also include the
+<p>If <tt class="docutils literal"><span class="pre">include_self</span></tt> is <tt class="xref docutils literal"><span class="pre">True</span></tt>, the <tt class="docutils literal"><span class="pre">QuerySet</span></tt> will also include the
 model instance itself.</p>
 </div>
 <div class="section" id="get-children">
@@ -218,7 +215,7 @@ children).</p>
 <h3><a class="toc-backref" href="#id8"><tt class="docutils literal"><span class="pre">get_descendants(include_self=False)</span></tt></a><a class="headerlink" href="#get-descendants-include-self-false" title="Permalink to this headline">¶</a></h3>
 <p>Creates a <tt class="docutils literal"><span class="pre">QuerySet</span></tt> containing descendants of the model instance, in
 tree order.</p>
-<p>If <tt class="docutils literal"><span class="pre">include_self</span></tt> is <tt class="docutils literal"><span class="pre">True</span></tt>, the <tt class="docutils literal"><span class="pre">QuerySet</span></tt> will also include the
+<p>If <tt class="docutils literal"><span class="pre">include_self</span></tt> is <tt class="xref docutils literal"><span class="pre">True</span></tt>, the <tt class="docutils literal"><span class="pre">QuerySet</span></tt> will also include the
 model instance itself.</p>
 </div>
 <div class="section" id="get-descendant-count">
@@ -229,12 +226,12 @@ any database access.</p>
 </div>
 <div class="section" id="get-next-sibling">
 <h3><a class="toc-backref" href="#id10"><tt class="docutils literal"><span class="pre">get_next_sibling()</span></tt></a><a class="headerlink" href="#get-next-sibling" title="Permalink to this headline">¶</a></h3>
-<p>Returns the model instance&#8217;s next sibling in the tree, or <tt class="docutils literal"><span class="pre">None</span></tt> if it
+<p>Returns the model instance&#8217;s next sibling in the tree, or <tt class="xref docutils literal"><span class="pre">None</span></tt> if it
 doesn&#8217;t have a next sibling.</p>
 </div>
 <div class="section" id="get-previous-sibling">
 <h3><a class="toc-backref" href="#id11"><tt class="docutils literal"><span class="pre">get_previous_sibling()</span></tt></a><a class="headerlink" href="#get-previous-sibling" title="Permalink to this headline">¶</a></h3>
-<p>Returns the model instance&#8217;s previous sibling in the tree, or <tt class="docutils literal"><span class="pre">None</span></tt>
+<p>Returns the model instance&#8217;s previous sibling in the tree, or <tt class="xref docutils literal"><span class="pre">None</span></tt>
 if it doesn&#8217;t have a previous sibling.</p>
 </div>
 <div class="section" id="get-root">
@@ -245,7 +242,7 @@ if it doesn&#8217;t have a previous sibling.</p>
 <h3><a class="toc-backref" href="#id13"><tt class="docutils literal"><span class="pre">get_siblings(include_self=False)</span></tt></a><a class="headerlink" href="#get-siblings-include-self-false" title="Permalink to this headline">¶</a></h3>
 <p>Creates a <tt class="docutils literal"><span class="pre">QuerySet</span></tt> containing siblings of the model instance. Root
 nodes are considered to be siblings of other root nodes.</p>
-<p>If <tt class="docutils literal"><span class="pre">include_self</span></tt> is <tt class="docutils literal"><span class="pre">True</span></tt>, the <tt class="docutils literal"><span class="pre">QuerySet</span></tt> will also include the
+<p>If <tt class="docutils literal"><span class="pre">include_self</span></tt> is <tt class="xref docutils literal"><span class="pre">True</span></tt>, the <tt class="docutils literal"><span class="pre">QuerySet</span></tt> will also include the
 model instance itself.</p>
 </div>
 <div class="section" id="insert-at-target-position-first-child-save-false">
@@ -258,17 +255,17 @@ called.</p>
 </div>
 <div class="section" id="is-child-node">
 <h3><a class="toc-backref" href="#id15"><tt class="docutils literal"><span class="pre">is_child_node()</span></tt></a><a class="headerlink" href="#is-child-node" title="Permalink to this headline">¶</a></h3>
-<p>Returns <tt class="docutils literal"><span class="pre">True</span></tt> if the model instance is a child node, <tt class="docutils literal"><span class="pre">False</span></tt>
+<p>Returns <tt class="xref docutils literal"><span class="pre">True</span></tt> if the model instance is a child node, <tt class="xref docutils literal"><span class="pre">False</span></tt>
 otherwise.</p>
 </div>
 <div class="section" id="is-leaf-node">
 <h3><a class="toc-backref" href="#id16"><tt class="docutils literal"><span class="pre">is_leaf_node()</span></tt></a><a class="headerlink" href="#is-leaf-node" title="Permalink to this headline">¶</a></h3>
-<p>Returns <tt class="docutils literal"><span class="pre">True</span></tt> if the model instance is a leaf node (it has no
-children), <tt class="docutils literal"><span class="pre">False</span></tt> otherwise.</p>
+<p>Returns <tt class="xref docutils literal"><span class="pre">True</span></tt> if the model instance is a leaf node (it has no
+children), <tt class="xref docutils literal"><span class="pre">False</span></tt> otherwise.</p>
 </div>
 <div class="section" id="is-root-node">
 <h3><a class="toc-backref" href="#id17"><tt class="docutils literal"><span class="pre">is_root_node()</span></tt></a><a class="headerlink" href="#is-root-node" title="Permalink to this headline">¶</a></h3>
-<p>Returns <tt class="docutils literal"><span class="pre">True</span></tt> if the model instance is a root node, <tt class="docutils literal"><span class="pre">False</span></tt>
+<p>Returns <tt class="xref docutils literal"><span class="pre">True</span></tt> if the model instance is a root node, <tt class="xref docutils literal"><span class="pre">False</span></tt>
 otherwise.</p>
 </div>
 <div class="section" id="move-to-target-position-first-child">
@@ -288,7 +285,7 @@ in the tree structure being put into an inaccurate state.</p>
 the type of movement which needs to take place, and will be used as the
 basis for positioning the model when it is moved, in combination with
 the <tt class="docutils literal"><span class="pre">position</span></tt> argument.</p>
-<p>A <tt class="docutils literal"><span class="pre">target</span></tt> of <tt class="docutils literal"><span class="pre">None</span></tt> indicates that the model instance should be
+<p>A <tt class="docutils literal"><span class="pre">target</span></tt> of <tt class="xref docutils literal"><span class="pre">None</span></tt> indicates that the model instance should be
 turned into a root node. The <tt class="docutils literal"><span class="pre">position</span></tt> argument is disregarded in
 this case.</p>
 <p>Valid values for the <tt class="docutils literal"><span class="pre">position</span></tt> argument and their effects on movement
@@ -379,7 +376,7 @@ model.</p>
 <tt class="docutils literal"><span class="pre">QuerySet</span></tt>, containing a count of how many instances of <tt class="docutils literal"><span class="pre">rel_cls</span></tt>
 are related to it through <tt class="docutils literal"><span class="pre">rel_field</span></tt>.</dd>
 <dt><tt class="docutils literal"><span class="pre">cumulative</span></tt></dt>
-<dd>If <tt class="docutils literal"><span class="pre">True</span></tt>, the count will be for each item and all of its
+<dd>If <tt class="xref docutils literal"><span class="pre">True</span></tt>, the count will be for each item and all of its
 descendants, otherwise it will be for each item itself.</dd>
 </dl>
 </div>
@@ -393,16 +390,16 @@ descendants, otherwise it will be for each item itself.</dd>
 into in the database) so it will be positioned relative to a given
 <tt class="docutils literal"><span class="pre">target</span></tt> node as specified by <tt class="docutils literal"><span class="pre">position</span></tt> (when appropriate) when it
 is inserted, with any neccessary space already having been made for it.</p>
-<p>A <tt class="docutils literal"><span class="pre">target</span></tt> of <tt class="docutils literal"><span class="pre">None</span></tt> indicates that <tt class="docutils literal"><span class="pre">node</span></tt> should be the last root
+<p>A <tt class="docutils literal"><span class="pre">target</span></tt> of <tt class="xref docutils literal"><span class="pre">None</span></tt> indicates that <tt class="docutils literal"><span class="pre">node</span></tt> should be the last root
 node.</p>
-<p>If <tt class="docutils literal"><span class="pre">save</span></tt> is <tt class="docutils literal"><span class="pre">True</span></tt>, <tt class="docutils literal"><span class="pre">node</span></tt>&#8216;s <tt class="docutils literal"><span class="pre">save()</span></tt> method will be called
+<p>If <tt class="docutils literal"><span class="pre">save</span></tt> is <tt class="xref docutils literal"><span class="pre">True</span></tt>, <tt class="docutils literal"><span class="pre">node</span></tt>&#8216;s <tt class="docutils literal"><span class="pre">save()</span></tt> method will be called
 before it is returned.</p>
 </div>
 <div class="section" id="move-node-node-target-position-last-child">
 <h4><tt class="docutils literal"><span class="pre">move_node(node,</span> <span class="pre">target,</span> <span class="pre">position='last-child')</span></tt><a class="headerlink" href="#move-node-node-target-position-last-child" title="Permalink to this headline">¶</a></h4>
 <p>Moves <tt class="docutils literal"><span class="pre">node</span></tt> based on <tt class="docutils literal"><span class="pre">target</span></tt>, relative to <tt class="docutils literal"><span class="pre">position</span></tt> when
 appropriate.</p>
-<p>A <tt class="docutils literal"><span class="pre">target</span></tt> of <tt class="docutils literal"><span class="pre">None</span></tt> indicates that <tt class="docutils literal"><span class="pre">node</span></tt> should be removed from
+<p>A <tt class="docutils literal"><span class="pre">target</span></tt> of <tt class="xref docutils literal"><span class="pre">None</span></tt> indicates that <tt class="docutils literal"><span class="pre">node</span></tt> should be removed from
 its current position and turned into a root node. If <tt class="docutils literal"><span class="pre">node</span></tt> is a root
 node in this case, no action will be taken.</p>
 <p>The given <tt class="docutils literal"><span class="pre">node</span></tt> will be modified to reflect its new tree state in the
@@ -500,7 +497,7 @@ them:</p>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" size="18" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -529,12 +526,12 @@ them:</p>
         <li class="right" >
           <a href="tutorial.html" title="Tutorial"
              >previous</a> |</li>
-        <li><a href="index.html">django-mptt 0.6.0 documentation</a> &raquo;</li> 
+        <li><a href="index.html">django-mptt v0.6.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
         &copy; Copyright 2007 - 2013, Craig de Stigter, Jonathan Buchanan and others.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>
 </html>
