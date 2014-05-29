@@ -124,7 +124,7 @@ node and makes queries which need to take depth into account easier to
 implement using Django&#8217;s ORM. For example, limiting the number of levels
 of nodes which are retrieved for the whole tree or any subtree:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="c"># Retrieve root nodes and their immediate children only</span>
-<span class="n">SomeModel</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">level__lte</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">SomeModel</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">level__lte</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
 <span class="c"># Retrieve descendants of a node up to two levels below it</span>
 <span class="n">node</span><span class="o">.</span><span class="n">get_descendants</span><span class="p">()</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">level__lte</span><span class="o">=</span><span class="n">node</span><span class="o">.</span><span class="n">level</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>

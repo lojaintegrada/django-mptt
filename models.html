@@ -419,7 +419,7 @@ database.</p>
 <p>Retrieving a list of root Categories which have a <tt class="docutils literal"><span class="pre">question_count</span></tt>
 attribute containing the number of Questions associated with each root
 and all of its descendants:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">roots</span> <span class="o">=</span> <span class="n">Category</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">add_related_count</span><span class="p">(</span><span class="n">Category</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">root_nodes</span><span class="p">(),</span> <span class="n">Question</span><span class="p">,</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">roots</span> <span class="o">=</span> <span class="n">Category</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">add_related_count</span><span class="p">(</span><span class="n">Category</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">root_nodes</span><span class="p">(),</span> <span class="n">Question</span><span class="p">,</span>
                                         <span class="s">&#39;category&#39;</span><span class="p">,</span> <span class="s">&#39;question_counts&#39;</span><span class="p">,</span>
                                         <span class="n">cumulative</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </pre></div>
