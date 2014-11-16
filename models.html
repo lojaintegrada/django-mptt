@@ -329,7 +329,14 @@ foreign key to an MPTT model. This includes the <tt class="docutils literal"><sp
 created on your model.</p>
 <p><tt class="docutils literal"><span class="pre">TreeForeignKey</span></tt> is just like a regular <tt class="docutils literal"><span class="pre">ForeignKey</span></tt> but it makes the default
 form field display choices in tree form.</p>
-<p>There are also <tt class="docutils literal"><span class="pre">TreeOneToOneField</span></tt> and <tt class="docutils literal"><span class="pre">TreeManyToManyField</span></tt> if you need them.</p>
+<p>There are also <tt class="docutils literal"><span class="pre">TreeOneToOneField</span></tt> and <tt class="docutils literal"><span class="pre">TreeManyToManyField</span></tt> if you need them.
+These may come in useful on other models that relate to your tree model in some way.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You can&#8217;t use a many-to-many as your &#8216;parent&#8217; field. That&#8217;s because
+the mptt algorithm only handles trees, not arbitrary graphs. A tree where nodes
+can have multiple parents isn&#8217;t really a tree at all.</p>
+</div>
 </div>
 <div class="section" id="the-treemanager-custom-manager">
 <h2><a class="toc-backref" href="#id20">The <tt class="docutils literal"><span class="pre">TreeManager</span></tt> custom manager</a><a class="headerlink" href="#the-treemanager-custom-manager" title="Permalink to this headline">¶</a></h2>
