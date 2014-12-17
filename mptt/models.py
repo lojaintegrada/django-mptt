@@ -838,7 +838,7 @@ class MPTTModel(six.with_metaclass(MPTTModelBase, models.Model)):
             super(MPTTModel, self).save(*args, **kwargs)
         finally:
             if collapse_old_tree is not None:
-                self._tree_manager._create_tree_space(collapse_old_tree, -1)
+                self._tree_manager._create_tree_space(collapse_old_tree, self.conta.id, -1)
 
         self._mptt_saved = True
         opts.update_mptt_cached_fields(self)
