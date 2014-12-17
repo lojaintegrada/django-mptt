@@ -25,13 +25,12 @@ def previous_current_next(items):
     """
     extend = itertools.chain([None], items, [None])
     prev, cur, nex = itertools.tee(extend, 3)
-    # Advancing an iterator twice when we know there are two items (the
-    # two Nones at the start and at the end) will never fail except if
-    # `items` is some funny StopIteration-raising generator. There's no point
-    # in swallowing this exception.
-    next(cur)
-    next(nex)
-    next(nex)
+    try:
+        next(cur)
+        next(nex)
+        next(nex)
+    except StopIteration:
+        pass
     return zip(prev, cur, nex)
 
 
@@ -71,7 +70,7 @@ def tree_item_iterator(items, ancestors=False):
     structure = {}
     opts = None
     first_item_level = 0
-    for previous, current, next_ in previous_current_next(items):
+    for previous, current, next in previous_current_next(items):
         if opts is None:
             opts = current._mptt_meta
 
@@ -97,17 +96,13 @@ def tree_item_iterator(items, ancestors=False):
                 structure['ancestors'] = []
 
             first_item_level = current_level
-        if next_:
-            structure['closed_levels'] = list(range(
-                current_level,
-                getattr(next_, opts.level_attr),
-                -1))
+        if next:
+            structure['closed_levels'] = list(range(current_level,
+                                               getattr(next,
+                                                       opts.level_attr), -1))
         else:
             # All remaining levels need to be closed
-            structure['closed_levels'] = list(range(
-                current_level,
-                first_item_level - 1,
-                -1))
+            structure['closed_levels'] = list(range(current_level, first_item_level - 1, -1))
 
         # Return a deep copy of the structure dict so this function can
         # be used in situations where the iterator is consumed
@@ -150,14 +145,14 @@ def drilldown_tree_for_node(node, rel_cls=None, rel_field=None, count_attr=None,
     return itertools.chain(node.get_ancestors(), [node], children)
 
 
-def print_debug_info(qs, file=None):
+def print_debug_info(qs):
     """
     Given an mptt queryset, prints some debug information to stdout.
     Use this when things go wrong.
     Please include the output from this method when filing bug issues.
     """
     opts = qs.model._mptt_meta
-    writer = csv.writer(sys.stdout if file is None else file)
+    writer = csv.writer(sys.stdout)
     header = (
         'pk',
         opts.level_attr,

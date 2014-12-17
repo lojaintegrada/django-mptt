@@ -6,8 +6,6 @@ Utilities for implementing Modified Preorder Tree Traversal with your
 Django Models and working with trees of Model instances.
 
 .. image:: https://secure.travis-ci.org/django-mptt/django-mptt.png?branch=master
-    :alt: Build Status
-    :target: https://travis-ci.org/django-mptt/django-mptt
 
 Project home: http://github.com/django-mptt/django-mptt/
 
@@ -49,8 +47,8 @@ structure and provides tools for working with trees of model instances.
 Requirements
 ------------
 
-* Python 2.6+ (with experimental support for python 3.2+ and PyPy)
-* Django 1.4.2+
+Python 2.6+ (with experimental support for python 3.2+)
+Django 1.4.2+
 
 Feature overview
 ----------------

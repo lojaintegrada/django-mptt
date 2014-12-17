@@ -4,15 +4,11 @@ trees.
 """
 from __future__ import unicode_literals
 from django import template
-try:
-    from django.apps import apps
-    get_model = apps.get_model
-except ImportError:  # pragma: no cover (Django 1.6 compatibility)
-    from django.db.models import get_model
+from django.db.models import get_model
 from django.db.models.fields import FieldDoesNotExist
 try:
     from django.utils.encoding import force_text
-except ImportError:  # pragma: no cover (Django 1.4 compatibility)
+except ImportError:
     from django.utils.encoding import force_unicode as force_text
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
@@ -22,7 +18,7 @@ from mptt.utils import tree_item_iterator, drilldown_tree_for_node
 register = template.Library()
 
 
-# ## ITERATIVE TAGS
+### ITERATIVE TAGS
 
 class FullTreeForModelNode(template.Node):
     def __init__(self, model, context_var):
@@ -57,7 +53,7 @@ class DrilldownTreeForNodeNode(template.Node):
             cls = get_model(app_label, model_name)
             if cls is None:
                 raise template.TemplateSyntaxError(
-                    _('drilldown_tree_for_node tag was given an invalid model: %s') %
+                    _('drilldown_tree_for_node tag was given an invalid model: %s') % \
                     '.'.join([app_label, model_name])
                 )
             try:
@@ -140,7 +136,7 @@ def do_drilldown_tree_for_node(parser, token):
        {% drilldown_tree_for_node genre as drilldown count tests.Game.genre in game_count %}
        {% drilldown_tree_for_node genre as drilldown cumulative count tests.Game.genre in game_count %}
 
-    """  # noqa
+    """
     bits = token.contents.split()
     len_bits = len(bits)
     if len_bits not in (4, 8, 9):
@@ -152,26 +148,21 @@ def do_drilldown_tree_for_node(parser, token):
     if len_bits == 8:
         if bits[4] != 'count':
             raise template.TemplateSyntaxError(
-                _("if seven arguments are given, fourth argument to %s tag must be 'with'")
-                % bits[0])
+                _("if seven arguments are given, fourth argument to %s tag must be 'with'") % bits[0])
         if bits[6] != 'in':
             raise template.TemplateSyntaxError(
-                _("if seven arguments are given, sixth argument to %s tag must be 'in'")
-                % bits[0])
+                _("if seven arguments are given, sixth argument to %s tag must be 'in'") % bits[0])
         return DrilldownTreeForNodeNode(bits[1], bits[3], bits[5], bits[7])
     elif len_bits == 9:
         if bits[4] != 'cumulative':
             raise template.TemplateSyntaxError(
-                _("if eight arguments are given, fourth argument to %s tag must be 'cumulative'")
-                % bits[0])
+                _("if eight arguments are given, fourth argument to %s tag must be 'cumulative'") % bits[0])
         if bits[5] != 'count':
             raise template.TemplateSyntaxError(
-                _("if eight arguments are given, fifth argument to %s tag must be 'count'")
-                % bits[0])
+                _("if eight arguments are given, fifth argument to %s tag must be 'count'") % bits[0])
         if bits[7] != 'in':
             raise template.TemplateSyntaxError(
-                _("if eight arguments are given, seventh argument to %s tag must be 'in'")
-                % bits[0])
+                _("if eight arguments are given, seventh argument to %s tag must be 'in'") % bits[0])
         return DrilldownTreeForNodeNode(bits[1], bits[3], bits[6], bits[8], cumulative=True)
     else:
         return DrilldownTreeForNodeNode(bits[1], bits[3])
@@ -200,9 +191,9 @@ def tree_info(items, features=None):
     Example::
 
        {% for genre,structure in genres|tree_info %}
-       {% if structure.new_level %}<ul><li>{% else %}</li><li>{% endif %}
+       {% if tree.new_level %}<ul><li>{% else %}</li><li>{% endif %}
        {{ genre.name }}
-       {% for level in structure.closed_levels %}</li></ul>{% endfor %}
+       {% for level in tree.closed_levels %}</li></ul>{% endfor %}
        {% endfor %}
 
     """
@@ -229,10 +220,10 @@ def tree_path(items, separator=' :: '):
        {{ some_node.get_ancestors|tree_path:" > " }}
 
     """
-    return separator.join(force_text(i) for i in items)
+    return separator.join([force_text(i) for i in items])
 
 
-# ## RECURSIVE TAGS
+### RECURSIVE TAGS
 
 @register.filter
 def cache_tree_children(queryset):

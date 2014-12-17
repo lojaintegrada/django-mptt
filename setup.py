@@ -3,17 +3,17 @@ from __future__ import unicode_literals
 
 from mptt import VERSION
 
-requires = (str('Django>=1.4.2'),)
+requires=(str('Django>=1.4.2'),)
 try:
     from setuptools import setup
-    kwargs = {str('install_requires'): requires}
+    kwargs ={str('install_requires'): requires}
 except ImportError:
     from distutils.core import setup
     kwargs = {str('requires'): requires}
 
 # Dynamically calculate the version based on mptt.VERSION
 version_tuple = VERSION
-version = ".".join(str(v) for v in version_tuple)
+version = ".".join([str(v) for v in version_tuple])
 
 # on py3, all these are text strings
 # on py2, they're all byte strings.
@@ -36,16 +36,8 @@ setup(
         str('License :: OSI Approved :: MIT License'),
         str('Operating System :: OS Independent'),
         str('Programming Language :: Python'),
-        str("Programming Language :: Python :: 2"),
-        str("Programming Language :: Python :: 2.6"),
-        str("Programming Language :: Python :: 2.7"),
-        str("Programming Language :: Python :: 3"),
-        str("Programming Language :: Python :: 3.1"),
-        str("Programming Language :: Python :: 3.2"),
-        str("Programming Language :: Python :: 3.3"),
-        str("Programming Language :: Python :: 3.4"),
-        str("Programming Language :: Python :: Implementation :: CPython"),
-        str("Programming Language :: Python :: Implementation :: PyPy"),
+        str('Programming Language :: Python :: 2'),
+        str('Programming Language :: Python :: 3'),
         str('Topic :: Utilities'),
     ],
     **kwargs

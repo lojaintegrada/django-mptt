@@ -1,35 +1,29 @@
 from __future__ import unicode_literals
 
-import io
 import os
 import re
 import sys
 import tempfile
 
 import django
-from django.contrib.auth.models import Group, User
-try:
-    from django.apps import apps
-    get_models = apps.get_models
-except ImportError:  # pragma: no cover (Django 1.6 compatibility)
-    from django.db.models import get_models
+from django.contrib import admin
+from django.contrib.auth.models import Group
+from django.db.models import get_models
 from django.forms.models import modelform_factory
-from django.template import Template, TemplateSyntaxError, Context
+from django.template import Template, Context
 from django.test import TestCase
-from django.utils.six import string_types, PY3, b, assertRaisesRegex
+from django.utils.six import string_types, PY3, b
+
+try:
+    import feincms
+except ImportError:
+    feincms = False
 
 from mptt.exceptions import CantDisableUpdates, InvalidMove
-from mptt.forms import (
-    MPTTAdminForm, TreeNodeChoiceField, TreeNodeMultipleChoiceField,
-    MoveNodeForm)
+from mptt.forms import MPTTAdminForm
 from mptt.models import MPTTModel
 from mptt.templatetags.mptt_tags import cache_tree_children
-from mptt.utils import print_debug_info
-
-from myapp.models import (
-    Category, Genre, CustomPKName, SingleProxyModel, DoubleProxyModel,
-    ConcreteModel, OrderedInsertion, AutoNowDateFieldModel, Person,
-    CustomTreeQueryset, Node, ReferencingModel)
+from myapp.models import Category, Genre, CustomPKName, SingleProxyModel, DoubleProxyModel, ConcreteModel, OrderedInsertion, AutoNowDateFieldModel
 
 extra_queries_per_update = 0
 if django.VERSION < (1, 6):
@@ -92,7 +86,7 @@ class DocTestTestCase(TreeTestCase):
 
         dummy_stream = DummyStream()
         before = sys.stdout
-        sys.stdout = dummy_stream
+        #sys.stdout = dummy_stream
 
         with open(os.path.join(os.path.dirname(__file__), 'doctests.txt')) as f:
             with tempfile.NamedTemporaryFile() as temp:
@@ -113,11 +107,12 @@ class DocTestTestCase(TreeTestCase):
                     module_relative=False,
                     optionflags=doctest.IGNORE_EXCEPTION_DETAIL,
                     encoding='utf-8',
+                    raise_on_error=True,
                 )
                 sys.stdout = before
                 content = dummy_stream.content
                 if content:
-                    before.write(content + '\n')
+                    sys.stderr.write(content + '\n')
                     self.fail()
 
 # genres.json defines the following tree structure
@@ -439,6 +434,27 @@ class PositionedInsertionTestCase(TreeTestCase):
     pass
 
 
+if feincms:
+    class FeinCMSModelAdminTestCase(TreeTestCase):
+        """
+        Tests for FeinCMSModelAdmin.
+        """
+        fixtures = ['categories.json']
+
+        def test_actions_column(self):
+            """
+            The action column should have an "add" button inserted.
+            """
+            from mptt.admin import FeinCMSModelAdmin
+            model_admin = FeinCMSModelAdmin(Category, admin.site)
+
+            category = Category.objects.get(id=1)
+            self.assertTrue(
+                '<a href="add/?parent=1" title="Add child">' in
+                model_admin._actions_column(category)[0]
+            )
+
+
 class CustomPKNameTestCase(TreeTestCase):
     def setUp(self):
         manager = CustomPKName.objects
@@ -476,9 +492,7 @@ class DisabledUpdatesTestCase(TreeTestCase):
         self.assertTrue(ConcreteModel._mptt_updates_enabled)
         self.assertTrue(SingleProxyModel._mptt_updates_enabled)
 
-        self.assertRaises(
-            CantDisableUpdates,
-            SingleProxyModel.objects.disable_mptt_updates().__enter__)
+        self.assertRaises(CantDisableUpdates, SingleProxyModel.objects.disable_mptt_updates().__enter__)
 
         self.assertTrue(ConcreteModel._mptt_updates_enabled)
         self.assertTrue(SingleProxyModel._mptt_updates_enabled)
@@ -494,9 +508,7 @@ class DisabledUpdatesTestCase(TreeTestCase):
         self.assertTrue(ConcreteModel._mptt_updates_enabled)
         self.assertTrue(DoubleProxyModel._mptt_updates_enabled)
 
-        self.assertRaises(
-            CantDisableUpdates,
-            DoubleProxyModel.objects.disable_mptt_updates().__enter__)
+        self.assertRaises(CantDisableUpdates, DoubleProxyModel.objects.disable_mptt_updates().__enter__)
 
         self.assertTrue(ConcreteModel._mptt_updates_enabled)
         self.assertTrue(DoubleProxyModel._mptt_updates_enabled)
@@ -668,9 +680,7 @@ class DelayedUpdatesTestCase(TreeTestCase):
         self.assertFalse(ConcreteModel._mptt_is_tracking)
         self.assertFalse(SingleProxyModel._mptt_is_tracking)
 
-        self.assertRaises(
-            CantDisableUpdates,
-            SingleProxyModel.objects.delay_mptt_updates().__enter__)
+        self.assertRaises(CantDisableUpdates, SingleProxyModel.objects.delay_mptt_updates().__enter__)
 
         self.assertFalse(ConcreteModel._mptt_is_tracking)
         self.assertFalse(SingleProxyModel._mptt_is_tracking)
@@ -1040,9 +1050,7 @@ class ManagerTests(TreeTestCase):
                 continue
             tm = model._tree_manager
             if tm in seen:
-                self.fail(
-                    "Tree managers for %s and %s are the same manager"
-                    % (model.__name__, seen[tm].__name__))
+                self.fail("Tree managers for %s and %s are the same manager" % (model.__name__, seen[tm].__name__))
             seen[tm] = model
 
     def test_all_managers_have_correct_model(self):
@@ -1080,32 +1088,6 @@ class ManagerTests(TreeTestCase):
             ['Games', 'Hardware & Accessories', 'Nintendo Wii'],
         )
 
-    def test_get_queryset_ancestors(self):
-        def get_anc_names(qs, include_self=False):
-            anc = Category.objects.get_queryset_ancestors(qs, include_self=include_self)
-            return list(anc.values_list('name', flat=True).order_by('name'))
-
-        qs = Category.objects.filter(name='Nintendo Wii')
-        self.assertEqual(
-            get_anc_names(qs),
-            ['PC & Video Games'],
-        )
-        self.assertEqual(
-            get_anc_names(qs, include_self=True),
-            ['Nintendo Wii', 'PC & Video Games'],
-        )
-
-    def test_custom_querysets(self):
-        """
-        Test that a custom manager also provides custom querysets.
-        """
-
-        self.assertTrue(isinstance(Person.objects.all(), CustomTreeQueryset))
-        self.assertEqual(
-            type(Person.objects.all()),
-            type(Person.objects.root_nodes())
-        )
-
 
 class CacheTreeChildrenTestCase(TreeTestCase):
     """
@@ -1128,197 +1110,43 @@ class CacheTreeChildrenTestCase(TreeTestCase):
             self.assertEqual(wii, wii_games.parent)
             self.assertEqual(games, wii_games.parent.parent)
 
-    def test_cache_tree_children_with_invalid_ordering(self):
-        """
-        Ensures that ``cache_tree_children`` fails with a ``ValueError`` when
-        passed a list which is not in tree order.
-        """
-
-        with self.assertNumQueries(1):
-            self.assertRaises(
-                ValueError,
-                cache_tree_children,
-                list(Category.objects.order_by('-id')))
-
-        # Passing a list with correct ordering should work, though.
-        with self.assertNumQueries(1):
-            cache_tree_children(list(Category.objects.all()))
-
 
 class RecurseTreeTestCase(TreeTestCase):
     """
     Tests for the ``recursetree`` template filter.
     """
     fixtures = ['categories.json']
-    template = re.sub(r'(?m)^[\s]+', '', '''
-        {% load mptt_tags %}
-        <ul>
-            {% recursetree nodes %}
-                <li>
-                    {{ node.name }}
-                    {% if not node.is_leaf_node %}
-                        <ul class="children">
-                            {{ children }}
-                        </ul>
-                    {% endif %}
-                </li>
-            {% endrecursetree %}
-        </ul>
-    ''')
+    template = (
+        '{% load mptt_tags %}'
+        '<ul>'
+            '{% recursetree nodes %}'
+                '<li>'
+                    '{{ node.name }}'
+                    '{% if not node.is_leaf_node %}'
+                        '<ul class="children">'
+                            '{{ children }}'
+                        '</ul>'
+                    '{% endif %}'
+                '</li>'
+            '{% endrecursetree %}'
+        '</ul>'
+    )
 
     def test_leaf_html(self):
         html = Template(self.template).render(Context({
             'nodes': Category.objects.filter(pk=10),
-        })).replace('\n', '')
+        }))
         self.assertEqual(html, '<ul><li>Hardware &amp; Accessories</li></ul>')
 
     def test_nonleaf_html(self):
         qs = Category.objects.get(pk=8).get_descendants(include_self=True)
         html = Template(self.template).render(Context({
             'nodes': qs,
-        })).replace('\n', '')
+        }))
         self.assertEqual(html, (
             '<ul><li>PlayStation 3<ul class="children">'
             '<li>Games</li><li>Hardware &amp; Accessories</li></ul></li></ul>'
         ))
-
-    def test_parsing_fail(self):
-        self.assertRaises(
-            TemplateSyntaxError,
-            Template,
-            '{% load mptt_tags %}{% recursetree %}{% endrecursetree %}')
-
-
-class TreeInfoTestCase(TreeTestCase):
-    fixtures = ['genres.json']
-    template = re.sub(r'(?m)^[\s]+', '', '''
-        {% load mptt_tags %}
-        {% for node, structure in nodes|tree_info %}
-        {% if structure.new_level %}<ul><li>{% else %}</li><li>{% endif %}
-        {{ node.pk }}
-        {% for level in structure.closed_levels %}</li></ul>{% endfor %}
-        {% endfor %}''')
-
-    template_with_ancestors = re.sub(r'(?m)^[\s]+', '', '''
-        {% load mptt_tags %}
-        {% for node, structure in nodes|tree_info:"ancestors" %}
-        {% if structure.new_level %}<ul><li>{% else %}</li><li>{% endif %}
-        {{ node.pk }}
-        {% for ancestor in structure.ancestors %}
-            {% if forloop.first %}A:{% endif %}
-            {{ ancestor }}{% if not forloop.last %},{% endif %}
-        {% endfor %}
-        {% for level in structure.closed_levels %}</li></ul>{% endfor %}
-        {% endfor %}''')
-
-    def test_tree_info_html(self):
-        html = Template(self.template).render(Context({
-            'nodes': Genre.objects.all(),
-        })).replace('\n', '')
-
-        self.assertEqual(
-            html,
-            '<ul><li>1<ul><li>2<ul><li>3</li><li>4</li><li>5</li></ul></li>'
-            '<li>6<ul><li>7</li><li>8</li></ul></li></ul></li><li>9<ul>'
-            '<li>10</li><li>11</li></ul></li></ul>')
-
-        html = Template(self.template).render(Context({
-            'nodes': Genre.objects.filter(**{
-                '%s__gte' % Genre._mptt_meta.level_attr: 1,
-                '%s__lte' % Genre._mptt_meta.level_attr: 2,
-            }),
-        })).replace('\n', '')
-
-        self.assertEqual(
-            html,
-            '<ul><li>2<ul><li>3</li><li>4</li><li>5</li></ul></li><li>6<ul>'
-            '<li>7</li><li>8</li></ul></li><li>10</li><li>11</li></ul>')
-
-        html = Template(self.template_with_ancestors).render(Context({
-            'nodes': Genre.objects.filter(**{
-                '%s__gte' % Genre._mptt_meta.level_attr: 1,
-                '%s__lte' % Genre._mptt_meta.level_attr: 2,
-            }),
-        })).replace('\n', '')
-
-        self.assertEqual(
-            html,
-            '<ul><li>2<ul><li>3A:Platformer</li><li>4A:Platformer</li>'
-            '<li>5A:Platformer</li></ul></li><li>6<ul><li>7A:Shootemup</li>'
-            '<li>8A:Shootemup</li></ul></li><li>10</li><li>11</li></ul>')
-
-
-class FullTreeTestCase(TreeTestCase):
-    fixtures = ['genres.json']
-    template = re.sub(r'(?m)^[\s]+', '', '''
-        {% load mptt_tags %}
-        {% full_tree_for_model myapp.Genre as tree %}
-        {% for node in tree %}{{ node.pk }},{% endfor %}
-        ''')
-
-    def test_full_tree_html(self):
-        html = Template(self.template).render(Context({})).replace('\n', '')
-        self.assertEqual(
-            html,
-            '1,2,3,4,5,6,7,8,9,10,11,')
-
-
-class DrilldownTreeTestCase(TreeTestCase):
-    fixtures = ['genres.json']
-    template = re.sub(r'(?m)^[\s]+', '', '''
-        {% load mptt_tags %}
-        {% drilldown_tree_for_node node as tree count myapp.Game.genre in game_count %}
-        {% for n in tree %}
-            {% ifequal n node %}[{% endifequal %}
-            {{ n.pk }}:{{ n.game_count }}
-            {% ifequal n node %}]{% endifequal %}{% if not forloop.last %},{% endif %}
-        {% endfor %}
-        ''')
-
-    def render_for_node(self, pk, cumulative=False, m2m=False):
-        template = self.template
-        if cumulative:
-            template = template.replace(' count ', ' cumulative count ')
-        if m2m:
-            template = template.replace('Game.genre', 'Game.genres_m2m')
-
-        return Template(template).render(Context({
-            'node': Genre.objects.get(pk=pk),
-        })).replace('\n', '')
-
-    def test_drilldown_html(self):
-        for idx, genre in enumerate(Genre.objects.all()):
-            for i in range(idx):
-                game = genre.game_set.create(name='Game %s' % i)
-                genre.games_m2m.add(game)
-
-        self.assertEqual(
-            self.render_for_node(1),
-            '[1:],2:1,6:5')
-        self.assertEqual(
-            self.render_for_node(2),
-            '1:,[2:],3:2,4:3,5:4')
-
-        self.assertEqual(
-            self.render_for_node(1, cumulative=True),
-            '[1:],2:10,6:18')
-        self.assertEqual(
-            self.render_for_node(2, cumulative=True),
-            '1:,[2:],3:2,4:3,5:4')
-
-        self.assertEqual(
-            self.render_for_node(1, m2m=True),
-            '[1:],2:1,6:5')
-        self.assertEqual(
-            self.render_for_node(2, m2m=True),
-            '1:,[2:],3:2,4:3,5:4')
-
-        self.assertEqual(
-            self.render_for_node(1, cumulative=True, m2m=True),
-            '[1:],2:10,6:18')
-        self.assertEqual(
-            self.render_for_node(2, cumulative=True, m2m=True),
-            '1:,[2:],3:2,4:3,5:4')
 
 
 class TestAutoNowDateFieldModel(TreeTestCase):
@@ -1341,167 +1169,5 @@ class TestForms(TreeTestCase):
     def test_adminform_instantiation(self):
         # https://github.com/django-mptt/django-mptt/issues/264
         c = Category.objects.get(name='Nintendo Wii')
-        CategoryForm = modelform_factory(
-            Category,
-            form=MPTTAdminForm,
-            fields=('name', 'parent'),
-        )
-        self.assertTrue(CategoryForm(instance=c))
-
-        # Test that the parent field is properly limited. (queryset)
-        form = CategoryForm({
-            'name': c.name,
-            'parent': c.children.all()[0].pk,
-        }, instance=c)
-        self.assertFalse(form.is_valid())
-        self.assertIn(
-            'Select a valid choice',
-            '%s' % form.errors)
-
-        # Test that even though we remove the field queryset limit,
-        # validation still fails.
-        form = CategoryForm({
-            'name': c.name,
-            'parent': c.children.all()[0].pk,
-        }, instance=c)
-        form.fields['parent'].queryset = Category.objects.all()
-        self.assertFalse(form.is_valid())
-        self.assertIn(
-            'Invalid parent',
-            '%s' % form.errors)
-
-    def test_field_types(self):
-        ReferencingModelForm = modelform_factory(
-            ReferencingModel,
-            exclude=('id',))
-
-        form = ReferencingModelForm()
-
-        # Also check whether we have the correct form field type
-        self.assertTrue(isinstance(
-            form.fields['fk'],
-            TreeNodeChoiceField))
-        self.assertTrue(isinstance(
-            form.fields['one'],
-            TreeNodeChoiceField))
-        self.assertTrue(isinstance(
-            form.fields['m2m'],
-            TreeNodeMultipleChoiceField))
-
-    def test_movenodeform(self):
-        c = Category.objects.get(pk=2)
-        form = MoveNodeForm(c, {
-            'target': '5',
-            'position': 'first-child',
-        })
-        self.assertTrue(form.is_valid())
-        form.save()
-
-        self.assertTreeEqual(Category.objects.all(), '''
-            1 - 1 0 1 20
-            5 1 1 1 2 13
-            2 5 1 2 3 8
-            3 2 1 3 4 5
-            4 2 1 3 6 7
-            6 5 1 2 9 10
-            7 5 1 2 11 12
-            8 1 1 1 14 19
-            9 8 1 2 15 16
-            10 8 1 2 17 18
-        ''')
-
-
-class TestAltersData(TreeTestCase):
-    def test_alters_data(self):
-        node = Node()
-        output = Template('{{ node.save }}').render(Context({
-            'node': node,
-        }))
-        self.assertEqual(output, '')
-        self.assertEqual(node.pk, None)
-
-        node.save()
-        self.assertNotEqual(node.pk, None)
-
-        output = Template('{{ node.delete }}').render(Context({
-            'node': node,
-        }))
-
-        self.assertEqual(node, Node.objects.get(pk=node.pk))
-
-
-class TestDebugInfo(TreeTestCase):
-    fixtures = ['categories.json']
-
-    def test_debug_info(self):  # Currently fails either on PY2 or PY3.
-        stream_type = io.StringIO if PY3 else io.BytesIO
-        with stream_type() as out:
-            print_debug_info(Category.objects.all(), file=out)
-            output = out.getvalue()
-
-        self.assertIn('1,0,,1,1,20', output)
-
-
-class AdminBatch(TreeTestCase):
-    fixtures = ['categories.json']
-
-    def test_changelist(self):
-        user = User.objects.create_superuser('admin', 'test@example.com', 'p')
-
-        self.client.login(username=user.username, password='p')
-
-        response = self.client.get('/admin/myapp/category/')
-        self.assertContains(
-            response,
-            'name="_selected_action"',
-            10)
-
-        mptt_opts = Category._mptt_meta
-        self.assertEqual(
-            response.context['cl'].result_list.query.order_by[:2],
-            [mptt_opts.tree_id_attr, mptt_opts.left_attr])
-
-        data = {
-            'action': 'delete_selected',
-            '_selected_action': ['5', '8', '9'],
-        }
-        response = self.client.post('/admin/myapp/category/', data)
-        self.assertContains(response, 'value="Yes, I\'m sure"', 1)
-
-        data['post'] = 'yes'
-        response = self.client.post('/admin/myapp/category/', data)
-
-        self.assertRedirects(
-            response,
-            '/admin/myapp/category/')
-
-        self.assertEqual(Category.objects.count(), 4)
-
-        # Batch deletion has not clobbered MPTT values, because our method
-        # delete_selected_tree has been used.
-        self.assertTreeEqual(Category.objects.all(), '''
-            1 - 1 0 1 8
-            2 1 1 1 2 7
-            3 2 1 2 3 4
-            4 2 1 2 5 6
-        ''')
-
-
-class TestUnsaved(TreeTestCase):
-    def test_unsaved(self):
-        for method in [
-            'get_ancestors',
-            'get_family',
-            'get_children',
-            'get_descendants',
-            'get_leafnodes',
-            'get_next_sibling',
-            'get_previous_sibling',
-            'get_root',
-            'get_siblings',
-        ]:
-            assertRaisesRegex(
-                self,
-                ValueError,
-                'Cannot call %s on unsaved Genre instances' % method,
-                getattr(Genre(), method))
+        CategoryForm = modelform_factory(Category, form=MPTTAdminForm, exclude=())
+        CategoryForm(instance=c)

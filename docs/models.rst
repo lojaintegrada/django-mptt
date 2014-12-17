@@ -10,13 +10,13 @@ Setting up a Django model for MPTT
 ==================================
 
 Start with a basic subclass of MPTTModel, something like this::
-
+   
     from django.db import models
     from mptt.models import MPTTModel, TreeForeignKey
-
+    
     class Genre(MPTTModel):
         name = models.CharField(max_length=50, unique=True)
-        parent = TreeForeignKey('self', null=True, blank=True, related_name='children', db_index=True)
+        parent = TreeForeignKey('self', null=True, blank=True, related_name='children')
 
 You must define a parent field which is a ``ForeignKey`` to ``'self'``. Recommended: use ``TreeForeignKey``. You can
 call it something different if you want - see `Model Options`_ below.
@@ -42,8 +42,8 @@ To change the names, create an ``MPTTMeta`` class inside your class::
 
     class Genre(MPTTModel):
         name = models.CharField(max_length=50, unique=True)
-        parent = TreeForeignKey('self', null=True, blank=True, related_name='children', db_index=True)
-
+        parent = TreeForeignKey('self', null=True, blank=True, related_name='children')
+        
         class MPTTMeta:
             level_attr = 'mptt_level'
             order_insertion_by=['name']
@@ -58,7 +58,7 @@ The available options for the MPTTMeta class are:
    Users are responsible for setting this field up on the model class,
    which can be done like so::
 
-      parent = TreeForeignKey('self', null=True, blank=True, related_name='children', db_index=True)
+      parent = TreeForeignKey('self', null=True, blank=True, related_name='children')
 
 For the following four arguments, if fields with the given names do not
 exist, they will be added to the model dynamically:
@@ -105,7 +105,7 @@ exist, they will be added to the model dynamically:
 Registration of existing models
 ===============================
 
-The preferred way to do model registration in ``django-mptt`` is by subclassing ``MPTTModel``.
+The preferred way to do model registration in ``django-mptt`` 0.4 is by subclassing ``MPTTModel``.
 
 However, sometimes that doesn't quite work. For instance, suppose you want to modify Django's Group model to be hierarchical.
 
@@ -114,11 +114,13 @@ You can't subclass MPTTModel without modifying the Group source. Instead, you ca
     import mptt
     from mptt.fields import TreeForeignKey
     from django.contrib.auth.models import Group
-
+    
     # add a parent foreign key
-    TreeForeignKey(Group, blank=True, null=True, db_index=True).contribute_to_class(Group, 'parent')
-
+    TreeForeignKey(Group, blank=True, null=True).contribute_to_class(Group, 'parent')
+    
     mptt.register(Group, order_insertion_by=['name'])
+
+``mptt.register()`` was removed in 0.4.0 but restored in 0.4.2, when this use case was reported.
 
 
 MPTTModel instance methods
@@ -129,7 +131,7 @@ Subclasses of MPTTModel have the following instance methods:
 ``get_ancestors(ascending=False, include_self=False)``
 ------------------------------------------------------
 
-Creates a ``QuerySet`` containing the ancestors of the model instance.
+creates a ``QuerySet`` containing the ancestors of the model instance.
 
 These default to being in descending order (root ancestor first,
 immediate parent last); passing ``True`` for the ``ascending`` argument
@@ -137,9 +139,6 @@ will reverse the ordering (immediate parent first, root ancestor last).
 
 If ``include_self`` is ``True``, the ``QuerySet`` will also include the
 model instance itself.
-
-Raises a ``ValueError`` if the instance isn't saved already.
-
 
 ``get_children()``
 ------------------
@@ -152,9 +151,6 @@ the ORM to the instance's children is that a database query can be
 avoided in the case where the instance is a leaf node (it has no
 children).
 
-Raises a ``ValueError`` if the instance isn't saved already.
-
-
 ``get_descendants(include_self=False)``
 ---------------------------------------
 
@@ -164,9 +160,6 @@ tree order.
 If ``include_self`` is ``True``, the ``QuerySet`` will also include the
 model instance itself.
 
-Raises a ``ValueError`` if the instance isn't saved already.
-
-
 ``get_descendant_count()``
 --------------------------
 
@@ -174,23 +167,11 @@ Returns the number of descendants the model instance has, based on its
 left and right tree node edge indicators. As such, this does not incur
 any database access.
 
-``get_family()``
-----------------
-
-Returns a ``QuerySet`` containing the ancestors, the model itself
-and the descendants, in tree order.
-
-Raises a ``ValueError`` if the instance isn't saved already.
-
-
 ``get_next_sibling()``
 ----------------------
 
 Returns the model instance's next sibling in the tree, or ``None`` if it
 doesn't have a next sibling.
-
-Raises a ``ValueError`` if the instance isn't saved already.
-
 
 ``get_previous_sibling()``
 --------------------------
@@ -198,16 +179,10 @@ Raises a ``ValueError`` if the instance isn't saved already.
 Returns the model instance's previous sibling in the tree, or ``None``
 if it doesn't have a previous sibling.
 
-Raises a ``ValueError`` if the instance isn't saved already.
-
-
 ``get_root()``
 --------------
 
 Returns the root node of the model instance's tree.
-
-Raises a ``ValueError`` if the instance isn't saved already.
-
 
 ``get_siblings(include_self=False)``
 ------------------------------------
@@ -217,9 +192,6 @@ nodes are considered to be siblings of other root nodes.
 
 If ``include_self`` is ``True``, the ``QuerySet`` will also include the
 model instance itself.
-
-Raises a ``ValueError`` if the instance isn't saved already.
-
 
 ``insert_at(target, position='first-child', save=False)``
 -----------------------------------------------------------
@@ -323,13 +295,6 @@ created on your model.
 form field display choices in tree form.
 
 There are also ``TreeOneToOneField`` and ``TreeManyToManyField`` if you need them.
-These may come in useful on other models that relate to your tree model in some way.
-
-
-.. note::
-   You can't use a many-to-many as your 'parent' field. That's because 
-   the mptt algorithm only handles trees, not arbitrary graphs. A tree where nodes
-   can have multiple parents isn't really a tree at all.
 
 
 The ``TreeManager`` custom manager
@@ -440,7 +405,7 @@ Retrieving a list of root Categories which have a ``question_count``
 attribute containing the number of Questions associated with each root
 and all of its descendants::
 
-   roots = Category.objects.add_related_count(Category.objects.root_nodes(), Question,
+   roots = Category.objects.add_related_count(Category.tree.root_nodes(), Question,
                                            'category', 'question_counts',
                                            cumulative=True)
 
