@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from mptt import VERSION
 
 requires=()
+
 try:
     from setuptools import setup
     kwargs ={str('install_requires'): requires}
