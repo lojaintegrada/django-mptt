@@ -10,7 +10,6 @@ from django.db.models import F, Max, Q
 from django.utils.translation import ugettext as _
 
 from mptt.exceptions import CantDisableUpdates, InvalidMove
-from mptt.utils import _get_tree_model
 
 __all__ = ('TreeManager',)
 
@@ -39,16 +38,29 @@ class TreeManager(models.Manager):
     """
     A manager for working with trees of objects.
     """
-    def contribute_to_class(self, model, name):
-        super(TreeManager, self).contribute_to_class(model, name)
 
-        if not model._meta.abstract:
-            self.tree_model = _get_tree_model(model)
+    def init_from_model(self, model):
+        """
+        Sets things up. This would normally be done in contribute_to_class(),
+        but Django calls that before we've created our extra tree fields on the
+        model (which we need). So it's done here instead, after field setup.
+        """
 
-            self._base_manager = None
-            if self.tree_model is not model:
-                # _base_manager is the treemanager on tree_model
-                self._base_manager = self.tree_model._tree_manager
+        # Avoid calling "get_field_by_name()", which populates the related
+        # models cache and can cause circular imports in complex projects.
+        # Instead, find the tree_id field using "get_fields_with_model()".
+        [tree_field] = [fld for fld in model._meta.get_fields_with_model() if fld[0].name == self.tree_id_attr]
+        if tree_field[1]:
+            # tree_model is the model that contains the tree fields.
+            # this is usually just the same as model, but not for derived models.
+            self.tree_model = tree_field[1]
+        else:
+            self.tree_model = model
+
+        self._base_manager = None
+        if self.tree_model is not model:
+            # _base_manager is the treemanager on tree_model
+            self._base_manager = self.tree_model._tree_manager
 
     def get_queryset_descendants(self, queryset, include_self=False):
         """
