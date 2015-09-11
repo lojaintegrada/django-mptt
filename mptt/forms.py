@@ -4,7 +4,7 @@ Form components for working with trees.
 from __future__ import unicode_literals
 from django import forms
 from django.forms.forms import NON_FIELD_ERRORS
-from django.forms.util import ErrorList
+from django.forms.utils import ErrorList
 try:
     from django.utils.encoding import smart_text
 except ImportError:

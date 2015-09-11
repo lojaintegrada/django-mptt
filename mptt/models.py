@@ -51,6 +51,7 @@ class MPTTOptions(object):
                 parent_attr = 'myparent'
     """
 
+    master_tree = None
     order_insertion_by = []
     left_attr = 'lft'
     right_attr = 'rght'
@@ -81,6 +82,7 @@ class MPTTOptions(object):
             self.order_insertion_by = list(self.order_insertion_by)
         elif self.order_insertion_by is None:
             self.order_insertion_by = []
+
 
     def __iter__(self):
         return ((k, v) for k, v in self.__dict__.items() if k[0] != '_')
@@ -162,6 +164,8 @@ class MPTTOptions(object):
 
             filters__append(reduce(and_, [Q(**{f: v}) for f, v in fields] + [q]))
             fields__append((field_name, value))
+
+
         return reduce(or_, filters)
 
     def get_ordered_insertion_target(self, node, parent):
@@ -180,6 +184,10 @@ class MPTTOptions(object):
             opts = node._mptt_meta
             order_by = opts.order_insertion_by[:]
             filters = self.insertion_target_filters(node, order_by)
+
+            if self.master_tree is not None and hasattr(node,self.master_tree):
+                filters = filters & Q(conta_id=node.conta_id)
+
             if parent:
                 filters = filters & Q(**{opts.parent_attr: parent})
                 # Fall back on tree ordering if multiple child nodes have
@@ -187,6 +195,7 @@ class MPTTOptions(object):
                 order_by.append(opts.left_attr)
             else:
                 filters = filters & Q(**{opts.parent_attr: None})
+
                 # Fall back on tree id ordering if multiple root nodes have
                 # the same values.
                 order_by.append(opts.tree_id_attr)
@@ -315,8 +324,6 @@ class MPTTModelBase(ModelBase):
                     # manager was inherited
                     manager = manager._copy_to_model(cls)
                     manager.contribute_to_class(cls, 'objects')
-                if hasattr(manager, 'init_from_model'):
-                    manager.init_from_model(cls)
 
                 # make sure we have a tree manager somewhere
                 tree_manager = None
@@ -335,7 +342,6 @@ class MPTTModelBase(ModelBase):
                 elif tree_manager is None:
                     tree_manager = TreeManager()
                 tree_manager.contribute_to_class(cls, '_tree_manager')
-                tree_manager.init_from_model(cls)
 
                 # avoid using ManagerDescriptor, so instances can refer to self._tree_manager
                 setattr(cls, '_tree_manager', tree_manager)

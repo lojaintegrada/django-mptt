@@ -3,11 +3,11 @@ from __future__ import unicode_literals
 
 from mptt import VERSION
 
-requires=()
+requires = ()
 
 try:
     from setuptools import setup
-    kwargs ={str('install_requires'): requires}
+    kwargs = {str('install_requires'): requires}
 except ImportError:
     from distutils.core import setup
     kwargs = {str('requires'): requires}
