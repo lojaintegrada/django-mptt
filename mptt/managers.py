@@ -725,6 +725,9 @@ class TreeManager(models.Manager):
         tree_id = getattr(node, self.tree_id_attr)
         target_tree_id = getattr(target, self.tree_id_attr)
 
+        if target_tree_id is None:
+            target_tree_id = self._get_next_tree_id()
+
         if node.is_child_node():
             if position == 'left':
                 space_target = target_tree_id - 1
